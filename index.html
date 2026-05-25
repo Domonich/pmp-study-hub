@@ -466,7 +466,7 @@ body.dark .profile-box h2 { color:var(--orange-light); }
   <div class="stats-grid">
     <div class="stat-card"><div class="num" id="stat-modules">0/10</div><div class="lbl">Modules Done</div></div>
     <div class="stat-card"><div class="num" id="stat-quiz">—</div><div class="lbl">Best Quiz Score</div></div>
-    <div class="stat-card"><div class="num" id="stat-mastered">0</div><div class="lbl">Topics Mastered</div></div>
+    <div class="stat-card"><div class="num" id="stat-mastered">0/16</div><div class="lbl">Topics Mastered</div></div>
     <div class="stat-card"><div class="num" id="stat-questions">131</div><div class="lbl">Practice Questions</div></div>
   </div>
 
@@ -3357,6 +3357,13 @@ function showStudyResults() {
   document.getElementById('study-result-bar').style.width = Math.max(0,finalPct) + '%';
   document.getElementById('study-result-bar').style.background = col;
   document.getElementById('study-result-pct').textContent = `Overall mastery: ${finalPct < 0 ? 'N/A' : finalPct + '%'}`;
+  // Refresh dashboard mastered count
+  const statMastered = document.getElementById('stat-mastered');
+  if (statMastered) {
+    const mastery = JSON.parse(uGet('pmp_mastery') || '{}');
+    const count = Object.values(mastery).filter(m => m.t > 0 && (m.r / m.t) >= 0.75).length;
+    statMastered.textContent = count + '/16';
+  }
 }
 
 function studyNext() {
@@ -4378,6 +4385,13 @@ function applyUserData() {
   const best = uGet('pmp_best_quiz');
   const statQuiz = document.getElementById('stat-quiz');
   if (statQuiz) statQuiz.textContent = best ? best + '%' : '0%';
+  // Topics mastered (≥75%)
+  const statMastered = document.getElementById('stat-mastered');
+  if (statMastered) {
+    const mastery = JSON.parse(uGet('pmp_mastery') || '{}');
+    const count = Object.values(mastery).filter(m => m.t > 0 && (m.r / m.t) >= 0.75).length;
+    statMastered.textContent = count + '/16';
+  }
   // Notes
   const notesEl = document.getElementById('notes-text');
   if (notesEl) notesEl.value = uGet('pmp_notes') || '';
