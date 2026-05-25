@@ -281,67 +281,31 @@ body.dark .profile-box h2 { color:var(--orange-light); }
 <nav id="sidebar">
   <h1>PMP Study Hub <span>OSC 6660 · Summer 2026</span><span id="sidebar-user" style="margin-top:4px;font-size:0.72rem;opacity:0.8;background:rgba(255,255,255,0.15);border-radius:10px;padding:2px 8px;display:inline-block"></span></h1>
   <div class="nav-section">
-    <div class="nav-section-title">Overview</div>
+    <div class="nav-section-title">Start Here</div>
     <a class="nav-link" onclick="show('learn')">🗺 Learning Map</a>
-    <a class="nav-link" onclick="show('dashboard')">Dashboard</a>
-    <a class="nav-link" onclick="show('search')">Search</a>
+    <a class="nav-link" onclick="show('dashboard')">📊 Dashboard</a>
   </div>
   <div class="nav-section">
-    <div class="nav-section-title">Deep Dive</div>
-    <a class="nav-link" onclick="show('sixsigma')">Six Sigma / DMAIC / DMADV</a>
-    <a class="nav-link" onclick="show('cmmi')">CMMI Maturity Levels</a>
-    <a class="nav-link" onclick="show('sdlc')">SDLC Models</a>
-    <a class="nav-link" onclick="show('agile-deep')">Agile Deep Dive</a>
-    <a class="nav-link" onclick="show('pm-tools')">PM Tools &amp; Diagrams</a>
+    <div class="nav-section-title">Study Content</div>
+    <a class="nav-link" onclick="show('pmbok8')" style="color:#f0a84d;font-weight:600">⭐ PMBOK 8th Edition</a>
+    <a class="nav-link" onclick="show('pmbok6')">📘 PMBOK 6th — Processes</a>
+    <a class="nav-link" onclick="show('pmbok7')">📗 PMBOK 7th — Principles</a>
+    <a class="nav-link" onclick="show('agile-deep')">🔄 Agile &amp; Frameworks</a>
+    <a class="nav-link" onclick="show('ethics')">⚖️ Ethics &amp; Standards</a>
   </div>
   <div class="nav-section">
-    <div class="nav-section-title">PMBOK 6th</div>
-    <a class="nav-link" onclick="show('pmbok6')">Overview & Process Groups</a>
-    <a class="nav-link" onclick="show('p6-integration')">Integration</a>
-    <a class="nav-link" onclick="show('p6-scope')">Scope</a>
-    <a class="nav-link" onclick="show('p6-schedule')">Schedule</a>
-    <a class="nav-link" onclick="show('p6-cost')">Cost</a>
-    <a class="nav-link" onclick="show('p6-quality')">Quality</a>
-    <a class="nav-link" onclick="show('p6-resource')">Resource</a>
-    <a class="nav-link" onclick="show('p6-comms')">Communications</a>
-    <a class="nav-link" onclick="show('p6-risk')">Risk</a>
-    <a class="nav-link" onclick="show('p6-procurement')">Procurement</a>
-    <a class="nav-link" onclick="show('p6-stakeholder')">Stakeholder</a>
+    <div class="nav-section-title">Practice</div>
+    <a class="nav-link" onclick="show('flashcards')">🃏 Flashcards</a>
+    <a class="nav-link" onclick="show('quiz')">❓ Quiz Bank</a>
+    <a class="nav-link" onclick="show('situational')">💡 Situational Quiz</a>
+    <a class="nav-link" onclick="show('formulas')">🔢 Formulas &amp; EVM</a>
   </div>
   <div class="nav-section">
-    <div class="nav-section-title">PMBOK 7th</div>
-    <a class="nav-link" onclick="show('pmbok7')">Principles & Domains</a>
-  </div>
-  <div class="nav-section">
-    <div class="nav-section-title">Exam Prep</div>
-    <a class="nav-link" onclick="show('ethics')">PMI Ethics &amp; Conduct</a>
-    <a class="nav-link" onclick="show('strategy')">How PMI Thinks</a>
-    <a class="nav-link" onclick="show('talent')">PMI Talent Triangle</a>
-  </div>
-  <div class="nav-section">
-    <div class="nav-section-title">Course Modules</div>
-    <a class="nav-link" onclick="show('mod1')">M1: Intro to PM</a>
-    <a class="nav-link" onclick="show('mod2')">M2: Project Selection</a>
-    <a class="nav-link" onclick="show('mod3')">M3: Scope & WBS</a>
-    <a class="nav-link" onclick="show('mod4')">M4: Scheduling</a>
-    <a class="nav-link" onclick="show('mod5')">M5: Resources & Cost</a>
-    <a class="nav-link" onclick="show('mod6')">M6: Risk</a>
-    <a class="nav-link" onclick="show('mod7')">M7: Quality</a>
-    <a class="nav-link" onclick="show('mod8')">M8: Procurement</a>
-    <a class="nav-link" onclick="show('mod9')">M9: Teams & Comms</a>
-    <a class="nav-link" onclick="show('mod10')">M10: Agile & Closing</a>
-  </div>
-  <div class="nav-section">
-    <div class="nav-section-title">Tools</div>
-    <a class="nav-link" onclick="show('formulas')">Formulas & EVM Calc</a>
-    <a class="nav-link" onclick="show('formula-drill')">Formula Drill</a>
-    <a class="nav-link" onclick="show('itto')">ITTO Grid (49 Processes)</a>
-    <a class="nav-link" onclick="show('situational')">Situational Quiz</a>
-    <a class="nav-link" onclick="show('glossary')">Glossary</a>
-    <a class="nav-link" onclick="show('flashcards')">Flashcards</a>
-    <a class="nav-link" onclick="show('quiz')">Quiz</a>
+    <div class="nav-section-title">Exam Ready</div>
     <a class="nav-link" onclick="show('mock')">🎯 Mock Exam (180Q)</a>
-    <a class="nav-link" onclick="show('notes')">My Notes</a>
+    <a class="nav-link" onclick="show('itto')">📋 ITTO Reference</a>
+    <a class="nav-link" onclick="show('glossary')">📖 Glossary</a>
+    <a class="nav-link" onclick="show('notes')">📔 My Notes</a>
   </div>
   <div class="nav-section" style="padding:12px 16px;display:flex;flex-direction:column;gap:6px">
     <button class="btn btn-outline" onclick="toggleDark()" style="width:100%;font-size:0.75rem">Toggle Dark Mode</button>
@@ -560,6 +524,21 @@ body.dark .profile-box h2 { color:var(--orange-light); }
       <tr><td>Strong Matrix</td><td>Moderate–High</td><td>PM</td><td>Full-time</td></tr>
       <tr><td>Projectized</td><td>High–Full</td><td>PM</td><td>Full-time</td></tr>
     </table>
+  </div>
+  <div class="card" style="background:var(--navy);color:#fff">
+    <h3 style="color:#f0a84d;margin-bottom:10px">📚 Explore the 10 Knowledge Areas</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px">
+      <button onclick="show('p6-integration')" class="btn" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);font-size:0.8rem">🔗 Integration (7)</button>
+      <button onclick="show('p6-scope')" class="btn" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);font-size:0.8rem">📐 Scope (6)</button>
+      <button onclick="show('p6-schedule')" class="btn" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);font-size:0.8rem">📅 Schedule (8)</button>
+      <button onclick="show('p6-cost')" class="btn" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);font-size:0.8rem">💰 Cost (6)</button>
+      <button onclick="show('p6-quality')" class="btn" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);font-size:0.8rem">✅ Quality (3)</button>
+      <button onclick="show('p6-resource')" class="btn" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);font-size:0.8rem">👥 Resource (6)</button>
+      <button onclick="show('p6-comms')" class="btn" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);font-size:0.8rem">📡 Comms (3)</button>
+      <button onclick="show('p6-risk')" class="btn" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);font-size:0.8rem">⚠️ Risk (7)</button>
+      <button onclick="show('p6-procurement')" class="btn" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);font-size:0.8rem">🤝 Procurement (3)</button>
+      <button onclick="show('p6-stakeholder')" class="btn" style="background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);font-size:0.8rem">👤 Stakeholder (4)</button>
+    </div>
   </div>
 </div>
 
@@ -1471,7 +1450,7 @@ body.dark .profile-box h2 { color:var(--orange-light); }
 
 <!-- SIX SIGMA -->
 <div id="sec-sixsigma" class="section">
-  <div class="topbar"><h2>Six Sigma, DMAIC &amp; DMADV</h2></div>
+  <div class="topbar"><h2>Six Sigma, DMAIC &amp; DMADV</h2><button class="btn btn-outline" style="font-size:0.75rem" onclick="show('agile-deep')">← Back to Agile &amp; Frameworks</button></div>
   <div class="card">
     <h3>What is Six Sigma?</h3>
     <p>Six Sigma is a data-driven methodology for eliminating defects and reducing process variation. The goal is <strong>3.4 defects per million opportunities (DPMO)</strong> — 99.99966% defect-free.</p>
@@ -1590,7 +1569,7 @@ body.dark .profile-box h2 { color:var(--orange-light); }
 
 <!-- CMMI -->
 <div id="sec-cmmi" class="section">
-  <div class="topbar"><h2>CMMI — Capability Maturity Model Integration</h2></div>
+  <div class="topbar"><h2>CMMI — Capability Maturity Model Integration</h2><button class="btn btn-outline" style="font-size:0.75rem" onclick="show('agile-deep')">← Back to Agile &amp; Frameworks</button></div>
   <div class="card">
     <h3>What is CMMI?</h3>
     <p>CMMI is a process improvement framework developed by the SEI (Software Engineering Institute) at Carnegie Mellon. It provides organizations a roadmap for improving their software and systems development processes. Higher maturity = more predictable, repeatable, high-quality outcomes.</p>
@@ -1642,7 +1621,7 @@ body.dark .profile-box h2 { color:var(--orange-light); }
 
 <!-- SDLC MODELS -->
 <div id="sec-sdlc" class="section">
-  <div class="topbar"><h2>SDLC Models</h2></div>
+  <div class="topbar"><h2>SDLC Models</h2><button class="btn btn-outline" style="font-size:0.75rem" onclick="show('agile-deep')">← Back to Agile &amp; Frameworks</button></div>
   <div class="card">
     <h3>Waterfall / Traditional SDLC</h3>
     <p style="font-size:0.82rem;margin-bottom:12px">Sequential, phase-by-phase. Each phase must be completed before the next begins. Best when requirements are well-defined and unlikely to change.</p>
@@ -1710,7 +1689,14 @@ body.dark .profile-box h2 { color:var(--orange-light); }
 
 <!-- AGILE DEEP DIVE -->
 <div id="sec-agile-deep" class="section">
-  <div class="topbar"><h2>Agile Deep Dive — Scrum, Kanban, XP &amp; More</h2></div>
+  <div class="topbar"><h2>Agile &amp; Frameworks</h2>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-outline" style="font-size:0.75rem" onclick="show('sixsigma')">Six Sigma / DMAIC</button>
+      <button class="btn btn-outline" style="font-size:0.75rem" onclick="show('cmmi')">CMMI Levels</button>
+      <button class="btn btn-outline" style="font-size:0.75rem" onclick="show('sdlc')">SDLC Models</button>
+      <button class="btn btn-outline" style="font-size:0.75rem" onclick="show('pm-tools')">PM Tools &amp; Diagrams</button>
+    </div>
+  </div>
   <div class="card">
     <h3>The Scrum Framework — Full Breakdown</h3>
     <p style="font-size:0.82rem;color:var(--text-light);margin-bottom:12px">Scrum is an empirical framework based on transparency, inspection, and adaptation. It is the most widely used Agile framework.</p>
@@ -1900,7 +1886,7 @@ body.dark .profile-box h2 { color:var(--orange-light); }
 
 <!-- PM TOOLS & DIAGRAMS -->
 <div id="sec-pm-tools" class="section">
-  <div class="topbar"><h2>PM Tools &amp; Diagrams Cheat Sheet</h2></div>
+  <div class="topbar"><h2>PM Tools &amp; Diagrams Cheat Sheet</h2><button class="btn btn-outline" style="font-size:0.75rem" onclick="show('agile-deep')">← Back to Agile &amp; Frameworks</button></div>
 
   <div class="card">
     <h3>📊 Gantt Chart</h3>
@@ -2215,9 +2201,244 @@ body.dark .profile-box h2 { color:var(--orange-light); }
   </div>
 </div>
 
+<!-- PMBOK 8TH EDITION -->
+<div id="sec-pmbok8" class="section">
+  <div class="topbar"><h2>⭐ PMBOK 8th Edition (2024)</h2></div>
+
+  <!-- Edition overview banner -->
+  <div class="card" style="background:linear-gradient(135deg,#1a3a6b,#2a5298);color:#fff;margin-bottom:14px">
+    <h3 style="color:#f0a84d;margin-bottom:8px">The Big Shift — Back to Basics + Modern Thinking</h3>
+    <p style="font-size:0.88rem;line-height:1.7;opacity:0.95">PMBOK 8th reunifies what the 7th split apart. It brings back <strong>processes and ITTOs</strong> (missing from 7th) while keeping the principles-and-domains framework — and adds <strong>Sustainability</strong> and <strong>AI in PM</strong> as new priorities. Think of it as the best of PMBOK 6 + PMBOK 7 in one book.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px;text-align:center">
+      <div style="background:rgba(255,255,255,0.1);border-radius:8px;padding:10px"><div style="font-size:1.5rem;font-weight:700;color:#f0a84d">6</div><div style="font-size:0.75rem;opacity:0.85">Core Principles</div></div>
+      <div style="background:rgba(255,255,255,0.1);border-radius:8px;padding:10px"><div style="font-size:1.5rem;font-weight:700;color:#f0a84d">7</div><div style="font-size:0.75rem;opacity:0.85">Performance Domains</div></div>
+      <div style="background:rgba(255,255,255,0.1);border-radius:8px;padding:10px"><div style="font-size:1.5rem;font-weight:700;color:#f0a84d">~40</div><div style="font-size:0.75rem;opacity:0.85">Reintroduced Processes</div></div>
+    </div>
+  </div>
+
+  <!-- Edition comparison -->
+  <div class="card" style="margin-bottom:14px">
+    <h3 style="margin-bottom:10px">Edition Evolution at a Glance</h3>
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font-size:0.82rem">
+        <thead><tr style="background:var(--navy);color:#fff">
+          <th style="padding:8px;text-align:left">Element</th>
+          <th style="padding:8px;text-align:center">6th (2017)</th>
+          <th style="padding:8px;text-align:center">7th (2021)</th>
+          <th style="padding:8px;text-align:center;background:#e8912d">8th (2024)</th>
+        </tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px">Principles</td><td style="padding:8px;text-align:center">None</td><td style="padding:8px;text-align:center">12</td><td style="padding:8px;text-align:center;font-weight:600;color:#e8912d">6 (consolidated)</td></tr>
+          <tr style="border-bottom:1px solid var(--border);background:var(--bg)"><td style="padding:8px">Performance Domains</td><td style="padding:8px;text-align:center">10 KAs</td><td style="padding:8px;text-align:center">8 Domains</td><td style="padding:8px;text-align:center;font-weight:600;color:#e8912d">7 Domains</td></tr>
+          <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px">Processes + ITTOs</td><td style="padding:8px;text-align:center">49 ✅</td><td style="padding:8px;text-align:center">❌ Removed</td><td style="padding:8px;text-align:center;font-weight:600;color:#e8912d">~40 ✅ Back</td></tr>
+          <tr style="border-bottom:1px solid var(--border);background:var(--bg)"><td style="padding:8px">Process Groups</td><td style="padding:8px;text-align:center">5 Groups</td><td style="padding:8px;text-align:center">Separate guide</td><td style="padding:8px;text-align:center;font-weight:600;color:#e8912d">5 Focus Areas ✅</td></tr>
+          <tr style="border-bottom:1px solid var(--border)"><td style="padding:8px">Sustainability</td><td style="padding:8px;text-align:center">Mentioned</td><td style="padding:8px;text-align:center">Mentioned</td><td style="padding:8px;text-align:center;font-weight:600;color:#e8912d">Core Principle ✅</td></tr>
+          <tr style="border-bottom:1px solid var(--border);background:var(--bg)"><td style="padding:8px">AI in PM</td><td style="padding:8px;text-align:center">—</td><td style="padding:8px;text-align:center">—</td><td style="padding:8px;text-align:center;font-weight:600;color:#e8912d">Appendix X3 ✅</td></tr>
+          <tr><td style="padding:8px">Volume structure</td><td style="padding:8px;text-align:center">1 book</td><td style="padding:8px;text-align:center">2 books</td><td style="padding:8px;text-align:center;font-weight:600;color:#e8912d">1 unified book</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Part 1: The Standard -->
+  <div class="card" style="margin-bottom:14px">
+    <h3 style="margin-bottom:12px">📖 Part 1: The Standard for Project Management</h3>
+
+    <div style="margin-bottom:16px">
+      <h4 style="color:var(--navy);margin-bottom:6px">Chapter 2 — System for Value Delivery</h4>
+      <p style="font-size:0.85rem;line-height:1.6;margin-bottom:8px">Projects exist to deliver <strong>value</strong>. The 8th edition frames everything around this — the PM's role is to optimize the system that produces value.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px">
+        <div style="background:var(--bg);border-radius:6px;padding:8px;font-size:0.8rem"><strong>EEFs</strong><br>Enterprise Environmental Factors — external/internal conditions the team can't control (culture, market, regulations)</div>
+        <div style="background:var(--bg);border-radius:6px;padding:8px;font-size:0.8rem"><strong>OPAs</strong><br>Organizational Process Assets — plans, processes, lessons learned the team can use and update</div>
+        <div style="background:var(--bg);border-radius:6px;padding:8px;font-size:0.8rem"><strong>Key Roles</strong><br>Sponsor (authority + funding), PM (day-to-day), Team (delivery), Stakeholders (interested parties), Customer (receives value)</div>
+        <div style="background:var(--bg);border-radius:6px;padding:8px;font-size:0.8rem"><strong>Product Management</strong><br>Distinction between managing the project (temporary) vs. managing the product (ongoing lifecycle)</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:16px">
+      <h4 style="color:var(--navy);margin-bottom:8px">Chapter 3 — The 6 Project Management Principles</h4>
+      <p style="font-size:0.8rem;color:var(--text-light);margin-bottom:10px">Consolidated from 12 principles in PMBOK 7th — broader and more strategic. These are the "why" behind every PM decision.</p>
+      <div style="display:grid;gap:8px">
+        <div style="border-left:4px solid #e8912d;padding:8px 12px;background:var(--bg);border-radius:0 6px 6px 0">
+          <strong style="font-size:0.85rem">1. Adopt a Holistic View</strong>
+          <p style="font-size:0.8rem;margin-top:3px;color:var(--text-light)">See the project as part of a larger system — organizational strategy, stakeholder ecosystem, and external environment all interact.</p>
+        </div>
+        <div style="border-left:4px solid #e8912d;padding:8px 12px;background:var(--bg);border-radius:0 6px 6px 0">
+          <strong style="font-size:0.85rem">2. Focus on Value</strong>
+          <p style="font-size:0.8rem;margin-top:3px;color:var(--text-light)">Continually evaluate whether the project is on track to deliver the expected business value. Pivot if it isn't.</p>
+        </div>
+        <div style="border-left:4px solid #e8912d;padding:8px 12px;background:var(--bg);border-radius:0 6px 6px 0">
+          <strong style="font-size:0.85rem">3. Embed Quality Into Processes and Deliverables</strong>
+          <p style="font-size:0.8rem;margin-top:3px;color:var(--text-light)">Quality is not an inspection step at the end — it is built in at every stage of the project lifecycle.</p>
+        </div>
+        <div style="border-left:4px solid #e8912d;padding:8px 12px;background:var(--bg);border-radius:0 6px 6px 0">
+          <strong style="font-size:0.85rem">4. Be an Accountable Leader</strong>
+          <p style="font-size:0.8rem;margin-top:3px;color:var(--text-light)">Leadership is not just a title. PMs own outcomes, model ethical behavior, and take responsibility for team performance.</p>
+        </div>
+        <div style="border-left:4px solid #059669;padding:8px 12px;background:var(--bg);border-radius:0 6px 6px 0">
+          <strong style="font-size:0.85rem">5. Integrate Sustainability 🌿 <span style="font-size:0.72rem;color:#059669;font-weight:400">(NEW in 8th)</span></strong>
+          <p style="font-size:0.8rem;margin-top:3px;color:var(--text-light)">Consider environmental, social, and economic impacts — not just delivery metrics. Projects should leave a net positive footprint.</p>
+        </div>
+        <div style="border-left:4px solid #059669;padding:8px 12px;background:var(--bg);border-radius:0 6px 6px 0">
+          <strong style="font-size:0.85rem">6. Build an Empowered Culture 🌿 <span style="font-size:0.72rem;color:#059669;font-weight:400">(NEW emphasis)</span></strong>
+          <p style="font-size:0.8rem;margin-top:3px;color:var(--text-light)">Create psychological safety. Teams perform best when members feel trusted, respected, and empowered to make decisions.</p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h4 style="color:var(--navy);margin-bottom:8px">Chapter 4 — Project Life Cycles</h4>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin-bottom:10px">
+        <div style="background:#dbeafe;border-radius:8px;padding:10px;font-size:0.82rem"><strong>Predictive (Waterfall)</strong><br>Scope, schedule, cost defined upfront. Best for stable requirements.</div>
+        <div style="background:#dcfce7;border-radius:8px;padding:10px;font-size:0.82rem"><strong>Adaptive (Agile)</strong><br>Iterative, incremental delivery. Best for evolving requirements.</div>
+        <div style="background:#fef9c3;border-radius:8px;padding:10px;font-size:0.82rem"><strong>Hybrid</strong><br>Combines both — predictive for governance/planning, adaptive for delivery.</div>
+      </div>
+      <p style="font-size:0.82rem;font-weight:600;margin-bottom:6px">5 Focus Areas (Process Groups — Restored):</p>
+      <div style="display:flex;gap:0;flex-wrap:wrap">
+        <div style="background:var(--navy);color:#fff;padding:6px 12px;font-size:0.78rem;border-radius:4px 0 0 4px;font-weight:600">Initiating</div>
+        <div style="background:#2a5298;color:#fff;padding:6px 12px;font-size:0.78rem;font-weight:600">Planning</div>
+        <div style="background:#3a62a8;color:#fff;padding:6px 12px;font-size:0.78rem;font-weight:600">Executing</div>
+        <div style="background:#4a72b8;color:#fff;padding:6px 12px;font-size:0.78rem;font-weight:600">Monitoring &amp; Controlling</div>
+        <div style="background:#e8912d;color:#fff;padding:6px 12px;font-size:0.78rem;border-radius:0 4px 4px 0;font-weight:600">Closing</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Part 2: Performance Domains -->
+  <div class="card" style="margin-bottom:14px">
+    <h3 style="margin-bottom:12px">📖 Part 2: The 7 Performance Domains</h3>
+    <p style="font-size:0.83rem;color:var(--text-light);margin-bottom:12px">Each domain has Key Concepts, ~5–6 embedded Processes with ITTOs, Tailoring Considerations, and Domain Interactions. Note how these differ from both the PMBOK 6 Knowledge Areas and the PMBOK 7 domains.</p>
+    <div style="display:grid;gap:8px">
+      <div style="border:1px solid var(--border);border-radius:8px;padding:12px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+          <span style="background:var(--navy);color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0">1</span>
+          <strong>Governance</strong><span style="font-size:0.75rem;color:var(--text-light);margin-left:6px">← NEW in 8th (not a PMBOK 7 domain)</span>
+        </div>
+        <p style="font-size:0.82rem;color:var(--text-light)">Oversight structures, decision rights, accountability frameworks, steering committees, project charters, and sponsor engagement.</p>
+      </div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:12px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+          <span style="background:var(--navy);color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0">2</span>
+          <strong>Scope</strong>
+        </div>
+        <p style="font-size:0.82rem;color:var(--text-light)">Requirements collection, WBS decomposition, scope baseline, scope verification and control, change management for scope.</p>
+      </div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:12px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+          <span style="background:var(--navy);color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0">3</span>
+          <strong>Schedule</strong>
+        </div>
+        <p style="font-size:0.82rem;color:var(--text-light)">Activity sequencing, duration estimation, critical path method, schedule baseline, schedule compression (crashing/fast-tracking), earned schedule.</p>
+      </div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:12px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+          <span style="background:var(--navy);color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0">4</span>
+          <strong>Finance</strong><span style="font-size:0.75rem;color:var(--text-light);margin-left:6px">← "Cost" renamed in 8th</span>
+        </div>
+        <p style="font-size:0.82rem;color:var(--text-light)">Budget estimation, funding, cost baseline, Earned Value Management (EVM), financial forecasting, cost control.</p>
+      </div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:12px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+          <span style="background:var(--navy);color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0">5</span>
+          <strong>Stakeholders</strong>
+        </div>
+        <p style="font-size:0.82rem;color:var(--text-light)">Stakeholder identification and analysis, engagement planning, communications management, managing expectations.</p>
+      </div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:12px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+          <span style="background:var(--navy);color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0">6</span>
+          <strong>Resources</strong>
+        </div>
+        <p style="font-size:0.82rem;color:var(--text-light)">Team acquisition and development, physical resources, resource leveling, team performance, motivation, and conflict resolution.</p>
+      </div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:12px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+          <span style="background:var(--navy);color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0">7</span>
+          <strong>Risk</strong>
+        </div>
+        <p style="font-size:0.82rem;color:var(--text-light)">Risk identification, qualitative and quantitative analysis, response strategies (avoid, mitigate, transfer, accept, exploit, share, enhance), risk reserves.</p>
+      </div>
+    </div>
+    <div style="margin-top:12px;background:#fef9c3;border-radius:8px;padding:10px;font-size:0.82rem">
+      <strong>⚠️ Note on what changed from PMBOK 7th:</strong> The 7th had 8 domains (Team, Stakeholders, Life Cycle, Planning, Project Work, Delivery, Measurement, Uncertainty). The 8th consolidates these into 7 more traditional domains — adding Governance and Finance explicitly, removing Measurement and Uncertainty as standalone domains (those concepts are folded into the others).
+    </div>
+  </div>
+
+  <!-- Appendices -->
+  <div class="card" style="margin-bottom:14px">
+    <h3 style="margin-bottom:10px">📎 Appendices — What's New</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px">
+      <div style="border:1px solid var(--border);border-radius:8px;padding:12px">
+        <strong style="font-size:0.85rem">Appendix X2 — PMOs</strong>
+        <p style="font-size:0.8rem;color:var(--text-light);margin-top:4px">Types (supportive, controlling, directive), functions, value to the organization.</p>
+      </div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:12px;border-color:#059669">
+        <strong style="font-size:0.85rem;color:#059669">Appendix X3 — AI in Project Management 🤖 NEW</strong>
+        <p style="font-size:0.8rem;color:var(--text-light);margin-top:4px">How AI tools augment PM work — scheduling, risk analysis, reporting, decision support. Ethical use of AI. Expect 1–3 PMP exam questions on this topic.</p>
+      </div>
+      <div style="border:1px solid var(--border);border-radius:8px;padding:12px">
+        <strong style="font-size:0.85rem">Appendix X4 — Procurement &amp; Contracting</strong>
+        <p style="font-size:0.8rem;color:var(--text-light);margin-top:4px">Contract types (FP, T&amp;M, CR), make-or-buy decisions, vendor management, procurement lifecycle.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gap analysis vs current study guide -->
+  <div class="card" style="margin-bottom:14px">
+    <h3 style="margin-bottom:10px">🔍 Gap Analysis — What This Study Hub Still Needs</h3>
+    <p style="font-size:0.83rem;color:var(--text-light);margin-bottom:10px">This guide covers PMBOK 6th and 7th thoroughly. The following gaps exist vs. PMBOK 8th — share your chapter notes from the physical book to fill these in:</p>
+    <div style="display:grid;gap:6px">
+      <div style="display:flex;align-items:flex-start;gap:8px;padding:8px;background:#fef2f2;border-radius:6px;font-size:0.82rem">
+        <span style="color:#dc2626;flex-shrink:0">❌</span>
+        <span><strong>~40 Reintroduced Processes with ITTOs</strong> — the 8th restructures processes by domain (not KA). Current ITTO grid reflects PMBOK 6 (49 processes / 10 KAs).</span>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:8px;padding:8px;background:#fef2f2;border-radius:6px;font-size:0.82rem">
+        <span style="color:#dc2626;flex-shrink:0">❌</span>
+        <span><strong>Sustainability content</strong> — Principle 5 is new. No quiz questions yet cover sustainability as a PM principle.</span>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:8px;padding:8px;background:#fef2f2;border-radius:6px;font-size:0.82rem">
+        <span style="color:#dc2626;flex-shrink:0">❌</span>
+        <span><strong>AI in PM (Appendix X3)</strong> — entirely absent from current content and quiz bank. Expect this on the exam.</span>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:8px;padding:8px;background:#fef2f2;border-radius:6px;font-size:0.82rem">
+        <span style="color:#dc2626;flex-shrink:0">❌</span>
+        <span><strong>System for Value Delivery (Ch.2)</strong> — the framing of EEFs + OPAs + roles through a value-delivery lens is not a dedicated study topic yet.</span>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:8px;padding:8px;background:#fef9c3;border-radius:6px;font-size:0.82rem">
+        <span style="color:#ca8a04;flex-shrink:0">⚠️</span>
+        <span><strong>PMBOK 7th Domains vs 8th Domains</strong> — quiz bank references 8 domains (7th) but exam questions will use the new 7-domain structure.</span>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:8px;padding:8px;background:#dcfce7;border-radius:6px;font-size:0.82rem">
+        <span style="color:#059669;flex-shrink:0">✅</span>
+        <span><strong>Process Groups, ITTOs, EVM, Agile, Ethics, Risk</strong> — well covered via PMBOK 6th sections. Still testable content on the PMP.</span>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:8px;padding:8px;background:#dcfce7;border-radius:6px;font-size:0.82rem">
+        <span style="color:#059669;flex-shrink:0">✅</span>
+        <span><strong>Tailoring concept</strong> — covered in Agile Deep Dive. More emphasis in 8th edition but foundational content is present.</span>
+      </div>
+    </div>
+    <div style="margin-top:12px;padding:10px;background:var(--bg);border-radius:8px;font-size:0.82rem;border-left:3px solid #e8912d">
+      <strong>📌 Action Plan:</strong> As you read your physical PMBOK 8th copy chapter by chapter, share key points here and the guide will be updated to fill in the gaps — especially the ~40 reintroduced processes and AI/sustainability content.
+    </div>
+  </div>
+
+  <!-- Add chapter notes button -->
+  <div class="card" style="text-align:center;padding:20px">
+    <p style="font-size:0.88rem;color:var(--text-light);margin-bottom:12px">Ready to add your PMBOK 8th chapter notes to this guide?</p>
+    <button class="btn btn-primary" onclick="show('notes')">📔 Open My Notes</button>
+    <button class="btn btn-outline" style="margin-left:8px" onclick="show('learn')">🗺 Study Topics</button>
+  </div>
+</div>
+
 <!-- PMI ETHICS -->
 <div id="sec-ethics" class="section">
-  <div class="topbar"><h2>PMI Ethics &amp; Professional Conduct</h2></div>
+  <div class="topbar"><h2>⚖️ Ethics &amp; Standards</h2>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-outline" style="font-size:0.75rem;font-weight:600" onclick="show('ethics')" id="eth-tab-btn">PMI Code of Ethics</button>
+      <button class="btn btn-outline" style="font-size:0.75rem" onclick="show('strategy')">How PMI Thinks</button>
+      <button class="btn btn-outline" style="font-size:0.75rem" onclick="show('talent')">Talent Triangle</button>
+    </div>
+  </div>
   <div class="card" style="margin-bottom:12px">
     <h3>Why This Matters on the PMP</h3>
     <p style="font-size:0.88rem;line-height:1.6">The PMP exam includes <strong>5–10 direct ethics questions</strong> every sitting — plus dozens of situational questions with an ethical dimension. The PMI Code of Ethics and Professional Conduct has <strong>4 core values</strong>, each with mandatory (what you <em>must</em> do) and aspirational (what you <em>should</em> do) standards.</p>
@@ -2307,7 +2528,13 @@ body.dark .profile-box h2 { color:var(--orange-light); }
 
 <!-- EXAM STRATEGY -->
 <div id="sec-strategy" class="section">
-  <div class="topbar"><h2>How PMI Thinks — Exam Strategy</h2></div>
+  <div class="topbar"><h2>How PMI Thinks — Exam Strategy</h2>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-outline" style="font-size:0.75rem" onclick="show('ethics')">PMI Code of Ethics</button>
+      <button class="btn btn-outline" style="font-size:0.75rem;font-weight:600" onclick="show('strategy')">How PMI Thinks</button>
+      <button class="btn btn-outline" style="font-size:0.75rem" onclick="show('talent')">Talent Triangle</button>
+    </div>
+  </div>
   <div class="card" style="margin-bottom:12px;border-left:4px solid var(--orange)">
     <h3>The Single Most Important Rule</h3>
     <p style="font-size:0.95rem;font-weight:700;color:var(--navy);margin-top:8px;line-height:1.6">PMI's "right answer" is always the one a <em>perfect, by-the-book, proactive PM</em> would choose — not what's fastest, cheapest, or most realistic.</p>
@@ -2423,7 +2650,13 @@ body.dark .profile-box h2 { color:var(--orange-light); }
 
 <!-- PMI TALENT TRIANGLE -->
 <div id="sec-talent" class="section">
-  <div class="topbar"><h2>PMI Talent Triangle</h2></div>
+  <div class="topbar"><h2>PMI Talent Triangle</h2>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-outline" style="font-size:0.75rem" onclick="show('ethics')">PMI Code of Ethics</button>
+      <button class="btn btn-outline" style="font-size:0.75rem" onclick="show('strategy')">How PMI Thinks</button>
+      <button class="btn btn-outline" style="font-size:0.75rem;font-weight:600" onclick="show('talent')">Talent Triangle</button>
+    </div>
+  </div>
   <div class="card" style="margin-bottom:12px">
     <h3>Overview</h3>
     <p style="font-size:0.88rem;line-height:1.6;margin-top:6px">The PMI Talent Triangle defines the three skill domains PMI expects from modern project managers. It was updated in <strong>2022</strong> to reflect how the profession has evolved. PDU requirements for PMP renewal are divided across these three areas.</p>
