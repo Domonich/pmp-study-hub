@@ -195,6 +195,32 @@ body.dark .kanban-col-header { color:var(--orange-light); }
 .wf-phase { padding:10px 20px;color:#fff;font-size:0.8rem;font-weight:600;position:relative;clip-path:polygon(0 0,100% 0,95% 100%,5% 100%);margin-bottom:-1px; }
 .network-diagram { overflow-x:auto;margin:14px 0; }
 /* ── End diagram styles ── */
+/* ====== Learning Map ====== */
+.topic-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-top:14px; }
+.topic-card { background:var(--card);border-radius:12px;padding:16px;border:2px solid var(--border);cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden; }
+.topic-card:hover { border-color:var(--navy-light);transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.1); }
+.topic-card.mastered { border-color:#059669; }
+.topic-card.learning { border-color:var(--orange); }
+.topic-card.needs-work { border-color:#dc2626; }
+.topic-icon { font-size:1.6rem;margin-bottom:6px; }
+.topic-name { font-size:0.85rem;font-weight:700;margin-bottom:8px;color:var(--text); }
+.mastery-bar-wrap { height:8px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:4px; }
+.mastery-bar-fill { height:100%;border-radius:4px;transition:width 0.5s; }
+.mastery-label { font-size:0.72rem;color:var(--text-light);display:flex;justify-content:space-between; }
+.mastery-badge { position:absolute;top:10px;right:10px;font-size:0.65rem;font-weight:700;padding:2px 6px;border-radius:10px;color:#fff; }
+/* Study Modal */
+.study-overlay { position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,20,50,0.85);z-index:800;display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:20px; }
+.study-overlay.open { display:flex; }
+.study-modal { background:var(--card);border-radius:16px;width:100%;max-width:680px;padding:24px;position:relative;margin:auto; }
+.study-tabs { display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:18px; }
+.study-tab { padding:8px 18px;font-size:0.85rem;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;color:var(--text-light); }
+.study-tab.active { color:var(--navy);border-bottom-color:var(--navy); }
+.key-point { display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--border);font-size:0.84rem;line-height:1.5; }
+.key-point:last-child { border:none; }
+.kp-num { background:var(--navy);color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:700;flex-shrink:0;margin-top:2px; }
+/* Diagnostic */
+.diag-progress { height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:14px; }
+.diag-progress-fill { height:100%;background:var(--navy);border-radius:3px;transition:width 0.3s; }
 .profile-overlay { position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,20,50,0.82);z-index:900;display:flex;align-items:center;justify-content:center; }
 .profile-box { background:var(--card);border-radius:16px;padding:32px;max-width:420px;width:92%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,0.4); }
 .profile-box h2 { color:var(--navy);font-size:1.4rem;margin-bottom:6px; }
@@ -256,7 +282,8 @@ body.dark .profile-box h2 { color:var(--orange-light); }
   <h1>PMP Study Hub <span>OSC 6660 · Summer 2026</span><span id="sidebar-user" style="margin-top:4px;font-size:0.72rem;opacity:0.8;background:rgba(255,255,255,0.15);border-radius:10px;padding:2px 8px;display:inline-block"></span></h1>
   <div class="nav-section">
     <div class="nav-section-title">Overview</div>
-    <a class="nav-link active" onclick="show('dashboard')">Dashboard</a>
+    <a class="nav-link" onclick="show('learn')">🗺 Learning Map</a>
+    <a class="nav-link" onclick="show('dashboard')">Dashboard</a>
     <a class="nav-link" onclick="show('search')">Search</a>
   </div>
   <div class="nav-section">
@@ -327,8 +354,114 @@ body.dark .profile-box h2 { color:var(--orange-light); }
 <!-- Main Content -->
 <main id="main">
 
+<!-- LEARNING MAP -->
+<div id="sec-learn" class="section active">
+  <div class="topbar">
+    <h2>🗺 Learning Map</h2>
+    <button class="btn btn-primary" onclick="studyNext()" style="margin-left:auto">▶ Study Next Topic</button>
+    <button class="btn btn-outline" onclick="startDiagnostic()">📋 Take Diagnostic</button>
+  </div>
+  <p style="font-size:0.85rem;color:var(--text-light);margin-bottom:4px">Click any topic to learn the concepts, then practice questions. Topics update as you answer questions.</p>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;font-size:0.78rem">
+    <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;background:#059669;border-radius:50%;display:inline-block"></span>Mastered (≥75%)</span>
+    <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;background:var(--orange);border-radius:50%;display:inline-block"></span>Learning (40–74%)</span>
+    <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;background:#dc2626;border-radius:50%;display:inline-block"></span>Needs Work (&lt;40%)</span>
+    <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;background:var(--border);border-radius:50%;display:inline-block"></span>Not Started</span>
+  </div>
+  <div id="topic-grid" class="topic-grid"></div>
+</div>
+
+<!-- STUDY MODAL OVERLAY -->
+<div id="study-overlay" class="study-overlay" onclick="closeStudyModal(event)">
+  <div class="study-modal" onclick="event.stopPropagation()">
+    <button onclick="closeStudyModal()" style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-light)">✕</button>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+      <span id="study-modal-icon" style="font-size:1.8rem"></span>
+      <div>
+        <h3 id="study-modal-title" style="font-size:1.1rem"></h3>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:4px">
+          <div style="width:120px;height:8px;background:var(--border);border-radius:4px;overflow:hidden">
+            <div id="study-modal-bar" style="height:100%;border-radius:4px;transition:width 0.4s"></div>
+          </div>
+          <span id="study-modal-pct" style="font-size:0.78rem;font-weight:700"></span>
+        </div>
+      </div>
+    </div>
+    <div class="study-tabs">
+      <div class="study-tab active" id="tab-learn" onclick="switchStudyTab('learn')">📖 Learn</div>
+      <div class="study-tab" id="tab-practice" onclick="switchStudyTab('practice')">✏️ Practice</div>
+    </div>
+    <!-- LEARN TAB -->
+    <div id="study-learn-pane">
+      <div id="study-key-points"></div>
+      <div id="study-exam-tip" style="margin-top:14px;background:var(--navy);color:#fff;border-radius:10px;padding:12px 14px;font-size:0.83rem;line-height:1.5"></div>
+      <button class="btn btn-primary" style="width:100%;margin-top:16px;padding:12px" onclick="switchStudyTab('practice')">I'm Ready — Start Practice Questions →</button>
+    </div>
+    <!-- PRACTICE TAB -->
+    <div id="study-practice-pane" style="display:none">
+      <div id="study-diag-progress" class="diag-progress" style="display:none"><div id="study-diag-fill" class="diag-progress-fill"></div></div>
+      <div id="study-q-area">
+        <div style="display:flex;justify-content:space-between;margin-bottom:10px;font-size:0.82rem;color:var(--text-light)">
+          <span id="study-q-counter"></span>
+          <span id="study-q-score" style="font-weight:700;color:var(--orange)"></span>
+        </div>
+        <p id="study-q-text" style="font-size:0.92rem;font-weight:600;line-height:1.5;margin-bottom:14px"></p>
+        <div id="study-q-options"></div>
+        <div id="study-q-exp" style="display:none;margin-top:12px;padding:10px;background:var(--bg);border-radius:8px;font-size:0.83rem;border-left:3px solid var(--orange);line-height:1.5"></div>
+        <button id="study-next-btn" class="btn btn-primary" onclick="nextStudyQ()" style="display:none;margin-top:12px;width:100%">Next →</button>
+      </div>
+      <div id="study-results-area" style="display:none;text-align:center">
+        <div style="font-size:2.5rem;margin-bottom:8px" id="study-result-emoji"></div>
+        <p id="study-result-score" style="font-size:1.3rem;font-weight:800;color:var(--navy)"></p>
+        <p id="study-result-msg" style="font-size:0.85rem;color:var(--text-light);margin:8px 0 16px"></p>
+        <div style="background:var(--bg);border-radius:10px;padding:12px;margin-bottom:16px">
+          <p style="font-size:0.8rem;font-weight:700;margin-bottom:6px">Mastery Updated</p>
+          <div style="height:12px;background:var(--border);border-radius:6px;overflow:hidden">
+            <div id="study-result-bar" style="height:100%;border-radius:6px;transition:width 0.6s"></div>
+          </div>
+          <p id="study-result-pct" style="font-size:0.8rem;margin-top:4px;font-weight:700"></p>
+        </div>
+        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+          <button class="btn btn-primary" onclick="restartStudyPractice()">Practice Again</button>
+          <button class="btn btn-outline" onclick="switchStudyTab('learn')">Review Concepts</button>
+          <button class="btn btn-outline" onclick="studyNext();closeStudyModal()">Study Next Weak Topic</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DIAGNOSTIC OVERLAY -->
+<div id="diag-overlay" class="study-overlay" style="display:none">
+  <div class="study-modal" onclick="event.stopPropagation()" style="max-width:600px">
+    <div id="diag-intro" style="text-align:center;padding:10px 0">
+      <div style="font-size:2.5rem;margin-bottom:10px">📋</div>
+      <h3 style="margin-bottom:8px">Knowledge Diagnostic</h3>
+      <p style="font-size:0.85rem;color:var(--text-light);line-height:1.6;margin-bottom:16px">Answer 1–2 quick questions per topic to populate your Learning Map. Takes about 5 minutes. Your results will show exactly where to focus.</p>
+      <button class="btn btn-primary" style="padding:12px 32px" onclick="runDiagnostic()">Start Diagnostic (16 Questions)</button>
+      <button class="btn btn-outline" style="margin-left:8px" onclick="document.getElementById('diag-overlay').style.display='none'">Cancel</button>
+    </div>
+    <div id="diag-quiz-area" style="display:none">
+      <div class="diag-progress"><div id="diag-prog-fill" class="diag-progress-fill" style="width:0%"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:0.8rem;color:var(--text-light);margin-bottom:12px">
+        <span id="diag-counter"></span><span id="diag-topic-label" style="font-weight:700;color:var(--navy)"></span>
+      </div>
+      <p id="diag-q-text" style="font-size:0.92rem;font-weight:600;line-height:1.5;margin-bottom:14px"></p>
+      <div id="diag-q-options"></div>
+      <div id="diag-q-exp" style="display:none;margin-top:10px;padding:10px;background:var(--bg);border-radius:8px;font-size:0.82rem;border-left:3px solid var(--orange)"></div>
+      <button id="diag-next-btn" class="btn btn-primary" onclick="nextDiagQ()" style="display:none;margin-top:12px;width:100%">Next →</button>
+    </div>
+    <div id="diag-done" style="display:none;text-align:center;padding:10px 0">
+      <div style="font-size:2.5rem;margin-bottom:8px">✅</div>
+      <h3>Diagnostic Complete!</h3>
+      <p id="diag-done-msg" style="font-size:0.85rem;color:var(--text-light);margin:10px 0 18px;line-height:1.6"></p>
+      <button class="btn btn-primary" onclick="document.getElementById('diag-overlay').style.display='none';renderTopicGrid()">View My Learning Map →</button>
+    </div>
+  </div>
+</div>
+
 <!-- DASHBOARD -->
-<div id="sec-dashboard" class="section active">
+<div id="sec-dashboard" class="section">
   <div class="topbar"><h2 id="dash-greeting">Dashboard</h2></div>
   <div class="stats-grid">
     <div class="stat-card"><div class="num" id="stat-modules">0/10</div><div class="lbl">Modules Reviewed</div></div>
@@ -2878,6 +3011,296 @@ function resetCatPerf() {
   }
 }
 
+// ====== Learning Map & Topic Study Engine ======
+const topicData = {
+  integration: { label:'Integration Management', icon:'🔗', cat:'integration',
+    points:['The Project Charter formally authorizes the project and must be signed BEFORE work begins — it grants the PM authority.','The PM Plan integrates ALL subsidiary plans (scope, schedule, cost, risk, etc.) — it is the single source of truth.','ALL changes must go through Perform Integrated Change Control and be approved by the CCB — no exceptions.','Direct & Manage Project Work creates deliverables and generates Work Performance Data (raw measurements).','Monitor & Control converts WPD → Work Performance Information (analyzed) → Work Performance Reports (distributed).','Close Project: obtain formal written acceptance, archive documents, release resources, document lessons learned.'],
+    tip:'If the question asks "who approves changes?" — always the CCB, not the PM alone, not the sponsor alone.' },
+  scope: { label:'Scope Management', icon:'📐', cat:'scope',
+    points:['Scope Baseline = Project Scope Statement + WBS + WBS Dictionary (all three together).','The WBS decomposes deliverables to work packages — the lowest level that can be estimated and assigned.','Validate Scope = customer formally accepts completed deliverables (output: Accepted Deliverables). This is about acceptance.','Control Scope = monitoring for scope creep and managing baseline changes. Different from Validate Scope.','Scope creep = uncontrolled additions without change control. Gold plating = adding unrequested features (also wrong).','Requirements Traceability Matrix links requirements to their source and tracks them through delivery.'],
+    tip:'"What does the customer formally accept?" → Validate Scope. "What controls unauthorized changes?" → Control Scope.' },
+  schedule: { label:'Schedule Management', icon:'📅', cat:'schedule',
+    points:['Critical Path = longest path through the network; zero total float. Delays here delay the whole project.','Total Float = LS − ES (or LF − EF). Free Float = time an activity can slip without delaying its successor\'s early start.','Crashing = add resources to shorten duration (costs more, but no extra risk). Scope stays the same.','Fast Tracking = overlap activities that were sequential (adds risk, may not add cost).','PERT = (O + 4M + P) / 6. Standard deviation = (P − O) / 6.','Resource Leveling adjusts start/end dates to resolve over-allocation — may extend the schedule.','Dependencies: FS (most common), SS, FF, SF. Lags add time; leads take time away.'],
+    tip:'Crash = cost↑, same risk. Fast Track = risk↑, same cost. PMP loves asking you to distinguish these.' },
+  cost: { label:'Cost Management & EVM', icon:'💰', cat:'cost',
+    points:['EV = Earned Value (% complete × BAC). AC = what you actually spent. PV = what you planned to spend by now.','CV = EV − AC (positive = under budget). SV = EV − PV (positive = ahead of schedule).','CPI = EV/AC. SPI = EV/PV. Both > 1 is good; < 1 is bad.','EAC = BAC/CPI (most common formula — assumes future performance mirrors past).','TCPI = (BAC−EV)/(BAC−AC). If >1, future work must be MORE efficient than past — harder target.','VAC = BAC − EAC. Positive = under budget at completion. Negative = over budget.','Cost Baseline = approved time-phased budget EXCLUDING management reserve. Total budget INCLUDES it.'],
+    tip:'EAC = BAC/CPI is the default. TCPI > 1 means "you need to do better going forward" — that\'s a bad sign.' },
+  quality: { label:'Quality Management', icon:'✅', cat:'quality',
+    points:['Prevention costs less than inspection — quality is built in, not inspected in (PMI core belief).','Control Quality = inspect deliverables for defects (Executing). Manage Quality = audit processes for compliance.','Control chart: Rule of Seven — 7 consecutive points on one side of mean = process out of control.','Pareto Chart: 80% of problems come from 20% of causes. Prioritize the vital few.','COQ (Cost of Quality): Conformance (prevention + appraisal) + Non-Conformance (internal + external failure).','Scatter diagram = shows correlation between two variables. Histogram = shows distribution of one variable.'],
+    tip:'"Where do quality audits belong?" → Manage Quality (Executing). "Where do you inspect results?" → Control Quality (M&C).' },
+  resource: { label:'Resource & HR Management', icon:'👥', cat:'resource',
+    points:['Tuckman stages: Forming → Storming → Norming → Performing → Adjourning. Storming is normal — coach through it.','Conflict resolution: Collaborate/Problem-Solve (BEST) → Compromise → Accommodate → Avoid → Force (LAST RESORT).','Maslow: Physiological → Safety → Social → Esteem → Self-Actualization. Each level must be met before the next.','Herzberg: Motivators (achievement, recognition, growth) vs. Hygiene factors (salary, working conditions).','McGregor Theory X: people are lazy, need control. Theory Y: people are motivated, need autonomy.','Communication channels = n(n−1)/2. 10 people = 45 channels. Adding 1 person to a 9-person team adds 9 channels.','RACI: only ONE person is Accountable per task. Multiple people can be Responsible.'],
+    tip:'"What is the best conflict resolution?" = Collaborate. "What theory says people dislike work?" = Theory X (McGregor).' },
+  risk: { label:'Risk Management', icon:'⚠️', cat:'risk',
+    points:['Threat responses: Avoid (eliminate), Transfer (shift impact), Mitigate (reduce P or I), Accept (passive or active).','Opportunity responses: Exploit, Share, Enhance, Accept.','Contingency Reserve = known-unknown risks (in the cost baseline). Management Reserve = unknown-unknowns (NOT in baseline).','EMV = Probability × Impact. Negative values = threats. Decision tree uses EMV.','Secondary risks: new risks created by your risk response. Residual risks: risks remaining after the response.','Qualitative = probability/impact matrix (fast, subjective). Quantitative = Monte Carlo, decision trees (data-driven).','Workaround = unplanned response to an unforeseen risk event. Document it and submit a change request after.'],
+    tip:'"What reserve covers unknown-unknowns?" = Management Reserve (outside the cost baseline, NOT controlled by PM).' },
+  procurement: { label:'Procurement Management', icon:'📄', cat:'procurement',
+    points:['FFP: fixed price regardless of cost — most risk on SELLER. CPFF: buyer reimburses all costs — most risk on BUYER.','FPIF has a "point of total assumption" (PTA) where the seller absorbs all overruns above the ceiling price.','SOW (Statement of Work) describes what the seller must deliver — scope, deliverables, timeline.','RFP = want a full proposal and approach. IFB = want a price bid only. RFQ = want unit pricing.','Control Procurements closes contracts and manages vendor performance. Only PM can close contracts officially.','Make-or-buy analysis: if you need a skill for <6 months or it\'s not a core competency, usually buy.'],
+    tip:'"Who bears more risk in CPFF?" = Buyer. "Who bears more risk in FFP?" = Seller. This is heavily tested.' },
+  stakeholder: { label:'Stakeholder Management', icon:'🤝', cat:'stakeholder',
+    points:['Power/Interest Grid: High Power + High Interest = Manage Closely. High Power + Low Interest = Keep Satisfied.','Engagement levels (low → high): Unaware → Resistant → Neutral → Supportive → Leading.','Salience Model: Power + Legitimacy + Urgency. All three = "definitive stakeholder" — highest priority.','Stakeholders should be identified as early as possible — ideally during Initiating. Never too late to add one.','Current vs. Desired engagement: the gap tells you how much effort to spend on a stakeholder.','Stakeholder engagement plan defines the strategy for involving each stakeholder throughout the project.'],
+    tip:'"When to identify stakeholders?" = as early as possible. "High power, low interest?" = Keep Satisfied.' },
+  agile: { label:'Agile & Scrum', icon:'🔄', cat:'agile',
+    points:['4 Agile Values: Individuals over processes; Working software over documentation; Customer collab over contracts; Responding to change over following a plan.','Scrum: Sprint (1–4 weeks) → Sprint Planning → Daily Scrum (15 min) → Sprint Review → Retrospective.','Product Owner owns and prioritizes the backlog. Scrum Master removes impediments. Dev Team self-organizes.','Sprint backlog is LOCKED once sprint begins — new work goes to the backlog for future sprints.','Kanban: manage flow with WIP limits. No sprints. Pull system. Visualize work on a board.','Velocity = story points completed per sprint. Burndown chart shows remaining work vs. time.','Servant leadership is the PM style in agile — facilitate, enable, remove obstacles.'],
+    tip:'"Who commits to the sprint?" = Dev team (not PO, not SM). "Sprint scope added mid-sprint?" = No — goes to backlog.' },
+  general: { label:'General PM Concepts', icon:'📋', cat:'general',
+    points:['A project is temporary (defined start/end) and creates a unique product/result. Operations are ongoing.','Project → Program (related projects) → Portfolio (strategic mix of projects & programs).','OPAs = internal assets (templates, lessons learned, processes). EEFs = external factors (market, regulations, culture).','PMO types: Supportive (provides templates), Controlling (requires compliance), Directive (manages projects directly).','Progressive elaboration: plans are refined in increasing detail as more information becomes available.','Triple constraint: Scope, Schedule, Cost. Change one and the others are affected. Quality is the fourth dimension.'],
+    tip:'"What is OPA vs EEF?" — OPA = inside your org. EEF = outside your control. This is tested constantly.' },
+  ethics: { label:'Ethics & Professional Conduct', icon:'⚖️', cat:'ethics',
+    points:['4 PMI values: Responsibility, Respect, Fairness, Honesty. Each has mandatory (must) and aspirational (should) standards.','Responsibility: Report unethical behavior. Never falsify reports. Protect proprietary information.','Honesty: Report accurate status even when bad. Never make false statements. Create transparency.','Fairness: Disclose conflicts of interest. Recuse yourself when conflicted. No favoritism or discrimination.','Respect: Listen first. Approach cultural differences with empathy. Never use authority for personal gain.','You must refuse unethical requests from ANY authority — sponsor, client, executive — and report them.'],
+    tip:'"Sponsor asks you to falsify a report?" = Refuse, report accurately, escalate. Never comply, even once.' },
+  talent: { label:'PMI Talent Triangle', icon:'🔺', cat:'talent',
+    points:['3 domains: Ways of Working (technical/agile methods), Power Skills (leadership/EQ), Business Acumen (strategy/finance).','Leadership styles: Servant (agile default), Transformational (inspire change), Transactional (reward/punish), Directive (crisis).','Goleman EQ: Self-Awareness, Self-Regulation, Motivation, Empathy, Social Skills.','Business Acumen includes: benefits realization, business case, NPV, opportunity cost, org context.','Benefits Management Plan defines how/when benefits will be measured after project closes.','NPV > 0 means the project is expected to generate more value than it costs. Higher NPV = better choice.'],
+    tip:'"PMI-preferred leadership style in agile?" = Servant Leadership. "Which domain covers EQ?" = Power Skills.' },
+  sixsigma: { label:'Six Sigma & DMAIC', icon:'📊', cat:'sixsigma',
+    points:['DMAIC = Define, Measure, Analyze, Improve, Control. Used to IMPROVE existing processes.','DMADV = Define, Measure, Analyze, Design, Verify. Used to CREATE new processes/products.','Six Sigma goal: ≤3.4 Defects Per Million Opportunities (DPMO) = 99.99966% defect-free.','SIPOC = Suppliers, Inputs, Process, Outputs, Customers — high-level process map used in Define phase.','CTQ (Critical to Quality) = key measurable characteristics that must meet customer requirements.','Poka-Yoke = mistake-proofing. FMEA = proactively identifies failure modes before they occur.','Belt levels: White < Yellow < Green Belt (part-time) < Black Belt (full-time) < Master Black Belt (coach).'],
+    tip:'"Use DMAIC when?" = fixing an existing process. "Use DMADV when?" = designing something new from scratch.' },
+  cmmi: { label:'CMMI Maturity Levels', icon:'📈', cat:'cmmi',
+    points:['Level 1 Initial: Chaotic, unpredictable, reactive. Success depends on individual heroics.','Level 2 Managed: Basic project management practices established. Plans, tracking, and control at project level.','Level 3 Defined: Organization-wide standard processes. Projects tailor from the standard. Most gov\'t contracts require this.','Level 4 Quantitatively Managed: Statistical process control. Uses metrics to manage performance predictably.','Level 5 Optimizing: Continuous process improvement. Proactively finds weaknesses and deploys innovations.','Each level builds on the previous — you cannot skip levels. CMMI is a maturity ladder.'],
+    tip:'"Minimum CMMI level for gov\'t contracts?" = Level 3 (Defined). "Uses statistical control?" = Level 4.' },
+  sdlc: { label:'SDLC Models', icon:'🔁', cat:'sdlc',
+    points:['Waterfall: Linear, sequential phases. Best when requirements are well-defined and unlikely to change.','Spiral: Risk-driven iterative model. Each loop = Plan → Risk Analysis → Engineering → Evaluate. Best for large, risky projects.','RAD (Rapid Application Development): Emphasizes speed through prototyping and user feedback. Less formal documentation.','V-Model: Each development phase maps to a testing phase. Emphasizes early test planning. Like waterfall with parallel testing.','Agile/Iterative: Short cycles (sprints) delivering working software. Best when requirements will change.','The later a defect is found, the more expensive it is to fix — all models try to catch defects early, just differently.'],
+    tip:'"First formal SDLC model?" = Waterfall (1970, Royce). "Most risk-focused model?" = Spiral.' }
+};
+
+const MASTERY_KEY = 'pmp_mastery';
+
+function getMastery() { return JSON.parse(uGet(MASTERY_KEY) || '{}'); }
+function saveMastery(m) { uSet(MASTERY_KEY, JSON.stringify(m)); }
+
+function getMasteryPct(cat) {
+  const m = getMastery();
+  if (!m[cat] || m[cat].t === 0) return -1; // -1 = not started
+  return Math.round((m[cat].r / m[cat].t) * 100);
+}
+
+function masteryColor(pct) {
+  if (pct < 0) return 'var(--border)';
+  if (pct < 40) return '#dc2626';
+  if (pct < 75) return '#f59e0b';
+  return '#059669';
+}
+
+function masteryClass(pct) {
+  if (pct < 0) return '';
+  if (pct < 40) return 'needs-work';
+  if (pct < 75) return 'learning';
+  return 'mastered';
+}
+
+function renderTopicGrid() {
+  const grid = document.getElementById('topic-grid');
+  if (!grid) return;
+  grid.innerHTML = Object.entries(topicData).map(([cat, td]) => {
+    const pct = getMasteryPct(cat);
+    const col = masteryColor(pct);
+    const cls = masteryClass(pct);
+    const pctDisplay = pct < 0 ? 'Not started' : `${pct}% mastery`;
+    const badgeText = pct >= 75 ? '★ Mastered' : pct >= 40 ? '▲ Learning' : pct >= 0 ? '● Needs Work' : '';
+    const badgeBg = pct >= 75 ? '#059669' : pct >= 40 ? '#f59e0b' : '#dc2626';
+    const qCount = quizBank.filter(q => q.cat === cat).length;
+    return `<div class="topic-card ${cls}" onclick="openStudyModal('${cat}')">
+      ${badgeText ? `<div class="mastery-badge" style="background:${badgeBg}">${badgeText}</div>` : ''}
+      <div class="topic-icon">${td.icon}</div>
+      <div class="topic-name">${td.label}</div>
+      <div class="mastery-bar-wrap"><div class="mastery-bar-fill" style="width:${Math.max(0,pct)}%;background:${col}"></div></div>
+      <div class="mastery-label"><span>${pctDisplay}</span><span>${qCount} questions</span></div>
+    </div>`;
+  }).join('');
+}
+
+// === Study Modal ===
+let studyCat = '', studyQs = [], studyIdx = 0, studyScore = 0, studyAnswered = false;
+
+function openStudyModal(cat) {
+  studyCat = cat;
+  const td = topicData[cat];
+  document.getElementById('study-modal-icon').textContent = td.icon;
+  document.getElementById('study-modal-title').textContent = td.label;
+  updateStudyModalBar();
+  // Populate learn tab
+  document.getElementById('study-key-points').innerHTML = td.points.map((p,i) =>
+    `<div class="key-point"><div class="kp-num">${i+1}</div><div>${p}</div></div>`
+  ).join('');
+  document.getElementById('study-exam-tip').innerHTML = `<strong>💡 Exam Tip:</strong> ${td.tip}`;
+  switchStudyTab('learn');
+  document.getElementById('study-overlay').classList.add('open');
+}
+
+function updateStudyModalBar() {
+  const pct = getMasteryPct(studyCat);
+  const col = masteryColor(pct);
+  const bar = document.getElementById('study-modal-bar');
+  const label = document.getElementById('study-modal-pct');
+  if (bar) { bar.style.width = Math.max(0,pct) + '%'; bar.style.background = col; }
+  if (label) label.textContent = pct < 0 ? 'Not started' : `${pct}%`;
+}
+
+function closeStudyModal(e) {
+  if (e && e.target !== document.getElementById('study-overlay')) return;
+  document.getElementById('study-overlay').classList.remove('open');
+  renderTopicGrid();
+  renderWeakAreas();
+}
+
+function switchStudyTab(tab) {
+  document.getElementById('study-learn-pane').style.display = tab === 'learn' ? 'block' : 'none';
+  document.getElementById('study-practice-pane').style.display = tab === 'practice' ? 'block' : 'none';
+  document.getElementById('tab-learn').classList.toggle('active', tab === 'learn');
+  document.getElementById('tab-practice').classList.toggle('active', tab === 'practice');
+  if (tab === 'practice') initStudyPractice();
+}
+
+function initStudyPractice(count) {
+  const pool = quizBank.filter(q => q.cat === studyCat).sort(() => Math.random() - 0.5);
+  studyQs = pool.slice(0, count || Math.min(7, pool.length));
+  studyIdx = 0; studyScore = 0; studyAnswered = false;
+  document.getElementById('study-results-area').style.display = 'none';
+  document.getElementById('study-q-area').style.display = 'block';
+  showStudyQ();
+}
+
+function restartStudyPractice() { initStudyPractice(); }
+
+function showStudyQ() {
+  studyAnswered = false;
+  const q = studyQs[studyIdx];
+  document.getElementById('study-q-counter').textContent = `Question ${studyIdx+1} of ${studyQs.length}`;
+  document.getElementById('study-q-score').textContent = `Score: ${studyScore}/${studyIdx}`;
+  document.getElementById('study-q-text').textContent = q.q;
+  document.getElementById('study-q-options').innerHTML = q.o.map((opt,i) =>
+    `<button class="quiz-option" onclick="selectStudyQ(${i})">${String.fromCharCode(65+i)}. ${opt}</button>`
+  ).join('');
+  document.getElementById('study-q-exp').style.display = 'none';
+  document.getElementById('study-next-btn').style.display = 'none';
+}
+
+function selectStudyQ(i) {
+  if (studyAnswered) return;
+  studyAnswered = true;
+  const q = studyQs[studyIdx];
+  const btns = document.querySelectorAll('#study-q-options .quiz-option');
+  btns.forEach((b,idx) => { if(idx===q.a) b.classList.add('correct'); else if(idx===i&&i!==q.a) b.classList.add('wrong'); });
+  // Update mastery
+  const m = getMastery();
+  if (!m[studyCat]) m[studyCat] = {r:0,t:0};
+  m[studyCat].t++;
+  if (i === q.a) { studyScore++; m[studyCat].r++; }
+  saveMastery(m);
+  // Also update catPerf for weak area tracker
+  const catPerf = JSON.parse(uGet('pmp_cat_perf') || '{}');
+  if (!catPerf[studyCat]) catPerf[studyCat] = {r:0,t:0};
+  catPerf[studyCat].t++;
+  if (i === q.a) catPerf[studyCat].r++;
+  uSet('pmp_cat_perf', JSON.stringify(catPerf));
+  document.getElementById('study-q-exp').textContent = q.e;
+  document.getElementById('study-q-exp').style.display = 'block';
+  document.getElementById('study-next-btn').style.display = 'block';
+  updateStudyModalBar();
+}
+
+function nextStudyQ() {
+  studyIdx++;
+  if (studyIdx >= studyQs.length) {
+    showStudyResults();
+  } else { showStudyQ(); }
+}
+
+function showStudyResults() {
+  document.getElementById('study-q-area').style.display = 'none';
+  document.getElementById('study-results-area').style.display = 'block';
+  const pct = Math.round((studyScore/studyQs.length)*100);
+  const emoji = pct >= 80 ? '🎉' : pct >= 60 ? '📈' : '📚';
+  const msg = pct >= 80 ? 'Excellent! You\'re building solid mastery on this topic.' : pct >= 60 ? 'Good progress! Review the concepts and try again.' : 'Keep studying — revisit the Learn tab and try again.';
+  document.getElementById('study-result-emoji').textContent = emoji;
+  document.getElementById('study-result-score').textContent = `${studyScore} / ${studyQs.length} (${pct}%)`;
+  document.getElementById('study-result-msg').textContent = msg;
+  const finalPct = getMasteryPct(studyCat);
+  const col = masteryColor(finalPct);
+  document.getElementById('study-result-bar').style.width = Math.max(0,finalPct) + '%';
+  document.getElementById('study-result-bar').style.background = col;
+  document.getElementById('study-result-pct').textContent = `Overall mastery: ${finalPct < 0 ? 'N/A' : finalPct + '%'}`;
+}
+
+function studyNext() {
+  // Find lowest-mastery topic with questions
+  let best = null, bestPct = 200;
+  Object.entries(topicData).forEach(([cat]) => {
+    const pct = getMasteryPct(cat);
+    const eff = pct < 0 ? -1 : pct; // not started = highest priority
+    if (eff < bestPct) { bestPct = eff; best = cat; }
+  });
+  if (best) openStudyModal(best);
+}
+
+// === Diagnostic ===
+let diagQs = [], diagIdx = 0, diagCorrect = 0, diagAnswered = false;
+
+function startDiagnostic() {
+  document.getElementById('diag-overlay').style.display = 'flex';
+  document.getElementById('diag-intro').style.display = 'block';
+  document.getElementById('diag-quiz-area').style.display = 'none';
+  document.getElementById('diag-done').style.display = 'none';
+}
+
+function runDiagnostic() {
+  // Pick 1 question per topic category
+  diagQs = Object.keys(topicData).map(cat => {
+    const pool = quizBank.filter(q => q.cat === cat);
+    if (pool.length === 0) return null;
+    return pool[Math.floor(Math.random() * pool.length)];
+  }).filter(Boolean);
+  diagIdx = 0; diagCorrect = 0; diagAnswered = false;
+  document.getElementById('diag-intro').style.display = 'none';
+  document.getElementById('diag-quiz-area').style.display = 'block';
+  showDiagQ();
+}
+
+function showDiagQ() {
+  diagAnswered = false;
+  const q = diagQs[diagIdx];
+  const pct = Math.round(((diagIdx)/diagQs.length)*100);
+  document.getElementById('diag-prog-fill').style.width = pct + '%';
+  document.getElementById('diag-counter').textContent = `Question ${diagIdx+1} of ${diagQs.length}`;
+  document.getElementById('diag-topic-label').textContent = catLabels[q.cat] || q.cat;
+  document.getElementById('diag-q-text').textContent = q.q;
+  document.getElementById('diag-q-options').innerHTML = q.o.map((opt,i) =>
+    `<button class="quiz-option" onclick="selectDiagQ(${i})">${String.fromCharCode(65+i)}. ${opt}</button>`
+  ).join('');
+  document.getElementById('diag-q-exp').style.display = 'none';
+  document.getElementById('diag-next-btn').style.display = 'none';
+}
+
+function selectDiagQ(i) {
+  if (diagAnswered) return;
+  diagAnswered = true;
+  const q = diagQs[diagIdx];
+  const btns = document.querySelectorAll('#diag-q-options .quiz-option');
+  btns.forEach((b,idx) => { if(idx===q.a) b.classList.add('correct'); else if(idx===i&&i!==q.a) b.classList.add('wrong'); });
+  // Record mastery
+  const m = getMastery();
+  if (!m[q.cat]) m[q.cat] = {r:0,t:0};
+  m[q.cat].t++;
+  if (i === q.a) { diagCorrect++; m[q.cat].r++; }
+  saveMastery(m);
+  document.getElementById('diag-q-exp').textContent = q.e;
+  document.getElementById('diag-q-exp').style.display = 'block';
+  document.getElementById('diag-next-btn').style.display = 'block';
+}
+
+function nextDiagQ() {
+  diagIdx++;
+  if (diagIdx >= diagQs.length) {
+    document.getElementById('diag-quiz-area').style.display = 'none';
+    document.getElementById('diag-done').style.display = 'block';
+    const pct = Math.round((diagCorrect/diagQs.length)*100);
+    const m = getMastery();
+    const weak = Object.entries(m).filter(([c,d]) => d.t>0 && (d.r/d.t)<0.5).map(([c]) => catLabels[c]||c).slice(0,3);
+    document.getElementById('diag-done-msg').textContent = `You scored ${diagCorrect}/${diagQs.length} (${pct}%). Your Learning Map is now populated.${weak.length ? ' Weakest areas: ' + weak.join(', ') + '.' : ' Great start!'}`;
+    renderWeakAreas();
+  } else { showDiagQ(); }
+}
+
 // ====== Mock Exam Engine ======
 let mockQs = [], mockIdx = 0, mockAnswers = [], mockFlagged = new Set();
 let mockTimerVal = 0, mockTimerInterval = null, mockStartTime = null;
@@ -3966,6 +4389,7 @@ window.addEventListener('load', () => {
   renderCard();
   renderIttoGrid();
   renderWeakAreas();
+  renderTopicGrid();
 
   const active = getActiveProfile();
   const profiles = getProfiles();
