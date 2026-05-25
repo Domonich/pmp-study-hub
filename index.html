@@ -286,12 +286,34 @@ body.dark .profile-box h2 { color:var(--orange-light); }
     <a class="nav-link" onclick="show('dashboard')">📊 Dashboard</a>
   </div>
   <div class="nav-section">
-    <div class="nav-section-title">Study Content</div>
-    <a class="nav-link" onclick="show('pmbok8')" style="color:#f0a84d;font-weight:600">⭐ PMBOK 8th Edition</a>
-    <a class="nav-link" onclick="show('pmbok6')">📘 PMBOK 6th — Processes</a>
-    <a class="nav-link" onclick="show('pmbok7')">📗 PMBOK 7th — Principles</a>
+    <div class="nav-section-title">Part 1 — The Standard</div>
+    <a class="nav-link" onclick="show('p8-ch1')">📖 Ch 1: Foundations</a>
+    <a class="nav-link" onclick="show('p8-ch2')">🔄 Ch 2: Value Delivery</a>
+    <a class="nav-link" onclick="show('p8-ch3')">🧭 Ch 3: PM Principles</a>
+    <a class="nav-link" onclick="show('p8-ch4')">🔁 Ch 4: Life Cycles</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Part 2 — Domains</div>
+    <a class="nav-link" onclick="show('p8-governance')">🏛 Governance</a>
+    <a class="nav-link" onclick="show('p8-scope')">📐 Scope</a>
+    <a class="nav-link" onclick="show('p8-schedule')">📅 Schedule</a>
+    <a class="nav-link" onclick="show('p8-finance')">💰 Finance</a>
+    <a class="nav-link" onclick="show('p8-stakeholders')">👥 Stakeholders</a>
+    <a class="nav-link" onclick="show('p8-resources')">🧑‍🤝‍🧑 Resources</a>
+    <a class="nav-link" onclick="show('p8-risk')">⚠️ Risk</a>
+    <a class="nav-link" onclick="show('p8-tailoring')">🔧 Tailoring</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Advanced Topics</div>
+    <a class="nav-link" onclick="show('p8-ai')">🤖 AI in PM</a>
+    <a class="nav-link" onclick="show('p8-procurement')">🤝 Procurement</a>
     <a class="nav-link" onclick="show('agile-deep')">🔄 Agile &amp; Frameworks</a>
     <a class="nav-link" onclick="show('ethics')">⚖️ Ethics &amp; Standards</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Reference</div>
+    <a class="nav-link" onclick="show('pmbok6')">📘 PMBOK 6th — Processes</a>
+    <a class="nav-link" onclick="show('pmbok7')">📗 PMBOK 7th — Principles</a>
   </div>
   <div class="nav-section">
     <div class="nav-section-title">Practice</div>
@@ -2427,6 +2449,860 @@ body.dark .profile-box h2 { color:var(--orange-light); }
     <p style="font-size:0.88rem;color:var(--text-light);margin-bottom:12px">Ready to add your PMBOK 8th chapter notes to this guide?</p>
     <button class="btn btn-primary" onclick="show('notes')">📔 Open My Notes</button>
     <button class="btn btn-outline" style="margin-left:8px" onclick="show('learn')">🗺 Study Topics</button>
+  </div>
+</div>
+
+<!-- PART 1 CHAPTERS -->
+<div id="sec-p8-ch1" class="section">
+  <div class="topbar"><h2>📖 Ch 1: Foundations</h2>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="btn btn-primary" style="font-size:0.72rem;padding:3px 10px" onclick="show('p8-ch1')">Ch 1</button>
+      <button class="btn btn-outline" style="font-size:0.72rem;padding:3px 10px" onclick="show('p8-ch2')">Ch 2</button>
+      <button class="btn btn-outline" style="font-size:0.72rem;padding:3px 10px" onclick="show('p8-ch3')">Ch 3</button>
+      <button class="btn btn-outline" style="font-size:0.72rem;padding:3px 10px" onclick="show('p8-ch4')">Ch 4</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:10px">What Is a Project?</h3>
+    <p style="font-size:0.87rem;line-height:1.6;margin-bottom:12px">A project is a <strong>temporary</strong> endeavor undertaken to create a <strong>unique</strong> product, service, or result. It has a defined beginning and end, produces unique outputs, and involves <strong>progressive elaboration</strong> — plans are refined as more information becomes available.</p>
+    <table style="font-size:0.82rem;width:100%;border-collapse:collapse">
+      <tr style="background:var(--navy);color:#fff"><th style="padding:7px">Dimension</th><th style="padding:7px">Projects</th><th style="padding:7px">Operations</th></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:7px">Duration</td><td style="padding:7px">Temporary</td><td style="padding:7px">Ongoing</td></tr>
+      <tr style="border-bottom:1px solid var(--border);background:var(--bg)"><td style="padding:7px">Output</td><td style="padding:7px">Unique</td><td style="padding:7px">Repetitive</td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:7px">Goal</td><td style="padding:7px">Achieve objective &amp; close</td><td style="padding:7px">Sustain the business</td></tr>
+      <tr style="background:var(--bg)"><td style="padding:7px">Team</td><td style="padding:7px">Assembled &amp; disbanded</td><td style="padding:7px">Stable, ongoing</td></tr>
+    </table>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:10px">The PM Hierarchy</h3>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <div style="background:var(--navy);color:#fff;padding:10px 14px;border-radius:8px;font-size:0.85rem"><strong>🏢 Portfolio</strong> — Collection of projects/programs aligned to <em>strategic objectives</em>. Maximizes business value across investments.</div>
+      <div style="background:#2a5298;color:#fff;padding:10px 14px;border-radius:8px;font-size:0.85rem;margin-left:16px"><strong>📦 Program</strong> — Group of <em>related projects</em> managed in a coordinated way to obtain benefits not available individually.</div>
+      <div style="background:#3a72b8;color:#fff;padding:10px 14px;border-radius:8px;font-size:0.85rem;margin-left:32px"><strong>🎯 Project</strong> — Temporary endeavor to create a unique output. The focus of PMP.</div>
+      <div style="background:#e8912d;color:#fff;padding:10px 14px;border-radius:8px;font-size:0.85rem;margin-left:48px"><strong>⚙️ Operations</strong> — Ongoing work that sustains the organization. Projects often transition into operations.</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:10px">Project Governance &amp; Key Roles</h3>
+    <div class="grid-2">
+      <div>
+        <h4 style="color:var(--navy);margin-bottom:6px">Organizational Governance</h4>
+        <p style="font-size:0.82rem;line-height:1.5">Policies, frameworks, and processes that guide the entire organization. Sets the environment in which projects operate.</p>
+      </div>
+      <div>
+        <h4 style="color:var(--navy);margin-bottom:6px">Project Governance</h4>
+        <p style="font-size:0.82rem;line-height:1.5">Oversight mechanisms specific to one project — sponsor authority, Change Control Board, steering committee, decision rights.</p>
+      </div>
+    </div>
+    <div style="margin-top:10px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px">
+      <div style="background:var(--bg);border-radius:6px;padding:8px;font-size:0.8rem"><strong>Sponsor</strong><br>Provides authority &amp; funding. Highest authority on project.</div>
+      <div style="background:var(--bg);border-radius:6px;padding:8px;font-size:0.8rem"><strong>PM</strong><br>Day-to-day leadership. Integrates all knowledge areas.</div>
+      <div style="background:var(--bg);border-radius:6px;padding:8px;font-size:0.8rem"><strong>Team</strong><br>Delivers the work. Self-organizing in agile contexts.</div>
+      <div style="background:var(--bg);border-radius:6px;padding:8px;font-size:0.8rem"><strong>PMO</strong><br>Provides standards, templates, support, and oversight.</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:10px">Key Terms</h3>
+    <div class="grid-2" style="gap:8px">
+      <div style="background:var(--bg);border-radius:6px;padding:8px;font-size:0.8rem"><strong>Progressive Elaboration</strong> — Refining plans iteratively as more info becomes available</div>
+      <div style="background:var(--bg);border-radius:6px;padding:8px;font-size:0.8rem"><strong>Deliverable</strong> — Any unique, verifiable product, result, or capability</div>
+      <div style="background:var(--bg);border-radius:6px;padding:8px;font-size:0.8rem"><strong>Work Package</strong> — Lowest WBS level with cost/schedule estimates</div>
+      <div style="background:var(--bg);border-radius:6px;padding:8px;font-size:0.8rem"><strong>Milestone</strong> — Significant point or event; zero duration</div>
+      <div style="background:var(--bg);border-radius:6px;padding:8px;font-size:0.8rem"><strong>Baseline</strong> — Approved version of scope/schedule/cost used for comparison</div>
+      <div style="background:var(--bg);border-radius:6px;padding:8px;font-size:0.8rem"><strong>Change Request</strong> — Formal proposal to modify any document, deliverable, or baseline</div>
+      <div style="background:var(--bg);border-radius:6px;padding:8px;font-size:0.8rem"><strong>PM Plan</strong> — How the project will be executed, monitored, and controlled</div>
+      <div style="background:var(--bg);border-radius:6px;padding:8px;font-size:0.8rem"><strong>Stakeholder</strong> — Any individual/group affected by or that can affect the project</div>
+    </div>
+  </div>
+
+  <div class="card" style="background:var(--navy);color:#fff">
+    <h3 style="color:#f0a84d;margin-bottom:8px">🎓 OSC 6660 — Week 1 (Prof. Wilson)</h3>
+    <p style="font-size:0.85rem;line-height:1.6;margin-bottom:10px">Module 1 covers project definition, the PM role, project vs. operations, and the triple constraint as the starting foundation for the entire course.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px">
+      <div style="background:rgba(255,255,255,0.1);border-radius:6px;padding:10px;font-size:0.8rem"><strong>Triple Constraint</strong><br>Scope ↔ Time ↔ Cost — change one, the others are affected</div>
+      <div style="background:rgba(255,255,255,0.1);border-radius:6px;padding:10px;font-size:0.8rem"><strong>Modern Constraints</strong><br>Add: Quality, Risk, Resources, Customer Satisfaction</div>
+      <div style="background:rgba(255,255,255,0.1);border-radius:6px;padding:10px;font-size:0.8rem"><strong>PMI PM Role</strong><br>Servant-leader and integrator — enables the team, doesn't command</div>
+    </div>
+    <button class="btn" style="margin-top:10px;background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);font-size:0.8rem" onclick="openStudyModal('integration')">📚 Study Integration Topics</button>
+  </div>
+</div>
+
+<div id="sec-p8-ch2" class="section">
+  <div class="topbar"><h2>🔄 Ch 2: System for Value Delivery</h2>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="btn btn-outline" style="font-size:0.72rem;padding:3px 10px" onclick="show('p8-ch1')">Ch 1</button>
+      <button class="btn btn-primary" style="font-size:0.72rem;padding:3px 10px" onclick="show('p8-ch2')">Ch 2</button>
+      <button class="btn btn-outline" style="font-size:0.72rem;padding:3px 10px" onclick="show('p8-ch3')">Ch 3</button>
+      <button class="btn btn-outline" style="font-size:0.72rem;padding:3px 10px" onclick="show('p8-ch4')">Ch 4</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:10px">Why Projects Exist — Creating Value</h3>
+    <p style="font-size:0.87rem;line-height:1.6;margin-bottom:12px">Projects don't exist to produce deliverables — they exist to create <strong>value</strong>. The PM's job is to optimize the system that produces that value.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px">
+      <div style="border:2px solid var(--orange);border-radius:8px;padding:10px;text-align:center;font-size:0.82rem"><strong style="display:block;color:var(--orange);font-size:1.1rem">Outputs</strong>Tangible/intangible deliverables produced by the project</div>
+      <div style="border:2px solid var(--navy);border-radius:8px;padding:10px;text-align:center;font-size:0.82rem"><strong style="display:block;color:var(--navy);font-size:1.1rem">Outcomes</strong>Changes in behavior or circumstance that result from outputs</div>
+      <div style="border:2px solid #059669;border-radius:8px;padding:10px;text-align:center;font-size:0.82rem"><strong style="display:block;color:#059669;font-size:1.1rem">Benefits</strong>Gains realized from outcomes (financial or non-financial)</div>
+      <div style="border:2px solid #7c3aed;border-radius:8px;padding:10px;text-align:center;font-size:0.82rem"><strong style="display:block;color:#7c3aed;font-size:1.1rem">Strategic Goals</strong>Long-term objectives the project supports</div>
+    </div>
+    <p style="font-size:0.8rem;color:var(--text-light);margin-top:10px">Project success = delivering value to stakeholders — not just on-time and on-budget.</p>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:10px">Project Selection Methods <span style="font-size:0.75rem;color:var(--text-light);font-weight:400">(OSC 6660 Week 2)</span></h3>
+    <p style="font-size:0.83rem;margin-bottom:10px;color:var(--text-light)">Organizations have limited resources and must choose which projects to fund. These methods quantify value.</p>
+    <table style="font-size:0.8rem;width:100%;border-collapse:collapse">
+      <tr style="background:var(--navy);color:#fff"><th style="padding:7px;text-align:left">Method</th><th style="padding:7px">How It Works</th><th style="padding:7px">Rule</th></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:7px"><strong>NPV</strong></td><td style="padding:7px">PV of future cash flows minus initial investment</td><td style="padding:7px;text-align:center">Higher = better; &gt;0 = viable</td></tr>
+      <tr style="border-bottom:1px solid var(--border);background:var(--bg)"><td style="padding:7px"><strong>IRR</strong></td><td style="padding:7px">Discount rate that makes NPV = 0</td><td style="padding:7px;text-align:center">Higher = better; &gt;cost of capital</td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:7px"><strong>Payback Period</strong></td><td style="padding:7px">Time to recover initial investment</td><td style="padding:7px;text-align:center">Lower = better</td></tr>
+      <tr style="background:var(--bg)"><td style="padding:7px"><strong>BCR</strong></td><td style="padding:7px">Total benefits ÷ total costs</td><td style="padding:7px;text-align:center">&gt;1 viable; higher = better</td></tr>
+    </table>
+    <p style="font-size:0.8rem;margin-top:8px;color:var(--text-light)"><strong>Opportunity Cost:</strong> The value of the next-best alternative foregone when selecting a project.</p>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:10px">Enterprise Environmental Factors (EEFs)</h3>
+    <p style="font-size:0.83rem;margin-bottom:10px;color:var(--text-light)">EEFs are conditions <em>outside the team's control</em> that influence how the project operates. They are INPUTS to many planning processes.</p>
+    <div class="grid-2">
+      <div>
+        <h4 style="color:var(--navy);font-size:0.85rem;margin-bottom:6px">External EEFs</h4>
+        <ul style="font-size:0.82rem;line-height:1.8">
+          <li>Market conditions &amp; competition</li>
+          <li>Industry standards &amp; regulations</li>
+          <li>Legal/regulatory requirements</li>
+          <li>Social and cultural influences</li>
+          <li>Government/political climate</li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color:var(--navy);font-size:0.85rem;margin-bottom:6px">Internal EEFs</h4>
+        <ul style="font-size:0.82rem;line-height:1.8">
+          <li>Organizational culture &amp; structure</li>
+          <li>Infrastructure &amp; technology</li>
+          <li>Resource availability &amp; capability</li>
+          <li>HR policies &amp; work authorization</li>
+          <li>Risk appetite of the organization</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:10px">Organizational Process Assets (OPAs)</h3>
+    <p style="font-size:0.83rem;margin-bottom:10px;color:var(--text-light)">OPAs are things the team <em>can use and update</em> — unlike EEFs which must be worked within.</p>
+    <div class="grid-2">
+      <div>
+        <h4 style="color:var(--navy);font-size:0.85rem;margin-bottom:6px">Processes &amp; Procedures</h4>
+        <ul style="font-size:0.82rem;line-height:1.8">
+          <li>Project templates and forms</li>
+          <li>Change control procedures</li>
+          <li>Communication requirements</li>
+          <li>Financial controls</li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color:var(--navy);font-size:0.85rem;margin-bottom:6px">Knowledge Repositories</h4>
+        <ul style="font-size:0.82rem;line-height:1.8">
+          <li>Lessons learned databases</li>
+          <li>Historical project data</li>
+          <li>Risk registers from prior projects</li>
+          <li>Configuration management data</li>
+        </ul>
+      </div>
+    </div>
+    <div style="background:#fef9c3;border-radius:6px;padding:8px;font-size:0.8rem;margin-top:10px"><strong>⭐ Exam Tip:</strong> Lessons learned is both an OUTPUT (created during project) and an OPA INPUT (used on future projects).</div>
+  </div>
+
+  <div class="card">
+    <h3 style="margin-bottom:10px">Organizational Structures</h3>
+    <table style="font-size:0.78rem;width:100%;border-collapse:collapse">
+      <tr style="background:var(--navy);color:#fff"><th style="padding:6px">Type</th><th style="padding:6px">PM Authority</th><th style="padding:6px">Resource Control</th><th style="padding:6px">PM Role</th></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px">Functional</td><td style="padding:6px">Little/None</td><td style="padding:6px">Functional Mgr</td><td style="padding:6px">Part-time</td></tr>
+      <tr style="border-bottom:1px solid var(--border);background:var(--bg)"><td style="padding:6px">Weak Matrix</td><td style="padding:6px">Limited</td><td style="padding:6px">Functional Mgr</td><td style="padding:6px">Part-time</td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px">Balanced Matrix</td><td style="padding:6px">Low–Moderate</td><td style="padding:6px">Mixed</td><td style="padding:6px">Part/Full-time</td></tr>
+      <tr style="border-bottom:1px solid var(--border);background:var(--bg)"><td style="padding:6px">Strong Matrix</td><td style="padding:6px">Moderate–High</td><td style="padding:6px">PM</td><td style="padding:6px">Full-time</td></tr>
+      <tr><td style="padding:6px">Projectized</td><td style="padding:6px">High–Full</td><td style="padding:6px">PM</td><td style="padding:6px">Full-time</td></tr>
+    </table>
+  </div>
+</div>
+
+<div id="sec-p8-ch3" class="section">
+  <div class="topbar"><h2>🧭 Ch 3: PM Principles</h2>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="btn btn-outline" style="font-size:0.72rem;padding:3px 10px" onclick="show('p8-ch1')">Ch 1</button>
+      <button class="btn btn-outline" style="font-size:0.72rem;padding:3px 10px" onclick="show('p8-ch2')">Ch 2</button>
+      <button class="btn btn-primary" style="font-size:0.72rem;padding:3px 10px" onclick="show('p8-ch3')">Ch 3</button>
+      <button class="btn btn-outline" style="font-size:0.72rem;padding:3px 10px" onclick="show('p8-ch4')">Ch 4</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:6px">12 Principles — The "Why" Behind Every PM Decision</h3>
+    <p style="font-size:0.83rem;line-height:1.6;color:var(--text-light)">These principles from <em>The Standard</em> guide how a PM thinks and behaves. They underpin all 7 Performance Domains. They are not prescriptive rules — they require professional judgment.</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:10px;margin-bottom:14px">
+    <div class="card" style="border-left:4px solid var(--orange)">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="background:var(--navy);color:#fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;flex-shrink:0">1</span><strong>Stewardship 🛡</strong></div>
+      <p style="font-size:0.8rem;line-height:1.5;margin-bottom:6px">Be a diligent, respectful, caring steward. Act in the best interests of all stakeholders. Uphold PMI's Code of Ethics.</p>
+      <p style="font-size:0.75rem;color:var(--orange);font-style:italic">Exam: When in doubt, the ethical/transparent choice is almost always correct.</p>
+    </div>
+    <div class="card" style="border-left:4px solid var(--orange)">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="background:var(--navy);color:#fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;flex-shrink:0">2</span><strong>Team 👥</strong></div>
+      <p style="font-size:0.8rem;line-height:1.5;margin-bottom:6px">Create a collaborative project team environment. Recognize individual contributions. Foster psychological safety.</p>
+      <p style="font-size:0.75rem;color:var(--orange);font-style:italic">Exam: PMI favors servant leadership — enable the team, don't micromanage.</p>
+    </div>
+    <div class="card" style="border-left:4px solid var(--orange)">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="background:var(--navy);color:#fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;flex-shrink:0">3</span><strong>Stakeholders 🤝</strong></div>
+      <p style="font-size:0.8rem;line-height:1.5;margin-bottom:6px">Effectively engage with stakeholders. Understand their interests, needs, and expectations proactively.</p>
+      <p style="font-size:0.75rem;color:var(--orange);font-style:italic">Exam: Engage stakeholders early and continuously — don't wait for problems.</p>
+    </div>
+    <div class="card" style="border-left:4px solid var(--orange)">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="background:var(--navy);color:#fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;flex-shrink:0">4</span><strong>Value 💎</strong></div>
+      <p style="font-size:0.8rem;line-height:1.5;margin-bottom:6px">Continuously evaluate whether the project is delivering intended value. Pivot if it isn't.</p>
+      <p style="font-size:0.75rem;color:var(--orange);font-style:italic">Exam: If a project no longer delivers value, escalate — don't blindly continue.</p>
+    </div>
+    <div class="card" style="border-left:4px solid var(--orange)">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="background:var(--navy);color:#fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;flex-shrink:0">5</span><strong>Systems Thinking 🔗</strong></div>
+      <p style="font-size:0.8rem;line-height:1.5;margin-bottom:6px">Recognize system interactions — changes in one area ripple through others. Projects are part of larger systems.</p>
+      <p style="font-size:0.75rem;color:var(--orange);font-style:italic">Exam: Consider downstream impacts and org context before deciding.</p>
+    </div>
+    <div class="card" style="border-left:4px solid var(--orange)">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="background:var(--navy);color:#fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;flex-shrink:0">6</span><strong>Leadership 🌟</strong></div>
+      <p style="font-size:0.8rem;line-height:1.5;margin-bottom:6px">Demonstrate leadership appropriate to the situation. Leadership ≠ authority. PMI favors situational and transformational leadership.</p>
+      <p style="font-size:0.75rem;color:var(--orange);font-style:italic">Exam: Lead by example and inspire — not by command.</p>
+    </div>
+    <div class="card" style="border-left:4px solid #059669">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="background:var(--navy);color:#fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;flex-shrink:0">7</span><strong>Tailoring ✂️</strong></div>
+      <p style="font-size:0.8rem;line-height:1.5;margin-bottom:6px">Adapt processes, tools, and methods to fit the project's unique context. No single approach works everywhere.</p>
+      <p style="font-size:0.75rem;color:#059669;font-style:italic">Exam: Always pick the answer that fits the specific context described.</p>
+    </div>
+    <div class="card" style="border-left:4px solid #059669">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="background:var(--navy);color:#fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;flex-shrink:0">8</span><strong>Quality ✅</strong></div>
+      <p style="font-size:0.8rem;line-height:1.5;margin-bottom:6px">Build quality into processes AND deliverables. Prevention is cheaper than inspection. Cost of quality = conformance + nonconformance.</p>
+      <p style="font-size:0.75rem;color:#059669;font-style:italic">Exam: Quality is planned in — not inspected in at the end.</p>
+    </div>
+    <div class="card" style="border-left:4px solid #059669">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="background:var(--navy);color:#fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;flex-shrink:0">9</span><strong>Complexity 🌀</strong></div>
+      <p style="font-size:0.8rem;line-height:1.5;margin-bottom:6px">Navigate complexity from human behavior, ambiguity, system interactions, and technological uncertainty. Use iterative approaches for high-complexity environments.</p>
+      <p style="font-size:0.75rem;color:#059669;font-style:italic">Exam: Adaptive/agile preferred when requirements are unclear or rapidly changing.</p>
+    </div>
+    <div class="card" style="border-left:4px solid #059669">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="background:var(--navy);color:#fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;flex-shrink:0">10</span><strong>Risk ⚠️</strong></div>
+      <p style="font-size:0.8rem;line-height:1.5;margin-bottom:6px">Optimize risk responses. Proactively identify threats AND opportunities. Responses should be proportional to the risk's significance.</p>
+      <p style="font-size:0.75rem;color:#059669;font-style:italic">Exam: Opportunities are risks too — always consider both sides.</p>
+    </div>
+    <div class="card" style="border-left:4px solid #7c3aed">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="background:var(--navy);color:#fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;flex-shrink:0">11</span><strong>Adaptability &amp; Resiliency 🔄</strong></div>
+      <p style="font-size:0.8rem;line-height:1.5;margin-bottom:6px">Build the ability to respond to change without panic. Bounce forward from setbacks. Embed flexibility into plans.</p>
+      <p style="font-size:0.75rem;color:#7c3aed;font-style:italic">Exam: Agile and hybrid approaches embody this principle most directly.</p>
+    </div>
+    <div class="card" style="border-left:4px solid #7c3aed">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="background:var(--navy);color:#fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;flex-shrink:0">12</span><strong>Change 🚀</strong></div>
+      <p style="font-size:0.8rem;line-height:1.5;margin-bottom:6px">Enable change to achieve the envisioned future state. A delivered project nobody adopts is a failure. PM must facilitate organizational adoption.</p>
+      <p style="font-size:0.75rem;color:#7c3aed;font-style:italic">Exam: Benefits realization requires change management, not just delivery.</p>
+    </div>
+  </div>
+</div>
+
+<div id="sec-p8-ch4" class="section">
+  <div class="topbar"><h2>🔁 Ch 4: Project Life Cycles</h2>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="btn btn-outline" style="font-size:0.72rem;padding:3px 10px" onclick="show('p8-ch1')">Ch 1</button>
+      <button class="btn btn-outline" style="font-size:0.72rem;padding:3px 10px" onclick="show('p8-ch2')">Ch 2</button>
+      <button class="btn btn-outline" style="font-size:0.72rem;padding:3px 10px" onclick="show('p8-ch3')">Ch 3</button>
+      <button class="btn btn-primary" style="font-size:0.72rem;padding:3px 10px" onclick="show('p8-ch4')">Ch 4</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:12px">Three Development Approaches</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px">
+      <div style="background:#dbeafe;border-radius:8px;padding:14px">
+        <strong style="display:block;font-size:0.9rem;margin-bottom:6px;color:#1e40af">🔵 Predictive (Waterfall)</strong>
+        <p style="font-size:0.8rem;line-height:1.5;margin-bottom:8px">Full scope defined upfront. Sequential phases. Low change tolerance. Best for stable, well-understood requirements.</p>
+        <p style="font-size:0.78rem;color:#1e40af"><strong>Examples:</strong> Construction, infrastructure, regulated industries</p>
+      </div>
+      <div style="background:#dcfce7;border-radius:8px;padding:14px">
+        <strong style="display:block;font-size:0.9rem;margin-bottom:6px;color:#166534">🟢 Adaptive (Agile)</strong>
+        <p style="font-size:0.8rem;line-height:1.5;margin-bottom:8px">Iterative/incremental delivery. Scope evolves. High change tolerance. Best for innovative products with evolving requirements.</p>
+        <p style="font-size:0.78rem;color:#166534"><strong>Examples:</strong> Software, digital products, R&amp;D</p>
+      </div>
+      <div style="background:#fef9c3;border-radius:8px;padding:14px">
+        <strong style="display:block;font-size:0.9rem;margin-bottom:6px;color:#854d0e">🟡 Hybrid</strong>
+        <p style="font-size:0.8rem;line-height:1.5;margin-bottom:8px">Combines both. Predictive for governance &amp; contracts; adaptive for delivery. Most real-world projects.</p>
+        <p style="font-size:0.78rem;color:#854d0e"><strong>Examples:</strong> Large IT programs, organizational change initiatives</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:10px">The 5 Focus Areas (Process Groups — Restored in PMBOK 8th)</h3>
+    <p style="font-size:0.82rem;color:var(--text-light);margin-bottom:12px">Process Groups were removed from PMBOK 7th but are back in PMBOK 8th as "Focus Areas." They apply regardless of development approach.</p>
+    <div style="display:grid;gap:8px">
+      <div style="background:var(--navy);color:#fff;border-radius:8px;padding:12px">
+        <strong>🚀 Initiating</strong> — Authorize the project. Develop Project Charter. Identify key stakeholders. Define high-level objectives. <em style="opacity:0.8;font-size:0.78rem">(OSC M1, M2)</em>
+      </div>
+      <div style="background:#2a5298;color:#fff;border-radius:8px;padding:12px">
+        <strong>📋 Planning</strong> — Develop all subsidiary plans. Establish scope, schedule, cost, quality, resource, communications, risk, procurement, and stakeholder engagement baselines. <em style="opacity:0.8;font-size:0.78rem">(OSC M3–M6)</em>
+      </div>
+      <div style="background:#3a72b8;color:#fff;border-radius:8px;padding:12px">
+        <strong>⚙️ Executing</strong> — Carry out the plan. Manage team, stakeholders, and vendors. Produce deliverables. Issue change requests as needed. <em style="opacity:0.8;font-size:0.78rem">(OSC M7–M9)</em>
+      </div>
+      <div style="background:#5a92d8;color:#fff;border-radius:8px;padding:12px">
+        <strong>📊 Monitoring &amp; Controlling</strong> — Track progress vs. baselines. Analyze variances. Approve/reject changes. Runs <em>concurrently</em> with Executing. <em style="opacity:0.8;font-size:0.78rem">(OSC M3–M9)</em>
+      </div>
+      <div style="background:#e8912d;color:#fff;border-radius:8px;padding:12px">
+        <strong>🏁 Closing</strong> — Finalize deliverables. Get formal acceptance. Release resources. Document lessons learned. Archive records. <em style="opacity:0.8;font-size:0.78rem">(OSC M10)</em>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:10px">Development Approach Selection Factors</h3>
+    <table style="font-size:0.8rem;width:100%;border-collapse:collapse">
+      <tr style="background:var(--navy);color:#fff"><th style="padding:7px;text-align:left">Factor</th><th style="padding:7px">→ Predictive</th><th style="padding:7px">→ Adaptive</th></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:7px">Requirements</td><td style="padding:7px">Stable, well-defined</td><td style="padding:7px">Uncertain, evolving</td></tr>
+      <tr style="border-bottom:1px solid var(--border);background:var(--bg)"><td style="padding:7px">Risk tolerance</td><td style="padding:7px">Low</td><td style="padding:7px">Higher, managed iteratively</td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:7px">Regulatory environment</td><td style="padding:7px">High compliance/documentation</td><td style="padding:7px">Flexible</td></tr>
+      <tr style="border-bottom:1px solid var(--border);background:var(--bg)"><td style="padding:7px">Stakeholder involvement</td><td style="padding:7px">Periodic reviews sufficient</td><td style="padding:7px">Continuous collaboration needed</td></tr>
+      <tr><td style="padding:7px">Delivery urgency</td><td style="padding:7px">Full product needed at once</td><td style="padding:7px">Incremental value preferred</td></tr>
+    </table>
+  </div>
+
+  <div class="card" style="background:var(--navy);color:#fff">
+    <h3 style="color:#f0a84d;margin-bottom:8px">🎓 OSC 6660 — All 10 Modules Mapped to Focus Areas</h3>
+    <table style="font-size:0.8rem;width:100%;border-collapse:collapse;color:#fff">
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.2)"><th style="padding:7px;text-align:left">Focus Area</th><th style="padding:7px;text-align:left">OSC 6660 Modules</th></tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.15)"><td style="padding:7px">Initiating</td><td style="padding:7px">M1 (Intro PM), M2 (Project Selection)</td></tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05)"><td style="padding:7px">Planning</td><td style="padding:7px">M3 (Scope/WBS), M4 (Schedule), M5 (Resources/Cost), M6 (Risk)</td></tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.15)"><td style="padding:7px">Executing</td><td style="padding:7px">M7 (Quality), M8 (Procurement), M9 (Teams/Comms)</td></tr>
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05)"><td style="padding:7px">Monitoring &amp; Controlling</td><td style="padding:7px">Spans M3–M9 (monitoring each domain)</td></tr>
+      <tr><td style="padding:7px">Closing</td><td style="padding:7px">M10 (Agile &amp; Closing)</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- DOMAIN NAV MACRO (referenced inline) -->
+<!-- GOVERNANCE -->
+<div id="sec-p8-governance" class="section">
+  <div class="topbar"><h2>🏛 Governance Domain</h2>
+    <div style="display:flex;gap:5px;flex-wrap:wrap">
+      <button class="btn btn-primary" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-governance')">🏛 Gov</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-scope')">📐 Scope</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-schedule')">📅 Schedule</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-finance')">💰 Finance</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-stakeholders')">👥 Stakeholders</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-resources')">🧑‍🤝‍🧑 Resources</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-risk')">⚠️ Risk</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-tailoring')">🔧 Tailoring</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:8px">What Governance Covers</h3>
+    <p style="font-size:0.85rem;line-height:1.6">Governance = the <strong>oversight structures, accountability mechanisms, and decision-making frameworks</strong> that keep a project aligned with organizational strategy. It answers: Who has authority? How are decisions made? What triggers escalation?</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin-top:10px">
+      <div style="background:var(--bg);border-radius:6px;padding:8px;font-size:0.8rem"><strong>Project Charter</strong><br>Formally authorizes project &amp; PM authority. First key output.</div>
+      <div style="background:var(--bg);border-radius:6px;padding:8px;font-size:0.8rem"><strong>PM Plan</strong><br>How the project will be executed, monitored &amp; controlled. Most comprehensive document.</div>
+      <div style="background:var(--bg);border-radius:6px;padding:8px;font-size:0.8rem"><strong>CCB</strong><br>Change Control Board reviews and approves/rejects all change requests to baselines.</div>
+      <div style="background:var(--bg);border-radius:6px;padding:8px;font-size:0.8rem"><strong>Config. Mgmt</strong><br>Ensures integrity and consistency of project docs and deliverables across the lifecycle.</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:10px">10 Governance Processes (PMBOK 8th)</h3>
+    <div style="display:grid;gap:6px;font-size:0.82rem">
+      <div style="display:flex;gap:10px;padding:8px;background:var(--bg);border-radius:6px;align-items:flex-start"><span style="background:var(--navy);color:#fff;border-radius:4px;padding:2px 7px;font-size:0.72rem;font-weight:700;white-space:nowrap;margin-top:2px">I</span><div><strong>Initiate Project or Phase</strong> — Develop project charter; outputs: Charter, Stakeholder Register</div></div>
+      <div style="display:flex;gap:10px;padding:8px;background:var(--bg);border-radius:6px;align-items:flex-start"><span style="background:#2a5298;color:#fff;border-radius:4px;padding:2px 7px;font-size:0.72rem;font-weight:700;white-space:nowrap;margin-top:2px">P</span><div><strong>Plan Sourcing Strategy</strong> — Determine make-or-buy decisions and procurement approach</div></div>
+      <div style="display:flex;gap:10px;padding:8px;background:var(--bg);border-radius:6px;align-items:flex-start"><span style="background:#2a5298;color:#fff;border-radius:4px;padding:2px 7px;font-size:0.72rem;font-weight:700;white-space:nowrap;margin-top:2px">P</span><div><strong>Integrate and Align Project Plans</strong> — Combine all subsidiary plans into the PM Plan</div></div>
+      <div style="display:flex;gap:10px;padding:8px;background:var(--bg);border-radius:6px;align-items:flex-start"><span style="background:#3a72b8;color:#fff;border-radius:4px;padding:2px 7px;font-size:0.72rem;font-weight:700;white-space:nowrap;margin-top:2px">E</span><div><strong>Manage Project Execution</strong> — Direct and manage project work; outputs: Deliverables, Work Performance Data</div></div>
+      <div style="display:flex;gap:10px;padding:8px;background:var(--bg);border-radius:6px;align-items:flex-start"><span style="background:#3a72b8;color:#fff;border-radius:4px;padding:2px 7px;font-size:0.72rem;font-weight:700;white-space:nowrap;margin-top:2px">E</span><div><strong>Manage Quality Assurance</strong> — Audit processes for compliance; outputs: Quality Reports, Change Requests</div></div>
+      <div style="display:flex;gap:10px;padding:8px;background:var(--bg);border-radius:6px;align-items:flex-start"><span style="background:#5a92d8;color:#fff;border-radius:4px;padding:2px 7px;font-size:0.72rem;font-weight:700;white-space:nowrap;margin-top:2px">M&amp;C</span><div><strong>Monitor and Control Project Performance</strong> — Track vs. baselines; outputs: Work Performance Reports</div></div>
+      <div style="display:flex;gap:10px;padding:8px;background:var(--bg);border-radius:6px;align-items:flex-start"><span style="background:#3a72b8;color:#fff;border-radius:4px;padding:2px 7px;font-size:0.72rem;font-weight:700;white-space:nowrap;margin-top:2px">E</span><div><strong>Manage Project Knowledge</strong> — Capture and share knowledge; output: Lessons Learned Register</div></div>
+      <div style="display:flex;gap:10px;padding:8px;background:var(--bg);border-radius:6px;align-items:flex-start"><span style="background:#5a92d8;color:#fff;border-radius:4px;padding:2px 7px;font-size:0.72rem;font-weight:700;white-space:nowrap;margin-top:2px">M&amp;C</span><div><strong>Assess and Control Project Performance</strong> — Integrated change control; key tool: CCB</div></div>
+      <div style="display:flex;gap:10px;padding:8px;background:var(--bg);border-radius:6px;align-items:flex-start"><span style="background:#5a92d8;color:#fff;border-radius:4px;padding:2px 7px;font-size:0.72rem;font-weight:700;white-space:nowrap;margin-top:2px">M&amp;C</span><div><strong>Examine and Implement Changes</strong> — Process approved changes; update baselines and plans</div></div>
+      <div style="display:flex;gap:10px;padding:8px;background:var(--bg);border-radius:6px;align-items:flex-start"><span style="background:#e8912d;color:#fff;border-radius:4px;padding:2px 7px;font-size:0.72rem;font-weight:700;white-space:nowrap;margin-top:2px">C</span><div><strong>Close Project or Phase</strong> — Finalize all activities; output: Final deliverable, Lessons Learned, Archived docs</div></div>
+    </div>
+    <div style="margin-top:8px;font-size:0.75rem;color:var(--text-light)">I=Initiating · P=Planning · E=Executing · M&amp;C=Monitoring &amp; Controlling · C=Closing</div>
+  </div>
+
+  <div class="card" style="background:var(--navy);color:#fff">
+    <h3 style="color:#f0a84d;margin-bottom:8px">🎓 OSC 6660 — Weeks 1 &amp; 7</h3>
+    <p style="font-size:0.83rem;line-height:1.6;opacity:0.9">Week 1: Project Charter, PM Plan, governance structure setup. Week 7: Quality Assurance processes — in PMBOK 8th, quality assurance sits within the Governance domain.</p>
+    <div style="margin-top:8px;background:rgba(255,255,255,0.1);border-radius:6px;padding:8px;font-size:0.8rem"><strong>⭐ Exam Rules:</strong> Always create the Charter BEFORE doing significant work. The PM cannot change baselines unilaterally — requires CCB. Lessons learned documented throughout, not just at close.</div>
+  </div>
+</div>
+
+<!-- SCOPE DOMAIN -->
+<div id="sec-p8-scope" class="section">
+  <div class="topbar"><h2>📐 Scope Domain</h2>
+    <div style="display:flex;gap:5px;flex-wrap:wrap">
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-governance')">🏛 Gov</button>
+      <button class="btn btn-primary" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-scope')">📐 Scope</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-schedule')">📅 Schedule</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-finance')">💰 Finance</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-stakeholders')">👥 Stakeholders</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-resources')">🧑‍🤝‍🧑 Resources</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-risk')">⚠️ Risk</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-tailoring')">🔧 Tailoring</button>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:10px">Key Concepts</h3>
+    <div class="grid-2" style="gap:8px">
+      <div style="background:var(--bg);padding:8px;border-radius:6px;font-size:0.82rem"><strong>Product Scope</strong> — Features and functions of the deliverable</div>
+      <div style="background:var(--bg);padding:8px;border-radius:6px;font-size:0.82rem"><strong>Project Scope</strong> — The work required to deliver the product</div>
+      <div style="background:var(--bg);padding:8px;border-radius:6px;font-size:0.82rem"><strong>Scope Baseline</strong> — Approved Scope Statement + WBS + WBS Dictionary</div>
+      <div style="background:var(--bg);padding:8px;border-radius:6px;font-size:0.82rem"><strong>Scope Creep</strong> — Unauthorized additions without time/cost/resource adjustment</div>
+      <div style="background:var(--bg);padding:8px;border-radius:6px;font-size:0.82rem"><strong>Gold Plating</strong> — Adding unrequested features — avoid, wastes resources</div>
+      <div style="background:var(--bg);padding:8px;border-radius:6px;font-size:0.82rem"><strong>RTM</strong> — Requirements Traceability Matrix: tracks requirements from source through delivery</div>
+    </div>
+    <div style="margin-top:10px;background:#fef9c3;border-radius:6px;padding:8px;font-size:0.8rem"><strong>⭐ Validate Scope vs. Control Quality:</strong> Validate Scope = customer <em>acceptance</em> of deliverables (Executing). Control Quality = <em>checking</em> work meets requirements (M&amp;C). Different processes!</div>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:10px">6 Scope Processes</h3>
+    <div style="display:grid;gap:6px;font-size:0.82rem">
+      <div style="display:flex;gap:10px;padding:8px;background:var(--bg);border-radius:6px"><span style="background:#2a5298;color:#fff;border-radius:4px;padding:2px 7px;font-size:0.72rem;font-weight:700;white-space:nowrap;margin-top:2px">P</span><div><strong>Plan Scope Management</strong> — Create Scope Management Plan and Requirements Management Plan</div></div>
+      <div style="display:flex;gap:10px;padding:8px;background:var(--bg);border-radius:6px"><span style="background:#2a5298;color:#fff;border-radius:4px;padding:2px 7px;font-size:0.72rem;font-weight:700;white-space:nowrap;margin-top:2px">P</span><div><strong>Elicit and Analyze Requirements</strong> — Interviews, workshops, surveys, prototypes; outputs: Requirements Documentation, RTM</div></div>
+      <div style="display:flex;gap:10px;padding:8px;background:var(--bg);border-radius:6px"><span style="background:#2a5298;color:#fff;border-radius:4px;padding:2px 7px;font-size:0.72rem;font-weight:700;white-space:nowrap;margin-top:2px">P</span><div><strong>Define Scope</strong> — Detailed project and product scope statement</div></div>
+      <div style="display:flex;gap:10px;padding:8px;background:var(--bg);border-radius:6px"><span style="background:#2a5298;color:#fff;border-radius:4px;padding:2px 7px;font-size:0.72rem;font-weight:700;white-space:nowrap;margin-top:2px">P</span><div><strong>Develop Scope Structure (WBS)</strong> — Hierarchical decomposition; output: WBS, WBS Dictionary, Scope Baseline</div></div>
+      <div style="display:flex;gap:10px;padding:8px;background:var(--bg);border-radius:6px"><span style="background:#3a72b8;color:#fff;border-radius:4px;padding:2px 7px;font-size:0.72rem;font-weight:700;white-space:nowrap;margin-top:2px">E</span><div><strong>Validate Scope</strong> — Formal customer acceptance of completed deliverables; output: Accepted Deliverables</div></div>
+      <div style="display:flex;gap:10px;padding:8px;background:var(--bg);border-radius:6px"><span style="background:#5a92d8;color:#fff;border-radius:4px;padding:2px 7px;font-size:0.72rem;font-weight:700;white-space:nowrap;margin-top:2px">M&amp;C</span><div><strong>Monitor and Control Scope</strong> — Track scope status, manage changes to scope baseline</div></div>
+    </div>
+  </div>
+  <div class="card" style="background:var(--navy);color:#fff">
+    <h3 style="color:#f0a84d;margin-bottom:8px">🎓 OSC 6660 — Week 3 (Scope &amp; WBS)</h3>
+    <p style="font-size:0.83rem;opacity:0.9">100% Rule: WBS captures 100% of scope. Scope Statement must be complete before creating the WBS. Rolling Wave Planning: detail near-term work, leave future work at higher levels.</p>
+    <button class="btn" style="margin-top:8px;background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);font-size:0.8rem" onclick="show('p6-scope')">📘 PMBOK 6 Scope Detail →</button>
+  </div>
+</div>
+
+<!-- SCHEDULE DOMAIN -->
+<div id="sec-p8-schedule" class="section">
+  <div class="topbar"><h2>📅 Schedule Domain</h2>
+    <div style="display:flex;gap:5px;flex-wrap:wrap">
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-governance')">🏛 Gov</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-scope')">📐 Scope</button>
+      <button class="btn btn-primary" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-schedule')">📅 Schedule</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-finance')">💰 Finance</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-stakeholders')">👥 Stakeholders</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-resources')">🧑‍🤝‍🧑 Resources</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-risk')">⚠️ Risk</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-tailoring')">🔧 Tailoring</button>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:10px">Network Diagrams &amp; Dependencies</h3>
+    <p style="font-size:0.82rem;margin-bottom:10px;color:var(--text-light)">PDM (Precedence Diagramming Method) — 4 dependency types:</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;font-size:0.8rem">
+      <div style="background:#dbeafe;border-radius:6px;padding:8px"><strong>Finish-to-Start (FS)</strong><br>Most common. B can't start until A finishes.</div>
+      <div style="background:#dcfce7;border-radius:6px;padding:8px"><strong>Start-to-Start (SS)</strong><br>B can't start until A starts.</div>
+      <div style="background:#fef9c3;border-radius:6px;padding:8px"><strong>Finish-to-Finish (FF)</strong><br>B can't finish until A finishes.</div>
+      <div style="background:#fce7f3;border-radius:6px;padding:8px"><strong>Start-to-Finish (SF)</strong><br>Rare. B can't finish until A starts.</div>
+    </div>
+    <p style="font-size:0.8rem;margin-top:8px;color:var(--text-light)"><strong>Lead:</strong> overlap (negative lag) | <strong>Lag:</strong> delay | <strong>Mandatory:</strong> hard logic | <strong>Discretionary:</strong> soft/preferred logic</p>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:10px">Critical Path Method (CPM)</h3>
+    <div class="grid-2">
+      <div>
+        <p style="font-size:0.83rem;line-height:1.6;margin-bottom:8px"><strong>Critical Path</strong> = longest path through the network = project duration. Activities on the critical path have <strong>zero float</strong>.</p>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div class="formula-box"><span>Float</span> = LS − ES = LF − EF</div>
+          <div class="formula-box"><span>Free Float</span> = ES(next) − EF(current)</div>
+        </div>
+      </div>
+      <div>
+        <h4 style="font-size:0.83rem;margin-bottom:6px">Schedule Compression:</h4>
+        <table style="font-size:0.78rem;width:100%;border-collapse:collapse">
+          <tr style="background:var(--navy);color:#fff"><th style="padding:5px">Technique</th><th style="padding:5px">How</th><th style="padding:5px">Risk</th></tr>
+          <tr style="border-bottom:1px solid var(--border)"><td style="padding:5px"><strong>Crashing</strong></td><td style="padding:5px">Add resources to critical path</td><td style="padding:5px">↑ Cost</td></tr>
+          <tr style="background:var(--bg)"><td style="padding:5px"><strong>Fast-tracking</strong></td><td style="padding:5px">Overlap sequential activities</td><td style="padding:5px">↑ Rework risk</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:8px">3 Schedule Processes</h3>
+    <div style="display:grid;gap:6px;font-size:0.82rem">
+      <div style="display:flex;gap:10px;padding:8px;background:var(--bg);border-radius:6px"><span style="background:#2a5298;color:#fff;border-radius:4px;padding:2px 7px;font-size:0.72rem;font-weight:700;white-space:nowrap;margin-top:2px">P</span><div><strong>Plan Schedule Management</strong> — Establish policies for planning and controlling schedule</div></div>
+      <div style="display:flex;gap:10px;padding:8px;background:var(--bg);border-radius:6px"><span style="background:#2a5298;color:#fff;border-radius:4px;padding:2px 7px;font-size:0.72rem;font-weight:700;white-space:nowrap;margin-top:2px">P</span><div><strong>Develop Schedule</strong> — CPM, resource leveling, compression; output: Schedule Baseline, Schedule Data</div></div>
+      <div style="display:flex;gap:10px;padding:8px;background:var(--bg);border-radius:6px"><span style="background:#5a92d8;color:#fff;border-radius:4px;padding:2px 7px;font-size:0.72rem;font-weight:700;white-space:nowrap;margin-top:2px">M&amp;C</span><div><strong>Monitor and Control Schedule</strong> — Track status, manage changes; outputs: Schedule Forecasts, Change Requests</div></div>
+    </div>
+  </div>
+  <div class="card" style="background:var(--navy);color:#fff">
+    <h3 style="color:#f0a84d;margin-bottom:8px">🎓 OSC 6660 — Week 4 (Scheduling)</h3>
+    <p style="font-size:0.83rem;opacity:0.9">Prof. Wilson covers: WBS → activities → network diagram → CPM → Gantt chart. Critical path = zero float. Schedule Domain in PMBOK 8th replaces the Time Knowledge Area from PMBOK 6th.</p>
+    <button class="btn" style="margin-top:8px;background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);font-size:0.8rem" onclick="show('p6-schedule')">📘 PMBOK 6 Schedule Detail →</button>
+  </div>
+</div>
+
+<!-- FINANCE DOMAIN -->
+<div id="sec-p8-finance" class="section">
+  <div class="topbar"><h2>💰 Finance Domain</h2>
+    <div style="display:flex;gap:5px;flex-wrap:wrap">
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-governance')">🏛 Gov</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-scope')">📐 Scope</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-schedule')">📅 Schedule</button>
+      <button class="btn btn-primary" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-finance')">💰 Finance</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-stakeholders')">👥 Stakeholders</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-resources')">🧑‍🤝‍🧑 Resources</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-risk')">⚠️ Risk</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-tailoring')">🔧 Tailoring</button>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:10px">Cost Types</h3>
+    <table style="font-size:0.8rem;width:100%;border-collapse:collapse">
+      <tr style="background:var(--navy);color:#fff"><th style="padding:6px">Type</th><th style="padding:6px">Definition</th><th style="padding:6px">Example</th></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px">Direct</td><td style="padding:6px">Directly attributable to project</td><td style="padding:6px">Developer salaries, materials</td></tr>
+      <tr style="border-bottom:1px solid var(--border);background:var(--bg)"><td style="padding:6px">Indirect</td><td style="padding:6px">Shared overhead allocated to project</td><td style="padding:6px">Office rent, utilities</td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px">Fixed</td><td style="padding:6px">Don't change with output volume</td><td style="padding:6px">Software licenses</td></tr>
+      <tr style="border-bottom:1px solid var(--border);background:var(--bg)"><td style="padding:6px">Variable</td><td style="padding:6px">Change with output volume</td><td style="padding:6px">Hourly contractors</td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px"><strong>Sunk Cost</strong></td><td style="padding:6px">Already spent — <strong>IGNORE in decisions</strong></td><td style="padding:6px">Past R&amp;D investment</td></tr>
+      <tr style="background:var(--bg)"><td style="padding:6px">Opportunity Cost</td><td style="padding:6px">Value of next-best alternative foregone</td><td style="padding:6px">Choosing Project A over B</td></tr>
+    </table>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:10px">Estimation Methods</h3>
+    <table style="font-size:0.78rem;width:100%;border-collapse:collapse">
+      <tr style="background:var(--navy);color:#fff"><th style="padding:6px">Method</th><th style="padding:6px">Accuracy</th><th style="padding:6px">When Used</th></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px">Analogous</td><td style="padding:6px">Low (−25%/+75%)</td><td style="padding:6px">Early/Initiating — uses historical data</td></tr>
+      <tr style="border-bottom:1px solid var(--border);background:var(--bg)"><td style="padding:6px">Parametric</td><td style="padding:6px">Medium</td><td style="padding:6px">Planning — statistical model ($/unit)</td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px">Bottom-Up</td><td style="padding:6px">High (−5%/+10%)</td><td style="padding:6px">Detailed planning — sum of WBS packages</td></tr>
+      <tr><td style="padding:6px">Three-Point (PERT)</td><td style="padding:6px">High w/ uncertainty</td><td style="padding:6px">E = (O + 4M + P) / 6</td></tr>
+    </table>
+    <div class="formula-box" style="margin-top:10px"><span>PERT</span> E = (O + 4M + P) / 6 &nbsp;|&nbsp; SD = (P − O) / 6</div>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:10px">Earned Value Management (EVM) — Full Reference</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-bottom:10px">
+      <div><p style="font-size:0.78rem;font-weight:600;margin-bottom:4px;color:var(--text-light)">BASE VALUES</p>
+        <div class="formula-box"><span>PV</span> Budgeted cost for work scheduled</div>
+        <div class="formula-box"><span>EV</span> Budgeted cost for work performed</div>
+        <div class="formula-box"><span>AC</span> Actual cost of work performed</div>
+        <div class="formula-box"><span>BAC</span> Total approved budget</div>
+      </div>
+      <div><p style="font-size:0.78rem;font-weight:600;margin-bottom:4px;color:var(--text-light)">VARIANCES (negative = bad)</p>
+        <div class="formula-box"><span>SV</span> = EV − PV</div>
+        <div class="formula-box"><span>CV</span> = EV − AC</div>
+        <p style="font-size:0.78rem;font-weight:600;margin:8px 0 4px;color:var(--text-light)">INDICES (&gt;1 = good)</p>
+        <div class="formula-box"><span>SPI</span> = EV / PV</div>
+        <div class="formula-box"><span>CPI</span> = EV / AC</div>
+      </div>
+      <div><p style="font-size:0.78rem;font-weight:600;margin-bottom:4px;color:var(--text-light)">FORECASTING</p>
+        <div class="formula-box"><span>EAC</span> = BAC / CPI</div>
+        <div class="formula-box"><span>ETC</span> = EAC − AC</div>
+        <div class="formula-box"><span>VAC</span> = BAC − EAC</div>
+        <div class="formula-box"><span>TCPI</span> = (BAC−EV)/(BAC−AC)</div>
+      </div>
+    </div>
+    <div style="background:#fef9c3;border-radius:6px;padding:8px;font-size:0.8rem"><strong>⭐ Budget Layers:</strong> Cost Baseline = Σ work package budgets + Contingency Reserves. Add Management Reserve → Total Budget. Management Reserve is for unknown-unknowns and is NOT in EVM.</div>
+  </div>
+  <div class="card" style="background:var(--navy);color:#fff">
+    <h3 style="color:#f0a84d;margin-bottom:8px">🎓 OSC 6660 — Week 5 (Resources &amp; Cost)</h3>
+    <p style="font-size:0.83rem;opacity:0.9">Prof. Wilson covers: cost estimation, budgeting, basic EVM. Finance Domain in PMBOK 8th = Cost Knowledge Area in PMBOK 6th — same content, renamed to reflect broader financial management scope.</p>
+    <button class="btn" style="margin-top:8px;background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);font-size:0.8rem" onclick="show('formulas')">🔢 Full EVM Calculator →</button>
+  </div>
+</div>
+
+<!-- STAKEHOLDERS DOMAIN -->
+<div id="sec-p8-stakeholders" class="section">
+  <div class="topbar"><h2>👥 Stakeholders Domain</h2>
+    <div style="display:flex;gap:5px;flex-wrap:wrap">
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-governance')">🏛 Gov</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-scope')">📐 Scope</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-schedule')">📅 Schedule</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-finance')">💰 Finance</button>
+      <button class="btn btn-primary" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-stakeholders')">👥 Stakeholders</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-resources')">🧑‍🤝‍🧑 Resources</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-risk')">⚠️ Risk</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-tailoring')">🔧 Tailoring</button>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:10px">Stakeholder Analysis</h3>
+    <div class="grid-2" style="gap:10px">
+      <div>
+        <h4 style="font-size:0.83rem;margin-bottom:6px">Power/Interest Grid</h4>
+        <table style="font-size:0.78rem;width:100%;border-collapse:collapse;border:1px solid var(--border)">
+          <tr><td style="padding:6px;border:1px solid var(--border);background:#dbeafe"><strong>High Power<br>Low Interest</strong><br>Keep Satisfied</td><td style="padding:6px;border:1px solid var(--border);background:#dcfce7"><strong>High Power<br>High Interest</strong><br>Manage Closely</td></tr>
+          <tr><td style="padding:6px;border:1px solid var(--border);background:var(--bg)"><strong>Low Power<br>Low Interest</strong><br>Monitor</td><td style="padding:6px;border:1px solid var(--border);background:#fef9c3"><strong>Low Power<br>High Interest</strong><br>Keep Informed</td></tr>
+        </table>
+      </div>
+      <div>
+        <h4 style="font-size:0.83rem;margin-bottom:6px">Engagement Levels</h4>
+        <div style="display:flex;flex-direction:column;gap:4px;font-size:0.8rem">
+          <div style="background:#fef2f2;border-radius:4px;padding:5px 8px"><strong>Unaware</strong> — Not aware of project/impact</div>
+          <div style="background:#fef9c3;border-radius:4px;padding:5px 8px"><strong>Resistant</strong> — Aware but opposed to change</div>
+          <div style="background:#f3f4f6;border-radius:4px;padding:5px 8px"><strong>Neutral</strong> — Aware, neither supportive nor resistant</div>
+          <div style="background:#dcfce7;border-radius:4px;padding:5px 8px"><strong>Supportive</strong> — Aware and supportive</div>
+          <div style="background:#dbeafe;border-radius:4px;padding:5px 8px"><strong>Leading</strong> — Actively engaged and promoting success</div>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:0.8rem;margin-top:8px;color:var(--text-light)"><strong>Communication Channels:</strong> n(n−1)/2 — where n = number of people. Adding one person dramatically increases complexity.</p>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:8px">Key Processes</h3>
+    <div style="display:grid;gap:6px;font-size:0.82rem">
+      <div style="display:flex;gap:10px;padding:7px;background:var(--bg);border-radius:6px"><span style="background:var(--navy);color:#fff;border-radius:4px;padding:2px 7px;font-size:0.72rem;font-weight:700;white-space:nowrap;margin-top:2px">I</span><div><strong>Identify Stakeholders</strong> — Create Stakeholder Register; start in Initiating, continue throughout</div></div>
+      <div style="display:flex;gap:10px;padding:7px;background:var(--bg);border-radius:6px"><span style="background:#2a5298;color:#fff;border-radius:4px;padding:2px 7px;font-size:0.72rem;font-weight:700;white-space:nowrap;margin-top:2px">P</span><div><strong>Plan Stakeholder Engagement</strong> — Develop engagement and communications plans</div></div>
+      <div style="display:flex;gap:10px;padding:7px;background:var(--bg);border-radius:6px"><span style="background:#3a72b8;color:#fff;border-radius:4px;padding:2px 7px;font-size:0.72rem;font-weight:700;white-space:nowrap;margin-top:2px">E</span><div><strong>Manage Stakeholder Engagement</strong> — Work to meet needs, address issues, foster support</div></div>
+      <div style="display:flex;gap:10px;padding:7px;background:var(--bg);border-radius:6px"><span style="background:#3a72b8;color:#fff;border-radius:4px;padding:2px 7px;font-size:0.72rem;font-weight:700;white-space:nowrap;margin-top:2px">E</span><div><strong>Manage Communications</strong> — Collect, create, and distribute project information</div></div>
+      <div style="display:flex;gap:10px;padding:7px;background:var(--bg);border-radius:6px"><span style="background:#5a92d8;color:#fff;border-radius:4px;padding:2px 7px;font-size:0.72rem;font-weight:700;white-space:nowrap;margin-top:2px">M&amp;C</span><div><strong>Monitor Stakeholder Engagement</strong> — Monitor relationships, adjust engagement strategies</div></div>
+    </div>
+  </div>
+  <div class="card" style="background:var(--navy);color:#fff">
+    <h3 style="color:#f0a84d;margin-bottom:8px">🎓 OSC 6660 — Week 9 (Teams &amp; Communications)</h3>
+    <p style="font-size:0.83rem;opacity:0.9">Identify stakeholders as early as possible — even in Initiating. More stakeholders = exponentially more communication channels. Push vs. pull vs. interactive communications.</p>
+  </div>
+</div>
+
+<!-- RESOURCES DOMAIN -->
+<div id="sec-p8-resources" class="section">
+  <div class="topbar"><h2>🧑‍🤝‍🧑 Resources Domain</h2>
+    <div style="display:flex;gap:5px;flex-wrap:wrap">
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-governance')">🏛 Gov</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-scope')">📐 Scope</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-schedule')">📅 Schedule</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-finance')">💰 Finance</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-stakeholders')">👥 Stakeholders</button>
+      <button class="btn btn-primary" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-resources')">🧑‍🤝‍🧑 Resources</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-risk')">⚠️ Risk</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-tailoring')">🔧 Tailoring</button>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:10px">Team Development — Tuckman's Model</h3>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0;text-align:center;font-size:0.78rem">
+      <div style="background:var(--navy);color:#fff;padding:10px;border-radius:8px 0 0 8px"><strong>Forming</strong><br><span style="opacity:0.8;font-size:0.72rem">Team assembles, polite, unclear roles</span></div>
+      <div style="background:#dc2626;color:#fff;padding:10px"><strong>Storming</strong><br><span style="opacity:0.8;font-size:0.72rem">Conflict, jockeying for position</span></div>
+      <div style="background:#ca8a04;color:#fff;padding:10px"><strong>Norming</strong><br><span style="opacity:0.8;font-size:0.72rem">Cohesion builds, norms established</span></div>
+      <div style="background:#059669;color:#fff;padding:10px"><strong>Performing</strong><br><span style="opacity:0.8;font-size:0.72rem">High productivity, trust, synergy</span></div>
+      <div style="background:#e8912d;color:#fff;padding:10px;border-radius:0 8px 8px 0"><strong>Adjourning</strong><br><span style="opacity:0.8;font-size:0.72rem">Project ends, team disbands</span></div>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:10px">Motivation Theories</h3>
+    <table style="font-size:0.8rem;width:100%;border-collapse:collapse">
+      <tr style="background:var(--navy);color:#fff"><th style="padding:6px">Theory</th><th style="padding:6px">Author</th><th style="padding:6px">Key Idea</th></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px">Hierarchy of Needs</td><td style="padding:6px">Maslow</td><td style="padding:6px">5 levels: Physiological→Safety→Social→Esteem→Self-Actualization</td></tr>
+      <tr style="border-bottom:1px solid var(--border);background:var(--bg)"><td style="padding:6px">Two-Factor Theory</td><td style="padding:6px">Herzberg</td><td style="padding:6px">Hygiene factors prevent dissatisfaction; Motivators create satisfaction</td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px">Theory X / Y</td><td style="padding:6px">McGregor</td><td style="padding:6px">X: need control; Y: self-motivated — PMI favors Theory Y</td></tr>
+      <tr style="border-bottom:1px solid var(--border);background:var(--bg)"><td style="padding:6px">Acquired Needs</td><td style="padding:6px">McClelland</td><td style="padding:6px">Achievement, Affiliation, Power — different people need different things</td></tr>
+      <tr><td style="padding:6px">Expectancy Theory</td><td style="padding:6px">Vroom</td><td style="padding:6px">Motivation = Expectancy × Instrumentality × Valence</td></tr>
+    </table>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:8px">Conflict Resolution (Best → Last Resort)</h3>
+    <div style="display:grid;gap:5px;font-size:0.82rem">
+      <div style="background:#dcfce7;border-radius:6px;padding:7px"><strong>1. Collaborate / Problem Solve</strong> — Work together for win-win. PMI's preferred approach.</div>
+      <div style="background:#fef9c3;border-radius:6px;padding:7px"><strong>2. Compromise</strong> — Both parties give something up. Neither fully wins.</div>
+      <div style="background:#fef9c3;border-radius:6px;padding:7px"><strong>3. Accommodate / Smooth</strong> — Emphasize agreement, downplay differences. Short-term only.</div>
+      <div style="background:#fef2f2;border-radius:6px;padding:7px"><strong>4. Force / Direct</strong> — PM uses authority to decide. Use sparingly — kills morale.</div>
+      <div style="background:#fef2f2;border-radius:6px;padding:7px"><strong>5. Withdraw / Avoid</strong> — Postpone or sidestep. Only for truly minor conflicts.</div>
+    </div>
+  </div>
+  <div class="card" style="background:var(--navy);color:#fff">
+    <h3 style="color:#f0a84d;margin-bottom:8px">🎓 OSC 6660 — Weeks 5 &amp; 9</h3>
+    <p style="font-size:0.83rem;opacity:0.9">Week 5: resource estimation, leveling, physical resources. Week 9: team development, leadership styles, conflict resolution. PMI strongly favors collaborative conflict resolution — force is always the last resort.</p>
+  </div>
+</div>
+
+<!-- RISK DOMAIN -->
+<div id="sec-p8-risk" class="section">
+  <div class="topbar"><h2>⚠️ Risk Domain</h2>
+    <div style="display:flex;gap:5px;flex-wrap:wrap">
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-governance')">🏛 Gov</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-scope')">📐 Scope</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-schedule')">📅 Schedule</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-finance')">💰 Finance</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-stakeholders')">👥 Stakeholders</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-resources')">🧑‍🤝‍🧑 Resources</button>
+      <button class="btn btn-primary" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-risk')">⚠️ Risk</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-tailoring')">🔧 Tailoring</button>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:10px">Risk Fundamentals</h3>
+    <div class="grid-2" style="gap:8px">
+      <div style="background:#fef2f2;border-radius:6px;padding:10px;font-size:0.82rem"><strong style="color:#dc2626">⬇ Threats</strong><br>Negative risks. Goal: reduce probability or impact.</div>
+      <div style="background:#dcfce7;border-radius:6px;padding:10px;font-size:0.82rem"><strong style="color:#059669">⬆ Opportunities</strong><br>Positive risks. Goal: increase probability or impact.</div>
+    </div>
+    <div style="margin-top:10px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;font-size:0.8rem">
+      <div style="background:var(--bg);border-radius:6px;padding:8px"><strong>Risk Appetite</strong><br>Amount of uncertainty willing to accept in pursuit of value</div>
+      <div style="background:var(--bg);border-radius:6px;padding:8px"><strong>Risk Tolerance</strong><br>Acceptable range of variation around an objective</div>
+      <div style="background:var(--bg);border-radius:6px;padding:8px"><strong>Risk Threshold</strong><br>Specific point beyond which the risk is unacceptable</div>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:10px">Risk Response Strategies</h3>
+    <div class="grid-2" style="gap:10px">
+      <div>
+        <h4 style="font-size:0.83rem;color:#dc2626;margin-bottom:6px">For Threats</h4>
+        <div style="display:grid;gap:4px;font-size:0.8rem">
+          <div style="background:#fef2f2;border-radius:4px;padding:5px 8px"><strong>Avoid</strong> — Eliminate risk by changing plan</div>
+          <div style="background:#fef2f2;border-radius:4px;padding:5px 8px"><strong>Mitigate</strong> — Reduce probability or impact</div>
+          <div style="background:#fef2f2;border-radius:4px;padding:5px 8px"><strong>Transfer</strong> — Shift to third party (insurance, contract)</div>
+          <div style="background:#fef2f2;border-radius:4px;padding:5px 8px"><strong>Accept</strong> — Active (contingency plan) or Passive</div>
+          <div style="background:#fef2f2;border-radius:4px;padding:5px 8px"><strong>Escalate</strong> — Beyond project scope; go to sponsor</div>
+        </div>
+      </div>
+      <div>
+        <h4 style="font-size:0.83rem;color:#059669;margin-bottom:6px">For Opportunities</h4>
+        <div style="display:grid;gap:4px;font-size:0.8rem">
+          <div style="background:#dcfce7;border-radius:4px;padding:5px 8px"><strong>Exploit</strong> — Ensure opportunity occurs</div>
+          <div style="background:#dcfce7;border-radius:4px;padding:5px 8px"><strong>Enhance</strong> — Increase probability or impact</div>
+          <div style="background:#dcfce7;border-radius:4px;padding:5px 8px"><strong>Share</strong> — Partner to capture benefit</div>
+          <div style="background:#dcfce7;border-radius:4px;padding:5px 8px"><strong>Accept</strong> — Take advantage if it occurs</div>
+          <div style="background:#dcfce7;border-radius:4px;padding:5px 8px"><strong>Escalate</strong> — Beyond project scope; go to sponsor</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:8px">Reserves</h3>
+    <div class="grid-2" style="gap:8px">
+      <div style="border:2px solid #ca8a04;border-radius:8px;padding:10px;font-size:0.82rem"><strong>Contingency Reserve</strong><br>For KNOWN unknowns (identified risks). Part of cost/schedule baseline. <strong>PM can use without approval.</strong></div>
+      <div style="border:2px solid #dc2626;border-radius:8px;padding:10px;font-size:0.82rem"><strong>Management Reserve</strong><br>For UNKNOWN unknowns (unforeseen). NOT in baseline. <strong>Requires management approval to use.</strong></div>
+    </div>
+    <div style="margin-top:8px;background:#fef9c3;border-radius:6px;padding:8px;font-size:0.8rem"><strong>⭐ Quantitative Tools:</strong> EMV = Probability × Impact | Tornado Diagram = sensitivity analysis | Monte Carlo = simulate range of outcomes</div>
+  </div>
+  <div class="card" style="background:var(--navy);color:#fff">
+    <h3 style="color:#f0a84d;margin-bottom:8px">🎓 OSC 6660 — Week 6 (Risk)</h3>
+    <p style="font-size:0.83rem;opacity:0.9">Prof. Wilson covers: risk categories, P&amp;I matrix, risk register, qualitative analysis. Key exam rule: risks include OPPORTUNITIES — always consider both sides in any risk question.</p>
+    <button class="btn" style="margin-top:8px;background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);font-size:0.8rem" onclick="show('p6-risk')">📘 PMBOK 6 Risk Detail →</button>
+  </div>
+</div>
+
+<!-- TAILORING -->
+<div id="sec-p8-tailoring" class="section">
+  <div class="topbar"><h2>🔧 Tailoring</h2>
+    <div style="display:flex;gap:5px;flex-wrap:wrap">
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-governance')">🏛 Gov</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-scope')">📐 Scope</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-schedule')">📅 Schedule</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-finance')">💰 Finance</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-stakeholders')">👥 Stakeholders</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-resources')">🧑‍🤝‍🧑 Resources</button>
+      <button class="btn btn-outline" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-risk')">⚠️ Risk</button>
+      <button class="btn btn-primary" style="font-size:0.7rem;padding:2px 8px" onclick="show('p8-tailoring')">🔧 Tailoring</button>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:8px">What is Tailoring?</h3>
+    <p style="font-size:0.85rem;line-height:1.6">Deliberately adapting the PM approach, governance, and processes to fit the specific context. <strong>Tailoring is not doing less PM — it is doing the RIGHT PM for the context.</strong></p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:10px;font-size:0.8rem">
+      <div style="background:var(--bg);border-radius:6px;padding:8px">Life Cycle (predictive/adaptive/hybrid)</div>
+      <div style="background:var(--bg);border-radius:6px;padding:8px">Processes (which to include, at what depth)</div>
+      <div style="background:var(--bg);border-radius:6px;padding:8px">Engagement approach (stakeholder involvement)</div>
+      <div style="background:var(--bg);border-radius:6px;padding:8px">Tools &amp; Templates</div>
+      <div style="background:var(--bg);border-radius:6px;padding:8px">Governance formality</div>
+      <div style="background:var(--bg);border-radius:6px;padding:8px">Documentation depth</div>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:10px">The 4-Step Tailoring Process</h3>
+    <div style="display:grid;gap:8px">
+      <div style="display:flex;gap:12px;align-items:flex-start"><span style="background:var(--orange);color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;flex-shrink:0">1</span><div><strong>Select Initial Development Approach</strong><br><span style="font-size:0.8rem;color:var(--text-light)">Based on requirements clarity, risk, team capability, org constraints</span></div></div>
+      <div style="display:flex;gap:12px;align-items:flex-start"><span style="background:var(--orange);color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;flex-shrink:0">2</span><div><strong>Tailor for the Organization</strong><br><span style="font-size:0.8rem;color:var(--text-light)">Align with org policies, PMO standards, governance requirements, EEFs, OPAs</span></div></div>
+      <div style="display:flex;gap:12px;align-items:flex-start"><span style="background:var(--orange);color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;flex-shrink:0">3</span><div><strong>Tailor for the Project</strong><br><span style="font-size:0.8rem;color:var(--text-light)">Adjust for size, complexity, team location, delivery urgency, stakeholder needs</span></div></div>
+      <div style="display:flex;gap:12px;align-items:flex-start"><span style="background:var(--orange);color:#fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:700;flex-shrink:0">4</span><div><strong>Implement Ongoing Improvement</strong><br><span style="font-size:0.8rem;color:var(--text-light)">Continuous improvement during execution — retrospectives, lessons learned, kaizen</span></div></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3 style="margin-bottom:10px">Common Tailoring Situations</h3>
+    <table style="font-size:0.8rem;width:100%;border-collapse:collapse">
+      <tr style="background:var(--navy);color:#fff"><th style="padding:6px;text-align:left">Situation</th><th style="padding:6px;text-align:left">Tailoring Suggestion</th></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px">Simple, short project</td><td style="padding:6px">Minimal documentation; informal governance</td></tr>
+      <tr style="border-bottom:1px solid var(--border);background:var(--bg)"><td style="padding:6px">Highly regulated industry</td><td style="padding:6px">Full predictive; extensive documentation</td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px">New product, unclear requirements</td><td style="padding:6px">Adaptive; iterative sprints; minimal upfront scope</td></tr>
+      <tr style="border-bottom:1px solid var(--border);background:var(--bg)"><td style="padding:6px">Large infrastructure project</td><td style="padding:6px">Hybrid: predictive planning, adaptive execution</td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px">High uncertainty / complexity</td><td style="padding:6px">Adaptive or hybrid; rolling wave planning</td></tr>
+      <tr style="background:var(--bg)"><td style="padding:6px">Global, distributed team</td><td style="padding:6px">More detailed communications and stakeholder plans</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- AI IN PM -->
+<div id="sec-p8-ai" class="section">
+  <div class="topbar"><h2>🤖 AI in Project Management <span style="font-size:0.75rem;color:var(--text-light);font-weight:400">(Appendix X2)</span></h2></div>
+  <div class="card" style="margin-bottom:12px;background:linear-gradient(135deg,#1a3a6b,#2a5298);color:#fff">
+    <h3 style="color:#f0a84d;margin-bottom:8px">PMI's View on AI</h3>
+    <p style="font-size:0.85rem;line-height:1.6;opacity:0.95">AI is a tool that <strong>augments</strong> — not replaces — the PM's judgment. The PM remains accountable for all decisions. AI capabilities: pattern recognition, predictive analytics, NLP, automation. Expect <strong>1–3 PMP exam questions</strong> on AI use cases.</p>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:10px">Primary AI Use Cases in PM (Table X3-1)</h3>
+    <table style="font-size:0.8rem;width:100%;border-collapse:collapse">
+      <tr style="background:var(--navy);color:#fff"><th style="padding:6px">Domain</th><th style="padding:6px;text-align:left">AI Use Case</th></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px;text-align:center">📅 Schedule</td><td style="padding:6px">Automated schedule optimization; early delay detection from progress data</td></tr>
+      <tr style="border-bottom:1px solid var(--border);background:var(--bg)"><td style="padding:6px;text-align:center">💰 Finance</td><td style="padding:6px">Cost forecasting; anomaly detection in spend patterns</td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px;text-align:center">⚠️ Risk</td><td style="padding:6px">Risk pattern recognition from historical projects; automated Monte Carlo simulations</td></tr>
+      <tr style="border-bottom:1px solid var(--border);background:var(--bg)"><td style="padding:6px;text-align:center">👥 Stakeholders</td><td style="padding:6px">Sentiment analysis of stakeholder communications; engagement tracking</td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px;text-align:center">🧑‍🤝‍🧑 Resources</td><td style="padding:6px">Resource demand forecasting; skill-gap identification</td></tr>
+      <tr style="border-bottom:1px solid var(--border);background:var(--bg)"><td style="padding:6px;text-align:center">📐 Scope</td><td style="padding:6px">Requirements extraction from natural language documents</td></tr>
+      <tr><td style="padding:6px;text-align:center">🏛 Governance</td><td style="padding:6px">Automated progress reporting; document generation; status dashboards</td></tr>
+    </table>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:8px">AI Terminology for PMs</h3>
+    <div class="grid-2" style="gap:8px;font-size:0.82rem">
+      <div style="background:var(--bg);border-radius:6px;padding:8px"><strong>Machine Learning (ML)</strong><br>System improves through experience without explicit programming</div>
+      <div style="background:var(--bg);border-radius:6px;padding:8px"><strong>Natural Language Processing (NLP)</strong><br>AI understanding of human language (emails, documents, voice)</div>
+      <div style="background:var(--bg);border-radius:6px;padding:8px"><strong>Generative AI</strong><br>Creates new content (text, plans, reports) based on learned patterns</div>
+      <div style="background:var(--bg);border-radius:6px;padding:8px"><strong>Predictive Analytics</strong><br>Uses historical data to forecast future project outcomes</div>
+    </div>
+  </div>
+  <div class="card" style="border-left:3px solid #e8912d">
+    <h3 style="margin-bottom:8px">Responsible AI Use</h3>
+    <ul style="font-size:0.83rem;line-height:1.8">
+      <li>Validate AI outputs — never blindly accept recommendations</li>
+      <li>Maintain human accountability for all project decisions</li>
+      <li>Be aware of data privacy requirements when feeding project data to AI tools</li>
+      <li>Document AI use in the project management plan</li>
+      <li>AI cannot replace PM judgment on stakeholder relationships and ethical decisions</li>
+    </ul>
+  </div>
+</div>
+
+<!-- PROCUREMENT -->
+<div id="sec-p8-procurement" class="section">
+  <div class="topbar"><h2>🤝 Procurement <span style="font-size:0.75rem;color:var(--text-light);font-weight:400">(Appendix X3)</span></h2></div>
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:10px">Contract Types — Most Tested Topic</h3>
+    <table style="font-size:0.78rem;width:100%;border-collapse:collapse">
+      <tr style="background:var(--navy);color:#fff"><th style="padding:6px">Type</th><th style="padding:6px">Risk Bearer</th><th style="padding:6px">When to Use</th></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px"><strong>FFP (Firm Fixed Price)</strong></td><td style="padding:6px;text-align:center">Seller</td><td style="padding:6px">Scope very well defined</td></tr>
+      <tr style="border-bottom:1px solid var(--border);background:var(--bg)"><td style="padding:6px"><strong>FPIF (Fixed Price + Incentive Fee)</strong></td><td style="padding:6px;text-align:center">Primarily Seller</td><td style="padding:6px">Defined scope + performance incentive</td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px"><strong>FP-EPA (Fixed Price + Economic Adjustment)</strong></td><td style="padding:6px;text-align:center">Shared</td><td style="padding:6px">Long duration; inflation risk</td></tr>
+      <tr style="border-bottom:1px solid var(--border);background:var(--bg)"><td style="padding:6px"><strong>T&amp;M (Time &amp; Material)</strong></td><td style="padding:6px;text-align:center">Buyer</td><td style="padding:6px">Unclear scope; short-term staffing</td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px"><strong>CPFF (Cost Plus Fixed Fee)</strong></td><td style="padding:6px;text-align:center">Buyer</td><td style="padding:6px">R&amp;D, uncertain scope</td></tr>
+      <tr style="border-bottom:1px solid var(--border);background:var(--bg)"><td style="padding:6px"><strong>CPIF (Cost Plus Incentive Fee)</strong></td><td style="padding:6px;text-align:center">Buyer (shared)</td><td style="padding:6px">Cost + performance incentive</td></tr>
+      <tr><td style="padding:6px"><strong>CPPC (Cost Plus % of Cost)</strong></td><td style="padding:6px;text-align:center">Buyer (most)</td><td style="padding:6px">Avoid — no incentive for seller to control costs</td></tr>
+    </table>
+    <div style="margin-top:8px;background:#fef9c3;border-radius:6px;padding:8px;font-size:0.8rem"><strong>⭐ Rule:</strong> Fixed Price = more risk to SELLER. Cost Reimbursable = more risk to BUYER. If scope is unclear → use T&amp;M or Cost Reimbursable.</div>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <h3 style="margin-bottom:8px">Procurement Documents</h3>
+    <div class="grid-2" style="gap:8px;font-size:0.82rem">
+      <div style="background:var(--bg);border-radius:6px;padding:8px"><strong>SOW (Statement of Work)</strong><br>Detailed description of what the seller must provide</div>
+      <div style="background:var(--bg);border-radius:6px;padding:8px"><strong>RFP (Request for Proposal)</strong><br>Requires price AND approach/methodology from seller</div>
+      <div style="background:var(--bg);border-radius:6px;padding:8px"><strong>RFQ (Request for Quotation)</strong><br>Price-focused; for commodity goods/services</div>
+      <div style="background:var(--bg);border-radius:6px;padding:8px"><strong>IFB (Invitation for Bid)</strong><br>Sealed bidding; lowest compliant bid wins</div>
+    </div>
+  </div>
+  <div class="card" style="background:var(--navy);color:#fff">
+    <h3 style="color:#f0a84d;margin-bottom:8px">🎓 OSC 6660 — Week 8 (Procurement)</h3>
+    <p style="font-size:0.83rem;opacity:0.9">Prof. Wilson covers: contract types, make-or-buy, vendor management. Fixed Price contracts protect the buyer from cost overruns. Contracts are legally binding — all changes must be formally documented.</p>
+    <button class="btn" style="margin-top:8px;background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);font-size:0.8rem" onclick="show('p6-procurement')">📘 PMBOK 6 Procurement Detail →</button>
   </div>
 </div>
 
