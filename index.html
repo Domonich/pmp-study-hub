@@ -464,35 +464,44 @@ body.dark .profile-box h2 { color:var(--orange-light); }
 <div id="sec-dashboard" class="section">
   <div class="topbar"><h2 id="dash-greeting">Dashboard</h2></div>
   <div class="stats-grid">
-    <div class="stat-card"><div class="num" id="stat-modules">0/10</div><div class="lbl">Modules Reviewed</div></div>
-    <div class="stat-card"><div class="num" id="stat-quiz">0%</div><div class="lbl">Quiz Best Score</div></div>
-    <div class="stat-card"><div class="num">49</div><div class="lbl">PMBOK 6 Processes</div></div>
-    <div class="stat-card"><div class="num">12</div><div class="lbl">PMBOK 7 Principles</div></div>
+    <div class="stat-card"><div class="num" id="stat-modules">0/10</div><div class="lbl">Modules Done</div></div>
+    <div class="stat-card"><div class="num" id="stat-quiz">—</div><div class="lbl">Best Quiz Score</div></div>
+    <div class="stat-card"><div class="num" id="stat-mastered">0</div><div class="lbl">Topics Mastered</div></div>
+    <div class="stat-card"><div class="num" id="stat-questions">131</div><div class="lbl">Practice Questions</div></div>
   </div>
-  <div class="grid-2">
+
+  <div class="grid-2" style="margin-bottom:14px">
     <div class="card">
-      <h3>Course Progress</h3>
-      <div id="progress-list"></div>
+      <h3 style="margin-bottom:10px">📌 OSC 6660 — Quick Info</h3>
+      <p style="font-size:0.83rem;line-height:1.8">
+        <strong>Professor:</strong> Chase Wilson<br>
+        <strong>Canvas:</strong> <a href="https://utah.instructure.com/courses/1248908" target="_blank" style="color:var(--navy)">utah.instructure.com/courses/1248908</a><br>
+        <strong>PMP Exam:</strong> 180 questions · 230 minutes<br>
+        <strong>Domains:</strong> People 42% · Process 50% · Business Environment 8%<br>
+        <strong>Content split:</strong> ~50% Predictive · ~50% Agile/Hybrid
+      </p>
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="show('learn')" style="font-size:0.78rem">🗺 Learning Map</button>
+        <button class="btn btn-outline" onclick="show('mock')" style="font-size:0.78rem">🎯 Mock Exam</button>
+        <button class="btn btn-outline" onclick="show('formulas')" style="font-size:0.78rem">📐 Formulas</button>
+        <button class="btn btn-outline" onclick="show('itto')" style="font-size:0.78rem">🔢 ITTO Grid</button>
+      </div>
     </div>
     <div class="card">
-      <h3>Quick Reference</h3>
-      <p><strong>PMP Exam:</strong> 180 questions, 230 min</p>
-      <p><strong>Content:</strong> ~50% Predictive, ~50% Agile/Hybrid</p>
-      <p><strong>Domains:</strong> People (42%), Process (50%), Business Environment (8%)</p>
-      <p style="margin-top:10px"><strong>OSC 6660 Professor:</strong> Chase Wilson</p>
-      <p><strong>Canvas:</strong> utah.instructure.com/courses/1248908</p>
-      <p style="margin-top:10px"><strong>Triple Constraint:</strong> Scope · Schedule · Cost</p>
-      <p><strong>Project definition:</strong> Temporary endeavor, unique result</p>
+      <h3 style="margin-bottom:10px">📊 Weak Area Tracker</h3>
+      <p style="font-size:0.78rem;color:var(--text-light);margin-bottom:8px">Updates after every quiz. Red = focus here first.</p>
+      <div id="weak-area-chart"></div>
+      <button class="btn btn-outline" onclick="resetCatPerf()" style="font-size:0.7rem;margin-top:8px">Reset Stats</button>
     </div>
   </div>
-  <div class="card" style="margin-bottom:16px">
-    <h3 style="margin-bottom:12px">📊 Weak Area Tracker</h3>
-    <p style="font-size:0.8rem;color:var(--text-light);margin-bottom:10px">Updates after every quiz. Categories below 70% need attention.</p>
-    <div id="weak-area-chart"></div>
-    <button class="btn btn-outline" onclick="resetCatPerf()" style="font-size:0.72rem;margin-top:10px">Reset Stats</button>
+
+  <div class="card" style="margin-bottom:14px">
+    <h3 style="margin-bottom:10px">📈 Course Progress</h3>
+    <div id="progress-list"></div>
   </div>
+
   <div class="card">
-    <h3>Key Formulas at a Glance</h3>
+    <h3 style="margin-bottom:10px">⚡ EVM Quick Reference</h3>
     <div class="grid-3">
       <div><div class="formula-box"><span>SV</span> = EV − PV</div></div>
       <div><div class="formula-box"><span>CV</span> = EV − AC</div></div>
@@ -501,6 +510,7 @@ body.dark .profile-box h2 { color:var(--orange-light); }
       <div><div class="formula-box"><span>EAC</span> = BAC / CPI</div></div>
       <div><div class="formula-box"><span>TCPI</span> = (BAC−EV)/(BAC−AC)</div></div>
     </div>
+    <p style="font-size:0.78rem;margin-top:8px;color:var(--text-light)">→ Full calculator &amp; all formulas: <a onclick="show('formulas')" style="cursor:pointer;color:var(--navy);text-decoration:underline">Formulas &amp; EVM Calc</a></p>
   </div>
 </div>
 
@@ -868,289 +878,416 @@ body.dark .profile-box h2 { color:var(--orange-light); }
 <!-- MODULE 1 -->
 <div id="sec-mod1" class="section">
   <div class="topbar"><h2>Module 1 — Introduction to Project Management</h2><button class="btn btn-primary" onclick="markDone('mod1')">Mark Done</button></div>
-  <div class="card">
-    <h3>Core Definitions</h3>
-    <p><strong>Project</strong> — temporary endeavor undertaken to create a unique product, service, or result</p>
-    <p><strong>Project Management</strong> — application of knowledge, skills, tools, and techniques to meet project requirements</p>
-    <p><strong>Program</strong> — group of related projects managed in coordinated way for benefits not achievable individually</p>
-    <p><strong>Portfolio</strong> — projects, programs, operations managed as a group to achieve strategic objectives</p>
-    <p><strong>Operations</strong> — ongoing, repetitive activities that sustain the organization</p>
+  <div class="card" style="margin-bottom:12px">
+    <h3>OSC 6660 Focus</h3>
+    <p style="font-size:0.85rem;line-height:1.7">Establishes the foundational vocabulary of project management. Prof. Wilson emphasizes understanding <strong>what makes something a project</strong> vs. ongoing operations, and why the PM role exists as a discipline distinct from simply "managing work."</p>
   </div>
-  <div class="card">
-    <h3>Project vs Operations</h3>
-    <table>
-      <tr><th>Project</th><th>Operations</th></tr>
-      <tr><td>Temporary</td><td>Ongoing</td></tr>
-      <tr><td>Unique deliverable</td><td>Repetitive output</td></tr>
-      <tr><td>Progressive elaboration</td><td>Stable processes</td></tr>
-      <tr><td>Definite start/end</td><td>No defined end</td></tr>
-    </table>
+  <div class="grid-2" style="margin-bottom:12px">
+    <div class="card">
+      <h3>Must-Know Distinctions</h3>
+      <table style="font-size:0.82rem;width:100%;border-collapse:collapse">
+        <tr style="background:var(--navy);color:#fff"><th style="padding:6px">Project</th><th style="padding:6px">Operations</th></tr>
+        <tr><td style="padding:5px;border:1px solid var(--border)">Temporary · unique</td><td style="padding:5px;border:1px solid var(--border)">Ongoing · repetitive</td></tr>
+        <tr style="background:var(--bg)"><td style="padding:5px;border:1px solid var(--border)">Defined start/end</td><td style="padding:5px;border:1px solid var(--border)">No defined end</td></tr>
+        <tr><td style="padding:5px;border:1px solid var(--border)">Progressive elaboration</td><td style="padding:5px;border:1px solid var(--border)">Stable processes</td></tr>
+      </table>
+      <p style="font-size:0.82rem;margin-top:8px"><strong>Project → Program → Portfolio</strong><br>Program = related projects for combined benefit. Portfolio = strategic mix for org goals.</p>
+    </div>
+    <div class="card">
+      <h3>Exam Highlights</h3>
+      <ul style="font-size:0.83rem;line-height:1.9">
+        <li>Triple constraint: <strong>Scope · Schedule · Cost</strong> — change one, others are impacted</li>
+        <li>Opportunity cost = value of the path NOT chosen</li>
+        <li>OPAs = internal (templates, lessons learned) · EEFs = external (regulations, market)</li>
+        <li>Predictive = defined upfront · Agile = iterative · Hybrid = both</li>
+        <li>PMO types: Supportive / Controlling / Directive</li>
+      </ul>
+    </div>
   </div>
-  <div class="card">
-    <h3>Triple Constraint &amp; Competing Demands</h3>
-    <p>Scope · Schedule · Cost · Quality · Risk · Resources</p>
-    <p>PM must balance all six competing demands. Changes to one affect others.</p>
-    <h4>Project Life Cycle Phases</h4>
-    <p>Starting → Organizing/Preparing → Executing → Closing</p>
-    <h4>Types of PM Methodologies</h4>
-    <p><strong>Predictive (Waterfall)</strong> — scope/schedule/cost defined early; sequential</p>
-    <p><strong>Agile/Adaptive</strong> — iterative, flexible; scope evolves; value-driven</p>
-    <p><strong>Hybrid</strong> — combination of both</p>
+  <div class="card" style="background:var(--navy);color:#fff">
+    <h3 style="margin-bottom:8px">📚 Deep Dive Links</h3>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button onclick="show('pmbok6')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">PMBOK 6 Overview</button>
+      <button onclick="show('pmbok7')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">PMBOK 7 Principles</button>
+      <button onclick="openStudyModal('general')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">📖 Study: General PM</button>
+    </div>
   </div>
 </div>
 
 <!-- MODULE 2 -->
 <div id="sec-mod2" class="section">
   <div class="topbar"><h2>Module 2 — Project Selection &amp; Business Case</h2><button class="btn btn-primary" onclick="markDone('mod2')">Mark Done</button></div>
-  <div class="card">
-    <h3>Project Selection Methods</h3>
-    <h4>Benefit Measurement Methods</h4>
-    <ul>
-      <li><strong>NPV (Net Present Value)</strong> — higher NPV = better; select if NPV &gt; 0</li>
-      <li><strong>IRR (Internal Rate of Return)</strong> — higher IRR = better</li>
-      <li><strong>Payback Period</strong> — shorter = better; ignores time value of money</li>
-      <li><strong>BCR (Benefit-Cost Ratio)</strong> — &gt;1 is favorable; higher = better</li>
-      <li><strong>Scoring Models</strong> — weighted criteria; often used for portfolio selection</li>
-    </ul>
-    <h4>Constrained Optimization Methods</h4>
-    <p>Linear/integer/dynamic programming; used for large complex decisions</p>
+  <div class="card" style="margin-bottom:12px">
+    <h3>OSC 6660 Focus</h3>
+    <p style="font-size:0.85rem;line-height:1.7">How organizations decide <em>which</em> projects to pursue. Covers financial analysis methods, the business case, and the Project Charter. Sets up the concept that the PM's job is to deliver value — not just outputs.</p>
   </div>
-  <div class="card">
-    <h3>Business Case &amp; Charter</h3>
-    <p><strong>Business Case</strong> — justifies project; problem/opportunity, options, cost-benefit analysis, recommendation</p>
-    <p><strong>Benefits Management Plan</strong> — documents when/how benefits will be realized</p>
-    <p><strong>Project Charter</strong> — formally authorizes project and PM; created by Sponsor; includes high-level scope, budget, schedule, stakeholders</p>
-    <h4>NPV Formula</h4>
-    <div class="formula-box"><span>NPV</span> = Σ [Cash Flow / (1+r)^t] − Initial Investment</div>
-    <p style="margin-top:8px">r = discount rate, t = time period</p>
+  <div class="grid-2" style="margin-bottom:12px">
+    <div class="card">
+      <h3>Project Selection Methods</h3>
+      <table style="font-size:0.82rem;width:100%;border-collapse:collapse">
+        <tr style="background:var(--navy);color:#fff"><th style="padding:6px">Method</th><th style="padding:6px">Rule</th></tr>
+        <tr><td style="padding:5px;border:1px solid var(--border)">NPV</td><td style="padding:5px;border:1px solid var(--border)">Higher &gt; 0 is better</td></tr>
+        <tr style="background:var(--bg)"><td style="padding:5px;border:1px solid var(--border)">IRR</td><td style="padding:5px;border:1px solid var(--border)">Higher % is better</td></tr>
+        <tr><td style="padding:5px;border:1px solid var(--border)">Payback Period</td><td style="padding:5px;border:1px solid var(--border)">Shorter is better</td></tr>
+        <tr style="background:var(--bg)"><td style="padding:5px;border:1px solid var(--border)">BCR</td><td style="padding:5px;border:1px solid var(--border)">&gt;1 favorable; higher better</td></tr>
+      </table>
+      <div class="formula-box" style="margin-top:10px"><span>NPV</span> = Σ [CF / (1+r)^t] − Investment</div>
+    </div>
+    <div class="card">
+      <h3>Exam Highlights</h3>
+      <ul style="font-size:0.83rem;line-height:1.9">
+        <li><strong>Business Case</strong> = justification document (problem, options, recommendation)</li>
+        <li><strong>Benefits Management Plan</strong> = how/when benefits are measured post-project</li>
+        <li><strong>Charter</strong> = formally authorizes project AND the PM's authority</li>
+        <li>If NPV of two projects: always choose the one with <strong>higher NPV</strong></li>
+        <li>Payback period ignores time value of money — PMI considers it less rigorous</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="background:var(--navy);color:#fff">
+    <h3 style="margin-bottom:8px">📚 Deep Dive Links</h3>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button onclick="show('p6-integration')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">Integration (Charter)</button>
+      <button onclick="show('talent')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">Business Acumen</button>
+      <button onclick="openStudyModal('integration')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">📖 Study: Integration</button>
+    </div>
   </div>
 </div>
 
 <!-- MODULE 3 -->
 <div id="sec-mod3" class="section">
   <div class="topbar"><h2>Module 3 — Scope Management &amp; WBS</h2><button class="btn btn-primary" onclick="markDone('mod3')">Mark Done</button></div>
-  <div class="card">
-    <h3>Scope Management Process</h3>
-    <p>Plan → Collect Requirements → Define Scope → Create WBS → Validate Scope → Control Scope</p>
-    <h4>Requirements Collection Techniques</h4>
-    <ul>
-      <li>Interviews, Focus Groups, Facilitated Workshops (JAD)</li>
-      <li>Group Creativity: Brainstorming, Nominal Group, Delphi, Mind Mapping, Affinity Diagram</li>
-      <li>Group Decision: Unanimity, Majority, Plurality, Dictatorship</li>
-      <li>Questionnaires/Surveys, Observations (Job Shadowing), Prototypes</li>
-      <li>Benchmarking, Context Diagrams, Document Analysis</li>
-    </ul>
+  <div class="card" style="margin-bottom:12px">
+    <h3>OSC 6660 Focus</h3>
+    <p style="font-size:0.85rem;line-height:1.7">Defining exactly what the project will and won't deliver. Prof. Wilson stresses the WBS as the foundation for all planning — you can't estimate cost, schedule, or risk without it.</p>
   </div>
-  <div class="card">
-    <h3>WBS Best Practices</h3>
-    <p><strong>100% Rule</strong> — WBS captures 100% of scope; nothing in or out without change control</p>
-    <p><strong>Work Package</strong> — lowest level of WBS; can be estimated, scheduled, assigned</p>
-    <p><strong>Control Account</strong> — management control point combining scope, budget, schedule</p>
-    <p><strong>Planning Package</strong> — WBS component below control account, scope defined but activities not yet planned</p>
-    <p><strong>WBS Dictionary</strong> — defines each WBS element: description, acceptance criteria, owner, resources, milestones</p>
-    <h4>Decomposition</h4>
-    <p>Break deliverables until manageable. Typical: 5-8 rule (each element has 5-8 sub-elements)</p>
+  <div class="grid-2" style="margin-bottom:12px">
+    <div class="card">
+      <h3>Requirements Techniques (Tested)</h3>
+      <ul style="font-size:0.83rem;line-height:1.8">
+        <li><strong>Delphi</strong> — anonymous expert consensus, multiple rounds</li>
+        <li><strong>JAD Workshop</strong> — facilitated group session</li>
+        <li><strong>Prototyping</strong> — build model to elicit requirements</li>
+        <li><strong>Context Diagram</strong> — shows system scope visually</li>
+        <li><strong>RTM</strong> — traces requirements from source → delivery</li>
+      </ul>
+      <p style="font-size:0.82rem;margin-top:8px"><strong>WBS 100% Rule:</strong> WBS must capture 100% of project scope. Nothing in or out without change control.</p>
+    </div>
+    <div class="card">
+      <h3>Exam Highlights</h3>
+      <ul style="font-size:0.83rem;line-height:1.9">
+        <li>Scope Baseline = <strong>Scope Statement + WBS + WBS Dictionary</strong></li>
+        <li>Work Package = lowest WBS level (estimable, assignable)</li>
+        <li>Validate Scope = customer <strong>accepts</strong> deliverables</li>
+        <li>Control Scope = prevents/manages <strong>scope creep</strong></li>
+        <li>Gold plating = adding unrequested features = always wrong</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="background:var(--navy);color:#fff">
+    <h3 style="margin-bottom:8px">📚 Deep Dive Links</h3>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button onclick="show('p6-scope')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">Scope Management</button>
+      <button onclick="show('pm-tools')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">WBS Diagram</button>
+      <button onclick="openStudyModal('scope')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">📖 Study: Scope</button>
+    </div>
   </div>
 </div>
 
 <!-- MODULE 4 -->
 <div id="sec-mod4" class="section">
   <div class="topbar"><h2>Module 4 — Scheduling</h2><button class="btn btn-primary" onclick="markDone('mod4')">Mark Done</button></div>
-  <div class="card">
-    <h3>Network Diagrams &amp; Dependencies</h3>
-    <p><strong>PDM (Precedence Diagramming Method)</strong> — Activity-on-Node; 4 dependency types:</p>
-    <ul>
-      <li><strong>FS (Finish-to-Start)</strong> — most common; predecessor must finish before successor starts</li>
-      <li><strong>SS (Start-to-Start)</strong> — predecessor must start before successor starts</li>
-      <li><strong>FF (Finish-to-Finish)</strong> — predecessor must finish before successor finishes</li>
-      <li><strong>SF (Start-to-Finish)</strong> — rare; predecessor must start before successor finishes</li>
-    </ul>
-    <h4>Dependency Types</h4>
-    <p>Mandatory (Hard Logic) · Discretionary (Soft Logic/Preferred) · External · Internal</p>
+  <div class="card" style="margin-bottom:12px">
+    <h3>OSC 6660 Focus</h3>
+    <p style="font-size:0.85rem;line-height:1.7">Network diagrams, critical path, and float calculations. This module has the most math on the exam — forward/backward pass, float, PERT. Prof. Wilson spends significant time here because these appear in almost every PMP exam.</p>
   </div>
-  <div class="card">
-    <h3>Critical Path &amp; Float</h3>
-    <div class="formula-box">
-      <span>ES</span> = Early Start &nbsp; <span>EF</span> = ES + Duration − 1<br>
-      <span>LF</span> = Late Finish &nbsp; <span>LS</span> = LF − Duration + 1<br>
-      <span>Float</span> = LS − ES = LF − EF
+  <div class="grid-2" style="margin-bottom:12px">
+    <div class="card">
+      <h3>CPM Calculation Steps</h3>
+      <ol style="font-size:0.83rem;line-height:1.9">
+        <li><strong>Forward Pass</strong>: ES → EF (left to right)</li>
+        <li><strong>Backward Pass</strong>: LF → LS (right to left)</li>
+        <li><strong>Float</strong> = LS − ES = LF − EF</li>
+        <li><strong>Critical Path</strong> = all activities with Float = 0</li>
+      </ol>
+      <div class="formula-box" style="margin-top:8px"><span>PERT</span> = (O + 4M + P) / 6 &nbsp;·&nbsp; <span>SD</span> = (P−O)/6</div>
+      <p style="font-size:0.8rem;margin-top:6px"><strong>Crash</strong> = add cost, reduce time. <strong>Fast Track</strong> = overlap tasks, add risk.</p>
     </div>
-    <p style="margin-top:8px"><strong>Forward Pass</strong> → calculates ES/EF (start at beginning)</p>
-    <p><strong>Backward Pass</strong> → calculates LF/LS (start at end)</p>
-    <p><strong>Critical Path</strong> = activities with zero float</p>
-    <h4>Resource Optimization</h4>
-    <p><strong>Resource Leveling</strong> — adjust start/end dates to balance demand; may extend schedule</p>
-    <p><strong>Resource Smoothing</strong> — adjust within float; does not extend schedule</p>
+    <div class="card">
+      <h3>Exam Highlights</h3>
+      <ul style="font-size:0.83rem;line-height:1.9">
+        <li>FS = most common dependency type</li>
+        <li>Free Float ≠ Total Float — know the difference</li>
+        <li>Adding float to a non-critical task doesn't shorten the project</li>
+        <li>Resource Leveling <em>may extend</em> the schedule</li>
+        <li>Resource Smoothing works <em>within</em> existing float — no extension</li>
+        <li>Mandatory dependency = hard logic (external or regulatory)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="background:var(--navy);color:#fff">
+    <h3 style="margin-bottom:8px">📚 Deep Dive Links</h3>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button onclick="show('p6-schedule')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">Schedule Management</button>
+      <button onclick="show('pm-tools')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">CPM Network Diagram</button>
+      <button onclick="show('formula-drill')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">Formula Drill</button>
+      <button onclick="openStudyModal('schedule')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">📖 Study: Schedule</button>
+    </div>
   </div>
 </div>
 
 <!-- MODULE 5 -->
 <div id="sec-mod5" class="section">
   <div class="topbar"><h2>Module 5 — Resources &amp; Cost Management</h2><button class="btn btn-primary" onclick="markDone('mod5')">Mark Done</button></div>
-  <div class="card">
-    <h3>Resource Estimation Methods</h3>
-    <ul>
-      <li><strong>Analogous</strong> — use similar past project data; less accurate, low cost</li>
-      <li><strong>Parametric</strong> — statistical model (cost per unit × quantity); more accurate</li>
-      <li><strong>Bottom-Up</strong> — estimate at work package level, roll up; most accurate, most time-consuming</li>
-      <li><strong>Three-Point (PERT)</strong> — O, M, P estimates; used for risk-adjusted estimates</li>
-    </ul>
+  <div class="card" style="margin-bottom:12px">
+    <h3>OSC 6660 Focus</h3>
+    <p style="font-size:0.85rem;line-height:1.7">Cost estimating, budgeting, and Earned Value Management (EVM). EVM is the highest-tested topic on the PMP — expect 10–15 EVM questions on the real exam. Also covers RACI and resource management basics.</p>
   </div>
-  <div class="card">
-    <h3>Cost Concepts</h3>
-    <p><strong>Direct Costs</strong> — directly attributable to project (labor, materials)</p>
-    <p><strong>Indirect Costs</strong> — overhead, shared facilities</p>
-    <p><strong>Sunk Cost</strong> — already spent; irrelevant to future decisions</p>
-    <p><strong>Opportunity Cost</strong> — value of next best alternative foregone</p>
-    <p><strong>Life Cycle Cost</strong> — total cost from inception through disposal</p>
-    <p><strong>Cost Baseline</strong> — approved time-phased budget (S-curve); excludes management reserve</p>
-    <p><strong>Project Budget</strong> = Cost Baseline + Management Reserve</p>
-    <h4>RACI Matrix</h4>
-    <p><strong>R</strong>esponsible · <strong>A</strong>ccountable · <strong>C</strong>onsulted · <strong>I</strong>nformed</p>
-    <p>Only ONE person is Accountable per task</p>
+  <div class="grid-2" style="margin-bottom:12px">
+    <div class="card">
+      <h3>Estimating Methods</h3>
+      <table style="font-size:0.82rem;width:100%;border-collapse:collapse">
+        <tr style="background:var(--navy);color:#fff"><th style="padding:5px">Method</th><th style="padding:5px">Accuracy</th><th style="padding:5px">Effort</th></tr>
+        <tr><td style="padding:5px;border:1px solid var(--border)">Analogous</td><td style="padding:5px;border:1px solid var(--border)">Low</td><td style="padding:5px;border:1px solid var(--border)">Low</td></tr>
+        <tr style="background:var(--bg)"><td style="padding:5px;border:1px solid var(--border)">Parametric</td><td style="padding:5px;border:1px solid var(--border)">Medium</td><td style="padding:5px;border:1px solid var(--border)">Medium</td></tr>
+        <tr><td style="padding:5px;border:1px solid var(--border)">Bottom-Up</td><td style="padding:5px;border:1px solid var(--border)">Highest</td><td style="padding:5px;border:1px solid var(--border)">High</td></tr>
+        <tr style="background:var(--bg)"><td style="padding:5px;border:1px solid var(--border)">Three-Point</td><td style="padding:5px;border:1px solid var(--border)">High</td><td style="padding:5px;border:1px solid var(--border)">Medium</td></tr>
+      </table>
+      <p style="font-size:0.82rem;margin-top:8px"><strong>Budget = Cost Baseline + Management Reserve</strong><br>Cost Baseline = time-phased (S-curve), excludes Mgmt Reserve</p>
+    </div>
+    <div class="card">
+      <h3>Exam Highlights</h3>
+      <ul style="font-size:0.83rem;line-height:1.9">
+        <li>Sunk costs are irrelevant to future decisions</li>
+        <li>Opportunity cost = value of the rejected alternative</li>
+        <li>RACI: only <strong>one Accountable</strong> per task</li>
+        <li>CPI &lt; 1 = over budget; SPI &lt; 1 = behind schedule</li>
+        <li>EAC = BAC/CPI is the standard "going forward" formula</li>
+        <li>TCPI &gt; 1 = future work must be MORE efficient</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="background:var(--navy);color:#fff">
+    <h3 style="margin-bottom:8px">📚 Deep Dive Links</h3>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button onclick="show('p6-cost')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">Cost &amp; EVM</button>
+      <button onclick="show('p6-resource')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">Resource Management</button>
+      <button onclick="show('formulas')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">EVM Calculator</button>
+      <button onclick="openStudyModal('cost')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">📖 Study: Cost/EVM</button>
+    </div>
   </div>
 </div>
 
 <!-- MODULE 6 -->
 <div id="sec-mod6" class="section">
   <div class="topbar"><h2>Module 6 — Risk Management</h2><button class="btn btn-primary" onclick="markDone('mod6')">Mark Done</button></div>
-  <div class="card">
-    <h3>Risk Process Steps</h3>
-    <p>Plan → Identify → Qualitative Analysis → Quantitative Analysis → Plan Responses → Implement Responses → Monitor</p>
-    <h4>Risk Identification Tools</h4>
-    <ul>
-      <li>Brainstorming, Delphi Technique, Checklists, Root Cause Analysis</li>
-      <li>SWOT Analysis, Cause-and-Effect Diagrams, Assumptions &amp; Constraint Analysis</li>
-      <li>Risk Register: risk description, probability, impact, owner, response</li>
-    </ul>
+  <div class="card" style="margin-bottom:12px">
+    <h3>OSC 6660 Focus</h3>
+    <p style="font-size:0.85rem;line-height:1.7">Proactive risk identification, analysis, and response planning. The PMP heavily tests the <em>sequence</em> of risk processes and the ability to choose the right response strategy. Prof. Wilson emphasizes that risk management is ongoing — not a one-time event.</p>
   </div>
-  <div class="card">
-    <h3>Probability × Impact Matrix</h3>
-    <p>Rate risks High/Medium/Low based on P×I score. High = watchlist, assign response</p>
-    <h4>Quantitative Tools</h4>
-    <p><strong>EMV</strong> = Probability × Monetary Impact (use in decision trees)</p>
-    <p><strong>Monte Carlo Simulation</strong> — thousands of iterations; probability distributions for cost/schedule</p>
-    <p><strong>Sensitivity Analysis</strong> — Tornado diagram; shows which risk has most impact</p>
-    <h4>Response Strategies (Threats)</h4>
-    <p>Avoid → eliminate the risk · Transfer → shift impact (insurance) · Mitigate → reduce P or I · Accept → contingency/passive</p>
-    <h4>Response Strategies (Opportunities)</h4>
-    <p>Exploit · Share · Enhance · Accept</p>
+  <div class="grid-2" style="margin-bottom:12px">
+    <div class="card">
+      <h3>Risk Process Sequence</h3>
+      <ol style="font-size:0.83rem;line-height:1.9">
+        <li>Plan Risk Management</li>
+        <li>Identify Risks → Risk Register</li>
+        <li>Qualitative Analysis (P×I matrix)</li>
+        <li>Quantitative Analysis (EMV, Monte Carlo)</li>
+        <li>Plan Risk Responses</li>
+        <li>Implement Risk Responses</li>
+        <li>Monitor Risks (ongoing)</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h3>Exam Highlights</h3>
+      <ul style="font-size:0.83rem;line-height:1.9">
+        <li>Contingency = known-unknowns (in baseline)</li>
+        <li>Management Reserve = unknown-unknowns (NOT in baseline)</li>
+        <li><strong>Avoid</strong> = eliminate threat entirely</li>
+        <li><strong>Transfer</strong> = insurance or contract (impact shifts, not risk)</li>
+        <li>Secondary risk = created BY your response</li>
+        <li>Residual risk = what remains AFTER response</li>
+        <li>Workaround = unplanned response after risk occurs</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="background:var(--navy);color:#fff">
+    <h3 style="margin-bottom:8px">📚 Deep Dive Links</h3>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button onclick="show('p6-risk')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">Risk Management</button>
+      <button onclick="show('pm-tools')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">Risk Matrix &amp; Tools</button>
+      <button onclick="openStudyModal('risk')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">📖 Study: Risk</button>
+    </div>
   </div>
 </div>
 
 <!-- MODULE 7 -->
 <div id="sec-mod7" class="section">
   <div class="topbar"><h2>Module 7 — Quality Management</h2><button class="btn btn-primary" onclick="markDone('mod7')">Mark Done</button></div>
-  <div class="card">
-    <h3>Quality Concepts</h3>
-    <p><strong>Quality</strong> — degree to which project satisfies requirements</p>
-    <p><strong>Grade</strong> — category of product with same function but different specifications</p>
-    <p><strong>Prevention over Inspection</strong> — build quality in, don't inspect it in</p>
-    <p><strong>Cost of Quality (CoQ)</strong></p>
-    <ul>
-      <li><strong>Conformance Costs:</strong> Prevention (training, documentation) + Appraisal (testing, audits)</li>
-      <li><strong>Non-Conformance Costs:</strong> Internal failure (rework) + External failure (warranty, lost business)</li>
-    </ul>
+  <div class="card" style="margin-bottom:12px">
+    <h3>OSC 6660 Focus</h3>
+    <p style="font-size:0.85rem;line-height:1.7">PMI's quality philosophy: prevention over inspection, quality is planned and built in — not tested in afterward. Covers the 7 basic quality tools and how to tell them apart on the exam.</p>
   </div>
-  <div class="card">
-    <h3>Quality Tools</h3>
-    <p><strong>Cause-Effect (Ishikawa/Fishbone)</strong> — identify root causes (6 Ms: Methods, Machines, Materials, Measurements, Mother Nature, Manpower)</p>
-    <p><strong>Control Chart</strong> — statistical process control; UCL/LCL at ±3σ; Rule of Seven</p>
-    <p><strong>Pareto Chart</strong> — bar chart sorted by frequency; 80/20 rule</p>
-    <p><strong>Histogram</strong> — frequency distribution</p>
-    <p><strong>Scatter Diagram</strong> — shows correlation between two variables</p>
-    <p><strong>Flow Chart</strong> — process flow; identify improvement opportunities</p>
-    <p><strong>Run Chart</strong> — data over time; identify trends</p>
-    <p><strong>Quality Audits</strong> — structured review of quality processes; identify gaps</p>
+  <div class="grid-2" style="margin-bottom:12px">
+    <div class="card">
+      <h3>7 Basic Quality Tools</h3>
+      <ul style="font-size:0.83rem;line-height:1.8">
+        <li><strong>Fishbone (Ishikawa)</strong> — root cause analysis (6 Ms)</li>
+        <li><strong>Control Chart</strong> — statistical process control; Rule of 7</li>
+        <li><strong>Pareto Chart</strong> — 80/20 rule; prioritize vital few</li>
+        <li><strong>Histogram</strong> — frequency distribution of one variable</li>
+        <li><strong>Scatter Diagram</strong> — correlation between two variables</li>
+        <li><strong>Flowchart</strong> — process flow and decision points</li>
+        <li><strong>Run Chart</strong> — performance trend over time</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Exam Highlights</h3>
+      <ul style="font-size:0.83rem;line-height:1.9">
+        <li>Manage Quality (E) = audit processes. Control Quality (M&amp;C) = inspect products</li>
+        <li>CoQ: Conformance (prevention + appraisal) vs. Non-Conformance (rework, warranty)</li>
+        <li>Quality ≠ Grade. Low quality is always a problem; low grade may not be</li>
+        <li>Control chart: UCL/LCL at ±3σ. 7 consecutive points = out of control</li>
+        <li>Gold plating is a quality problem (adds untested scope)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="background:var(--navy);color:#fff">
+    <h3 style="margin-bottom:8px">📚 Deep Dive Links</h3>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button onclick="show('p6-quality')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">Quality Management</button>
+      <button onclick="show('pm-tools')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">Fishbone &amp; Diagrams</button>
+      <button onclick="show('sixsigma')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">Six Sigma / DMAIC</button>
+      <button onclick="openStudyModal('quality')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">📖 Study: Quality</button>
+    </div>
   </div>
 </div>
 
 <!-- MODULE 8 -->
 <div id="sec-mod8" class="section">
   <div class="topbar"><h2>Module 8 — Procurement Management</h2><button class="btn btn-primary" onclick="markDone('mod8')">Mark Done</button></div>
-  <div class="card">
-    <h3>Procurement Concepts</h3>
-    <p><strong>Make-or-Buy Analysis</strong> — determine if work should be done internally or contracted</p>
-    <p><strong>SOW (Statement of Work)</strong> — describes work to be performed by seller; includes performance, deliverables, timeline</p>
-    <p><strong>Procurement Documents:</strong> RFP (Request for Proposal) · RFQ (Request for Quotation) · IFB (Invitation for Bid)</p>
-    <p><strong>Source Selection Criteria</strong> — price, technical capability, past performance, management approach</p>
+  <div class="card" style="margin-bottom:12px">
+    <h3>OSC 6660 Focus</h3>
+    <p style="font-size:0.85rem;line-height:1.7">Contract types and risk allocation. The PMP will give you a scenario and ask you to identify the contract type or who bears the risk. Prof. Wilson focuses on being able to distinguish FFP, CPFF, T&amp;M and when each is appropriate.</p>
   </div>
-  <div class="card">
-    <h3>Contract Management</h3>
-    <p><strong>Privity of Contract</strong> — legal relationship between contracting parties; PM must be aware of limits</p>
-    <p><strong>Claims Administration</strong> — disputed changes; use ADR (Alternative Dispute Resolution) before litigation</p>
-    <p><strong>Point of Total Assumption (PTA)</strong> — in FPIF; cost above which seller absorbs all cost overruns</p>
-    <div class="formula-box"><span>PTA</span> = ((Ceiling − Target Price) / Buyer's Share Ratio) + Target Cost</div>
-    <h4>Seller Selection Process</h4>
-    <p>Advertise → Qualified Sellers List → Proposals → Evaluation → Negotiations → Award</p>
+  <div class="grid-2" style="margin-bottom:12px">
+    <div class="card">
+      <h3>Contract Type Risk Summary</h3>
+      <table style="font-size:0.81rem;width:100%;border-collapse:collapse">
+        <tr style="background:var(--navy);color:#fff"><th style="padding:5px">Type</th><th style="padding:5px">Buyer Risk</th><th style="padding:5px">Seller Risk</th></tr>
+        <tr><td style="padding:5px;border:1px solid var(--border)">FFP</td><td style="padding:5px;border:1px solid var(--border)">Low</td><td style="padding:5px;border:1px solid var(--border)">High</td></tr>
+        <tr style="background:var(--bg)"><td style="padding:5px;border:1px solid var(--border)">FPIF</td><td style="padding:5px;border:1px solid var(--border)">Low–Mod</td><td style="padding:5px;border:1px solid var(--border)">Mod</td></tr>
+        <tr><td style="padding:5px;border:1px solid var(--border)">CPFF</td><td style="padding:5px;border:1px solid var(--border)">High</td><td style="padding:5px;border:1px solid var(--border)">Low</td></tr>
+        <tr style="background:var(--bg)"><td style="padding:5px;border:1px solid var(--border)">T&amp;M</td><td style="padding:5px;border:1px solid var(--border)">High</td><td style="padding:5px;border:1px solid var(--border)">Low</td></tr>
+      </table>
+      <div class="formula-box" style="margin-top:8px;font-size:0.78rem"><span>PTA</span> = ((Ceiling − Target Price) / Buyer Share) + Target Cost</div>
+    </div>
+    <div class="card">
+      <h3>Exam Highlights</h3>
+      <ul style="font-size:0.83rem;line-height:1.9">
+        <li><strong>RFP</strong> = want full proposal + approach (solution unknown)</li>
+        <li><strong>IFB</strong> = want price only (solution well-defined)</li>
+        <li><strong>RFQ</strong> = want unit pricing / catalog rates</li>
+        <li>SOW describes <em>what</em> the seller delivers</li>
+        <li>Control Procurements officially closes contracts</li>
+        <li>ADR (mediation/arbitration) before litigation</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="background:var(--navy);color:#fff">
+    <h3 style="margin-bottom:8px">📚 Deep Dive Links</h3>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button onclick="show('p6-procurement')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">Procurement Management</button>
+      <button onclick="openStudyModal('procurement')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">📖 Study: Procurement</button>
+    </div>
   </div>
 </div>
 
 <!-- MODULE 9 -->
 <div id="sec-mod9" class="section">
   <div class="topbar"><h2>Module 9 — Teams &amp; Communications</h2><button class="btn btn-primary" onclick="markDone('mod9')">Mark Done</button></div>
-  <div class="card">
-    <h3>Team Development</h3>
-    <p><strong>Tuckman's Stages:</strong> Forming → Storming → Norming → Performing → Adjourning</p>
-    <p><strong>Emotional Intelligence (EI)</strong> — self-awareness, self-regulation, motivation, empathy, social skills</p>
-    <h4>Conflict Management</h4>
-    <p><strong>Sources:</strong> Schedules, Resources, Priorities, Technical, Admin, Personality, Cost</p>
-    <p><strong>Best approach:</strong> Collaborative/Problem-Solve (win-win)</p>
-    <p><strong>Other approaches:</strong> Compromise (lose-lose) · Force (win-lose) · Smooth/Accommodate · Withdraw</p>
+  <div class="card" style="margin-bottom:12px">
+    <h3>OSC 6660 Focus</h3>
+    <p style="font-size:0.85rem;line-height:1.7">The "People" domain (42% of PMP). Motivation theories, team development, conflict resolution, and communication channels. These are heavy on the new PMP — Prof. Wilson emphasizes that situational judgment questions almost always involve these topics.</p>
   </div>
-  <div class="card">
-    <h3>Communication Planning</h3>
-    <div class="formula-box">Channels = <span>n(n−1)/2</span> where n = number of stakeholders</div>
-    <p style="margin-top:8px"><strong>Communication Plan includes:</strong> who needs what info, when, format, method, responsible party</p>
-    <p><strong>Meetings Best Practices:</strong> Set agenda in advance, assign facilitator, document decisions, assign action items with owners and due dates</p>
-    <h4>Virtual Teams</h4>
-    <p>Challenges: time zones, cultural differences, communication barriers</p>
-    <p>Tools: video conferencing, project management software, chat tools</p>
-    <h4>Stakeholder Engagement Assessment Matrix</h4>
-    <p>Current vs Desired engagement for each stakeholder; identify gaps and plan actions</p>
+  <div class="grid-2" style="margin-bottom:12px">
+    <div class="card">
+      <h3>Key Theories (Tested)</h3>
+      <ul style="font-size:0.83rem;line-height:1.8">
+        <li><strong>Maslow</strong>: Physiological → Safety → Social → Esteem → Self-Actualization</li>
+        <li><strong>Herzberg</strong>: Motivators (achievement, recognition) vs. Hygiene (salary, environment)</li>
+        <li><strong>McGregor</strong>: X = people dislike work · Y = people are self-motivated</li>
+        <li><strong>Tuckman</strong>: Forming → Storming → Norming → Performing → Adjourning</li>
+      </ul>
+      <div class="formula-box" style="margin-top:8px"><span>Channels</span> = n(n−1)/2</div>
+    </div>
+    <div class="card">
+      <h3>Exam Highlights</h3>
+      <ul style="font-size:0.83rem;line-height:1.9">
+        <li>Collaborate/Problem-Solve = BEST conflict resolution (always)</li>
+        <li>Force = WORST (last resort only)</li>
+        <li>Storming is <em>normal</em> — PM coaches through it, doesn't fire people</li>
+        <li>Interactive comms = best when immediate feedback needed</li>
+        <li>Salary is a <strong>hygiene factor</strong> (prevents dissatisfaction, doesn't motivate)</li>
+        <li>Virtual teams: extra attention to cultural norms and time zones</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="background:var(--navy);color:#fff">
+    <h3 style="margin-bottom:8px">📚 Deep Dive Links</h3>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button onclick="show('p6-resource')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">Resource Management</button>
+      <button onclick="show('p6-comms')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">Communications</button>
+      <button onclick="show('talent')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">Talent Triangle</button>
+      <button onclick="openStudyModal('resource')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">📖 Study: Resource/HR</button>
+    </div>
   </div>
 </div>
 
 <!-- MODULE 10 -->
 <div id="sec-mod10" class="section">
   <div class="topbar"><h2>Module 10 — Agile, Hybrid &amp; Closing</h2><button class="btn btn-primary" onclick="markDone('mod10')">Mark Done</button></div>
-  <div class="card">
-    <h3>Agile Manifesto (4 Values)</h3>
-    <ol>
-      <li>Individuals and interactions OVER processes and tools</li>
-      <li>Working software OVER comprehensive documentation</li>
-      <li>Customer collaboration OVER contract negotiation</li>
-      <li>Responding to change OVER following a plan</li>
-    </ol>
-    <h4>12 Agile Principles (key ones)</h4>
-    <ul>
-      <li>Highest priority: satisfy customer through early, continuous delivery</li>
-      <li>Welcome changing requirements, even late in development</li>
-      <li>Deliver working software frequently (2 weeks to 2 months)</li>
-      <li>Business people and developers must work together daily</li>
-      <li>Face-to-face conversation is best form of communication</li>
-      <li>Working software is primary measure of progress</li>
-      <li>Sustainable pace; teams should maintain constant pace indefinitely</li>
-    </ul>
+  <div class="card" style="margin-bottom:12px">
+    <h3>OSC 6660 Focus</h3>
+    <p style="font-size:0.85rem;line-height:1.7">The PMP is now ~50% agile/hybrid. This module covers Scrum, Kanban, XP, and hybrid approaches — plus formal project closure. Prof. Wilson emphasizes that you must know Scrum cold: all 5 events, 3 roles, 3 artifacts, and when sprint scope is locked.</p>
   </div>
-  <div class="card">
-    <h3>Scrum Framework</h3>
-    <p><strong>Roles:</strong> Product Owner · Scrum Master (servant leader) · Development Team</p>
-    <p><strong>Artifacts:</strong> Product Backlog · Sprint Backlog · Increment</p>
-    <p><strong>Events:</strong> Sprint (1-4 weeks) · Sprint Planning · Daily Scrum (15 min) · Sprint Review · Sprint Retrospective</p>
-    <p><strong>Definition of Done (DoD)</strong> — shared understanding of when work is complete</p>
-    <h4>Kanban</h4>
-    <p>Visualize workflow · Limit WIP · Manage flow · Make policies explicit · Improve collaboratively</p>
-    <h4>SAFe (Scaled Agile)</h4>
-    <p>Agile at enterprise scale: Team → Program (ART) → Large Solution → Portfolio levels</p>
+  <div class="grid-2" style="margin-bottom:12px">
+    <div class="card">
+      <h3>Scrum Quick Reference</h3>
+      <p style="font-size:0.82rem;font-weight:700;margin-bottom:4px">3 Roles</p>
+      <p style="font-size:0.82rem;margin-bottom:8px">Product Owner · Scrum Master · Dev Team</p>
+      <p style="font-size:0.82rem;font-weight:700;margin-bottom:4px">5 Events (timeboxed)</p>
+      <ul style="font-size:0.82rem;line-height:1.7;margin-bottom:8px">
+        <li>Sprint (1–4 weeks)</li>
+        <li>Sprint Planning</li>
+        <li>Daily Scrum (15 min max)</li>
+        <li>Sprint Review (demo)</li>
+        <li>Retrospective (process improvement)</li>
+      </ul>
+      <p style="font-size:0.82rem;font-weight:700;margin-bottom:4px">3 Artifacts</p>
+      <p style="font-size:0.82rem">Product Backlog · Sprint Backlog · Increment</p>
+    </div>
+    <div class="card">
+      <h3>Exam Highlights</h3>
+      <ul style="font-size:0.83rem;line-height:1.9">
+        <li>Sprint backlog is <strong>locked</strong> once sprint begins</li>
+        <li>Product Owner owns &amp; prioritizes the backlog</li>
+        <li>Scrum Master = servant leader, removes impediments</li>
+        <li>Retrospective = improve <em>process</em>. Review = inspect <em>product</em></li>
+        <li>Kanban: no sprints, manage flow with WIP limits</li>
+        <li>Formal closure required even for terminated projects</li>
+        <li>Lessons Learned captured throughout, formalized at close</li>
+      </ul>
+    </div>
   </div>
-  <div class="card">
-    <h3>Project Closing</h3>
-    <p><strong>Close Project or Phase process:</strong> Obtain final acceptance → Document lessons learned → Archive records → Release resources → Update organizational process assets</p>
-    <p><strong>Lessons Learned</strong> — captured throughout project, formalized at close; input to future projects</p>
-    <p><strong>Final Report</strong> — summary of project performance vs baseline</p>
-    <p><strong>Administrative Closure vs Contract Closure</strong> — both required; contract closure first</p>
-    <p><strong>Early Project Termination</strong> — still requires formal closure; document what was accomplished</p>
+  <div class="card" style="background:var(--navy);color:#fff">
+    <h3 style="margin-bottom:8px">📚 Deep Dive Links</h3>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button onclick="show('agile-deep')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">Agile Deep Dive</button>
+      <button onclick="show('pmbok7')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">PMBOK 7 Principles</button>
+      <button onclick="show('p6-integration')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">Closing Process</button>
+      <button onclick="openStudyModal('agile')" class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,0.4);font-size:0.78rem">📖 Study: Agile</button>
+    </div>
   </div>
 </div>
 
