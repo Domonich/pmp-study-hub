@@ -7181,17 +7181,24 @@ window.addEventListener('load', () => {
   const qStatEl = document.getElementById('stat-questions');
   if (qStatEl) qStatEl.textContent = quizBank.length + (typeof sitBank !== 'undefined' ? '+' + sitBank.length + ' sit.' : '');
 
-  const active = getActiveProfile();
-  const profiles = getProfiles();
+  let active = getActiveProfile();
+  let profiles = getProfiles();
+  // Auto-create a default profile if none exists so the app is immediately usable
   if (!active || !profiles.find(p => p.id === active)) {
-    // First launch or profile deleted — show profile modal
-    renderProfileList();
-    document.getElementById('profile-overlay').style.display = 'flex';
-    // Set up a default if no profiles exist yet
-  } else {
-    document.getElementById('profile-overlay').style.display = 'none';
-    applyUserData();
+    if (profiles.length === 0) {
+      const id = 'u_default';
+      profiles = [{ id, name: 'Student', created: new Date().toLocaleDateString() }];
+      saveProfiles(profiles);
+      localStorage.setItem(ACTIVE_KEY, id);
+      active = id;
+    } else {
+      // Profiles exist but none active — activate the first one
+      active = profiles[0].id;
+      localStorage.setItem(ACTIVE_KEY, active);
+    }
   }
+  document.getElementById('profile-overlay').style.display = 'none';
+  applyUserData();
 });
 </script>
 </body>
