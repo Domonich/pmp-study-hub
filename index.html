@@ -3787,14 +3787,12 @@ body.dark .profile-box h2 { color:var(--orange-light); }
 <script>
 // ====== Navigation ======
 function show(id) {
-  try {
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-    const sec = document.getElementById('sec-' + id);
-    if (sec) sec.classList.add('active');
-    try { event && event.target && event.target.classList && event.target.classList.add('active'); } catch(e2) {}
-    window.scrollTo(0, 0);
-  } catch(e) { console.error('show('+id+')',e); }
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  const sec = document.getElementById('sec-' + id);
+  if (sec) sec.classList.add('active');
+  event && event.target && event.target.classList.add('active');
+  window.scrollTo(0, 0);
 }
 
 // toggleDark() is overridden in Profile System — writes to user namespace
@@ -6957,10 +6955,9 @@ function createProfile() {
 
 function activateProfile(id) {
   localStorage.setItem(ACTIVE_KEY, id);
-  const ov = document.getElementById('profile-overlay');
-  if (ov) ov.style.display = 'none';
-  try { applyUserData(); } catch(e) { console.error('applyUserData error:', e); }
-  try { renderProfileList(); } catch(e) {}
+  document.getElementById('profile-overlay').style.display = 'none';
+  applyUserData();
+  renderProfileList();
   show('dashboard');
 }
 
@@ -7176,35 +7173,25 @@ window.addEventListener('load', () => {
     } else { showQuestion(); }
   };
 
-  try { renderGloss(); } catch(e) { console.error('renderGloss',e); }
-  try { renderCard(); } catch(e) { console.error('renderCard',e); }
-  try { renderIttoGrid(); } catch(e) { console.error('renderIttoGrid',e); }
-  try { renderWeakAreas(); } catch(e) { console.error('renderWeakAreas',e); }
-  try { renderDomainReadiness(); } catch(e) { console.error('renderDomainReadiness',e); }
-  try { renderTopicGrid(); } catch(e) { console.error('renderTopicGrid',e); }
-
+  renderGloss();
+  renderCard();
+  renderIttoGrid();
+  renderWeakAreas(); renderDomainReadiness();
+  renderTopicGrid();
   // Dynamic question count
   const qStatEl = document.getElementById('stat-questions');
   if (qStatEl) qStatEl.textContent = quizBank.length + (typeof sitBank !== 'undefined' ? '+' + sitBank.length + ' sit.' : '');
 
-  // Profile check — always ends with a visible section
-  const ov = document.getElementById('profile-overlay');
-  try {
-    const active = getActiveProfile();
-    const profiles = getProfiles();
-    if (!active || !profiles.find(p => p.id === active)) {
-      // New user — show profile creation overlay; dashboard shown after activateProfile()
-      try { renderProfileList(); } catch(e) {}
-      if (ov) ov.style.display = 'flex';
-    } else {
-      // Returning user — hide overlay and land on dashboard
-      if (ov) ov.style.display = 'none';
-      try { applyUserData(); } catch(e) { console.error('applyUserData',e); }
-      show('dashboard');
-    }
-  } catch(e) {
-    console.error('Init error:', e);
-    if (ov) ov.style.display = 'none';
+  const active = getActiveProfile();
+  const profiles = getProfiles();
+  if (!active || !profiles.find(p => p.id === active)) {
+    // First launch or profile deleted — show profile modal
+    renderProfileList();
+    document.getElementById('profile-overlay').style.display = 'flex';
+    // Set up a default if no profiles exist yet
+  } else {
+    document.getElementById('profile-overlay').style.display = 'none';
+    applyUserData();
     show('dashboard');
   }
 });
