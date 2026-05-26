@@ -3791,7 +3791,7 @@ function show(id) {
   document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
   const sec = document.getElementById('sec-' + id);
   if (sec) sec.classList.add('active');
-  event && event.target && event.target.classList.add('active');
+  event && event.target && event.target.classList && event.target.classList.add('active');
   window.scrollTo(0, 0);
 }
 
@@ -6959,6 +6959,7 @@ function activateProfile(id) {
   if (ov) ov.style.display = 'none';
   try { applyUserData(); } catch(e) { console.error('applyUserData error:', e); }
   try { renderProfileList(); } catch(e) {}
+  show('dashboard');
 }
 
 function showProfileModal() {
@@ -7186,19 +7187,23 @@ window.addEventListener('load', () => {
     const active = getActiveProfile();
     const profiles = getProfiles();
     if (!active || !profiles.find(p => p.id === active)) {
+      // New user — show profile creation overlay; dashboard shown after activateProfile()
       renderProfileList();
       const ov = document.getElementById('profile-overlay');
       if (ov) { ov.style.display = 'flex'; }
     } else {
+      // Returning user — hide overlay and land on dashboard
       const ov = document.getElementById('profile-overlay');
       if (ov) ov.style.display = 'none';
       applyUserData();
+      show('dashboard');
     }
   } catch(e) {
-    // If anything fails, still hide the overlay so the app is usable
+    // If anything fails, still show the app
     console.error('Init error:', e);
     const ov = document.getElementById('profile-overlay');
     if (ov) ov.style.display = 'none';
+    show('dashboard');
   }
 });
 </script>
