@@ -211,13 +211,23 @@ body.dark .kanban-col-header { color:var(--orange-light); }
 /* Study Modal */
 .study-overlay { position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,20,50,0.85);z-index:800;display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:20px; }
 .study-overlay.open { display:flex; }
-.study-modal { background:var(--card);border-radius:16px;width:100%;max-width:680px;padding:24px;position:relative;margin:auto; }
+.study-modal { background:var(--card);border-radius:16px;width:100%;max-width:820px;padding:24px;position:relative;margin:auto; }
 .study-tabs { display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:18px; }
 .study-tab { padding:8px 18px;font-size:0.85rem;font-weight:600;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;color:var(--text-light); }
 .study-tab.active { color:var(--navy);border-bottom-color:var(--navy); }
 .key-point { display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--border);font-size:0.84rem;line-height:1.5; }
 .key-point:last-child { border:none; }
 .kp-num { background:var(--navy);color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:0.68rem;font-weight:700;flex-shrink:0;margin-top:2px; }
+.learn-intro { background:linear-gradient(135deg,#1a3a6b 0%,#2a5298 100%);color:#fff;border-radius:12px;padding:16px 18px;margin-bottom:18px;font-size:0.88rem;line-height:1.65; }
+.learn-section { margin-bottom:18px;border:1px solid var(--border);border-radius:10px;overflow:hidden; }
+.learn-section-h { background:var(--navy);color:#fff;font-size:0.82rem;font-weight:700;padding:9px 14px;letter-spacing:0.3px; }
+.learn-section-body { padding:10px 14px 6px;font-size:0.83rem;line-height:1.6;color:var(--text); }
+.learn-section-body p { margin:0 0 8px; }
+.learn-section-items { padding:0 14px 12px;list-style:none;margin:0; }
+.learn-section-items li { display:flex;gap:8px;padding:5px 0;border-top:1px solid var(--border);font-size:0.82rem;line-height:1.55;color:var(--text); }
+.learn-section-items li::before { content:"▸";color:var(--orange);flex-shrink:0;font-size:0.75rem;margin-top:3px; }
+.learn-divider { border:none;border-top:2px dashed var(--border);margin:20px 0 14px; }
+.learn-qr-title { font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-light);margin-bottom:8px; }
 /* Diagnostic */
 .diag-progress { height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:14px; }
 .diag-progress-fill { height:100%;background:var(--navy);border-radius:3px;transition:width 0.3s; }
@@ -378,7 +388,11 @@ body.dark .profile-box h2 { color:var(--orange-light); }
       <div class="study-tab" id="tab-practice" onclick="switchStudyTab('practice')">✏️ Practice</div>
     </div>
     <!-- LEARN TAB -->
-    <div id="study-learn-pane">
+    <div id="study-learn-pane" style="max-height:72vh;overflow-y:auto;padding-right:4px">
+      <div id="study-intro"></div>
+      <div id="study-sections"></div>
+      <hr class="learn-divider">
+      <div class="learn-qr-title">⚡ Quick Reference</div>
       <div id="study-key-points"></div>
       <div id="study-exam-tip" style="margin-top:14px;background:var(--navy);color:#fff;border-radius:10px;padding:12px 14px;font-size:0.83rem;line-height:1.5"></div>
       <button class="btn btn-primary" style="width:100%;margin-top:16px;padding:12px" onclick="switchStudyTab('practice')">I'm Ready — Start Practice Questions →</button>
@@ -4259,54 +4273,1231 @@ function resetCatPerf() {
 
 // ====== Learning Map & Topic Study Engine ======
 const topicData = {
-  integration: { label:'Integration Management', icon:'🔗', cat:'integration',
-    points:['The Project Charter formally authorizes the project and must be signed BEFORE work begins — it grants the PM authority.','The PM Plan integrates ALL subsidiary plans (scope, schedule, cost, risk, etc.) — it is the single source of truth.','ALL changes must go through Perform Integrated Change Control and be approved by the CCB — no exceptions.','Direct & Manage Project Work creates deliverables and generates Work Performance Data (raw measurements).','Monitor & Control converts WPD → Work Performance Information (analyzed) → Work Performance Reports (distributed).','Close Project: obtain formal written acceptance, archive documents, release resources, document lessons learned.'],
-    tip:'If the question asks "who approves changes?" — always the CCB, not the PM alone, not the sponsor alone.' },
-  scope: { label:'Scope Management', icon:'📐', cat:'scope',
-    points:['Scope Baseline = Project Scope Statement + WBS + WBS Dictionary (all three together).','The WBS decomposes deliverables to work packages — the lowest level that can be estimated and assigned.','Validate Scope = customer formally accepts completed deliverables (output: Accepted Deliverables). This is about acceptance.','Control Scope = monitoring for scope creep and managing baseline changes. Different from Validate Scope.','Scope creep = uncontrolled additions without change control. Gold plating = adding unrequested features (also wrong).','Requirements Traceability Matrix links requirements to their source and tracks them through delivery.'],
-    tip:'"What does the customer formally accept?" → Validate Scope. "What controls unauthorized changes?" → Control Scope.' },
-  schedule: { label:'Schedule Management', icon:'📅', cat:'schedule',
-    points:['Critical Path = longest path through the network; zero total float. Delays here delay the whole project.','Total Float = LS − ES (or LF − EF). Free Float = time an activity can slip without delaying its successor\'s early start.','Crashing = add resources to shorten duration (costs more, but no extra risk). Scope stays the same.','Fast Tracking = overlap activities that were sequential (adds risk, may not add cost).','PERT = (O + 4M + P) / 6. Standard deviation = (P − O) / 6.','Resource Leveling adjusts start/end dates to resolve over-allocation — may extend the schedule.','Dependencies: FS (most common), SS, FF, SF. Lags add time; leads take time away.'],
-    tip:'Crash = cost↑, same risk. Fast Track = risk↑, same cost. PMP loves asking you to distinguish these.' },
-  cost: { label:'Cost Management & EVM', icon:'💰', cat:'cost',
-    points:['EV = Earned Value (% complete × BAC). AC = what you actually spent. PV = what you planned to spend by now.','CV = EV − AC (positive = under budget). SV = EV − PV (positive = ahead of schedule).','CPI = EV/AC. SPI = EV/PV. Both > 1 is good; < 1 is bad.','EAC = BAC/CPI (most common formula — assumes future performance mirrors past).','TCPI = (BAC−EV)/(BAC−AC). If >1, future work must be MORE efficient than past — harder target.','VAC = BAC − EAC. Positive = under budget at completion. Negative = over budget.','Cost Baseline = approved time-phased budget EXCLUDING management reserve. Total budget INCLUDES it.'],
-    tip:'EAC = BAC/CPI is the default. TCPI > 1 means "you need to do better going forward" — that\'s a bad sign.' },
-  quality: { label:'Quality Management', icon:'✅', cat:'quality',
-    points:['Prevention costs less than inspection — quality is built in, not inspected in (PMI core belief).','Control Quality = inspect deliverables for defects (Executing). Manage Quality = audit processes for compliance.','Control chart: Rule of Seven — 7 consecutive points on one side of mean = process out of control.','Pareto Chart: 80% of problems come from 20% of causes. Prioritize the vital few.','COQ (Cost of Quality): Conformance (prevention + appraisal) + Non-Conformance (internal + external failure).','Scatter diagram = shows correlation between two variables. Histogram = shows distribution of one variable.'],
-    tip:'"Where do quality audits belong?" → Manage Quality (Executing). "Where do you inspect results?" → Control Quality (M&C).' },
-  resource: { label:'Resource & HR Management', icon:'👥', cat:'resource',
-    points:['Tuckman stages: Forming → Storming → Norming → Performing → Adjourning. Storming is normal — coach through it.','Conflict resolution: Collaborate/Problem-Solve (BEST) → Compromise → Accommodate → Avoid → Force (LAST RESORT).','Maslow: Physiological → Safety → Social → Esteem → Self-Actualization. Each level must be met before the next.','Herzberg: Motivators (achievement, recognition, growth) vs. Hygiene factors (salary, working conditions).','McGregor Theory X: people are lazy, need control. Theory Y: people are motivated, need autonomy.','Communication channels = n(n−1)/2. 10 people = 45 channels. Adding 1 person to a 9-person team adds 9 channels.','RACI: only ONE person is Accountable per task. Multiple people can be Responsible.'],
-    tip:'"What is the best conflict resolution?" = Collaborate. "What theory says people dislike work?" = Theory X (McGregor).' },
-  risk: { label:'Risk Management', icon:'⚠️', cat:'risk',
-    points:['Threat responses: Avoid (eliminate), Transfer (shift impact), Mitigate (reduce P or I), Accept (passive or active).','Opportunity responses: Exploit, Share, Enhance, Accept.','Contingency Reserve = known-unknown risks (in the cost baseline). Management Reserve = unknown-unknowns (NOT in baseline).','EMV = Probability × Impact. Negative values = threats. Decision tree uses EMV.','Secondary risks: new risks created by your risk response. Residual risks: risks remaining after the response.','Qualitative = probability/impact matrix (fast, subjective). Quantitative = Monte Carlo, decision trees (data-driven).','Workaround = unplanned response to an unforeseen risk event. Document it and submit a change request after.'],
-    tip:'"What reserve covers unknown-unknowns?" = Management Reserve (outside the cost baseline, NOT controlled by PM).' },
-  procurement: { label:'Procurement Management', icon:'📄', cat:'procurement',
-    points:['FFP: fixed price regardless of cost — most risk on SELLER. CPFF: buyer reimburses all costs — most risk on BUYER.','FPIF has a "point of total assumption" (PTA) where the seller absorbs all overruns above the ceiling price.','SOW (Statement of Work) describes what the seller must deliver — scope, deliverables, timeline.','RFP = want a full proposal and approach. IFB = want a price bid only. RFQ = want unit pricing.','Control Procurements closes contracts and manages vendor performance. Only PM can close contracts officially.','Make-or-buy analysis: if you need a skill for <6 months or it\'s not a core competency, usually buy.'],
-    tip:'"Who bears more risk in CPFF?" = Buyer. "Who bears more risk in FFP?" = Seller. This is heavily tested.' },
-  stakeholder: { label:'Stakeholder Management', icon:'🤝', cat:'stakeholder',
-    points:['Power/Interest Grid: High Power + High Interest = Manage Closely. High Power + Low Interest = Keep Satisfied.','Engagement levels (low → high): Unaware → Resistant → Neutral → Supportive → Leading.','Salience Model: Power + Legitimacy + Urgency. All three = "definitive stakeholder" — highest priority.','Stakeholders should be identified as early as possible — ideally during Initiating. Never too late to add one.','Current vs. Desired engagement: the gap tells you how much effort to spend on a stakeholder.','Stakeholder engagement plan defines the strategy for involving each stakeholder throughout the project.'],
-    tip:'"When to identify stakeholders?" = as early as possible. "High power, low interest?" = Keep Satisfied.' },
-  agile: { label:'Agile & Scrum', icon:'🔄', cat:'agile',
-    points:['4 Agile Values: Individuals over processes; Working software over documentation; Customer collab over contracts; Responding to change over following a plan.','Scrum: Sprint (1–4 weeks) → Sprint Planning → Daily Scrum (15 min) → Sprint Review → Retrospective.','Product Owner owns and prioritizes the backlog. Scrum Master removes impediments. Dev Team self-organizes.','Sprint backlog is LOCKED once sprint begins — new work goes to the backlog for future sprints.','Kanban: manage flow with WIP limits. No sprints. Pull system. Visualize work on a board.','Velocity = story points completed per sprint. Burndown chart shows remaining work vs. time.','Servant leadership is the PM style in agile — facilitate, enable, remove obstacles.'],
-    tip:'"Who commits to the sprint?" = Dev team (not PO, not SM). "Sprint scope added mid-sprint?" = No — goes to backlog.' },
-  general: { label:'General PM Concepts', icon:'📋', cat:'general',
-    points:['A project is temporary (defined start/end) and creates a unique product/result. Operations are ongoing.','Project → Program (related projects) → Portfolio (strategic mix of projects & programs).','OPAs = internal assets (templates, lessons learned, processes). EEFs = external factors (market, regulations, culture).','PMO types: Supportive (provides templates), Controlling (requires compliance), Directive (manages projects directly).','Progressive elaboration: plans are refined in increasing detail as more information becomes available.','Triple constraint: Scope, Schedule, Cost. Change one and the others are affected. Quality is the fourth dimension.'],
-    tip:'"What is OPA vs EEF?" — OPA = inside your org. EEF = outside your control. This is tested constantly.' },
-  ethics: { label:'Ethics & Professional Conduct', icon:'⚖️', cat:'ethics',
-    points:['4 PMI values: Responsibility, Respect, Fairness, Honesty. Each has mandatory (must) and aspirational (should) standards.','Responsibility: Report unethical behavior. Never falsify reports. Protect proprietary information.','Honesty: Report accurate status even when bad. Never make false statements. Create transparency.','Fairness: Disclose conflicts of interest. Recuse yourself when conflicted. No favoritism or discrimination.','Respect: Listen first. Approach cultural differences with empathy. Never use authority for personal gain.','You must refuse unethical requests from ANY authority — sponsor, client, executive — and report them.'],
-    tip:'"Sponsor asks you to falsify a report?" = Refuse, report accurately, escalate. Never comply, even once.' },
-  talent: { label:'PMI Talent Triangle', icon:'🔺', cat:'talent',
-    points:['3 domains: Ways of Working (technical/agile methods), Power Skills (leadership/EQ), Business Acumen (strategy/finance).','Leadership styles: Servant (agile default), Transformational (inspire change), Transactional (reward/punish), Directive (crisis).','Goleman EQ: Self-Awareness, Self-Regulation, Motivation, Empathy, Social Skills.','Business Acumen includes: benefits realization, business case, NPV, opportunity cost, org context.','Benefits Management Plan defines how/when benefits will be measured after project closes.','NPV > 0 means the project is expected to generate more value than it costs. Higher NPV = better choice.'],
-    tip:'"PMI-preferred leadership style in agile?" = Servant Leadership. "Which domain covers EQ?" = Power Skills.' },
-  sixsigma: { label:'Six Sigma & DMAIC', icon:'📊', cat:'sixsigma',
-    points:['DMAIC = Define, Measure, Analyze, Improve, Control. Used to IMPROVE existing processes.','DMADV = Define, Measure, Analyze, Design, Verify. Used to CREATE new processes/products.','Six Sigma goal: ≤3.4 Defects Per Million Opportunities (DPMO) = 99.99966% defect-free.','SIPOC = Suppliers, Inputs, Process, Outputs, Customers — high-level process map used in Define phase.','CTQ (Critical to Quality) = key measurable characteristics that must meet customer requirements.','Poka-Yoke = mistake-proofing. FMEA = proactively identifies failure modes before they occur.','Belt levels: White < Yellow < Green Belt (part-time) < Black Belt (full-time) < Master Black Belt (coach).'],
-    tip:'"Use DMAIC when?" = fixing an existing process. "Use DMADV when?" = designing something new from scratch.' },
-  cmmi: { label:'CMMI Maturity Levels', icon:'📈', cat:'cmmi',
-    points:['Level 1 Initial: Chaotic, unpredictable, reactive. Success depends on individual heroics.','Level 2 Managed: Basic project management practices established. Plans, tracking, and control at project level.','Level 3 Defined: Organization-wide standard processes. Projects tailor from the standard. Most gov\'t contracts require this.','Level 4 Quantitatively Managed: Statistical process control. Uses metrics to manage performance predictably.','Level 5 Optimizing: Continuous process improvement. Proactively finds weaknesses and deploys innovations.','Each level builds on the previous — you cannot skip levels. CMMI is a maturity ladder.'],
-    tip:'"Minimum CMMI level for gov\'t contracts?" = Level 3 (Defined). "Uses statistical control?" = Level 4.' },
-  sdlc: { label:'SDLC Models', icon:'🔁', cat:'sdlc',
-    points:['Waterfall: Linear, sequential phases. Best when requirements are well-defined and unlikely to change.','Spiral: Risk-driven iterative model. Each loop = Plan → Risk Analysis → Engineering → Evaluate. Best for large, risky projects.','RAD (Rapid Application Development): Emphasizes speed through prototyping and user feedback. Less formal documentation.','V-Model: Each development phase maps to a testing phase. Emphasizes early test planning. Like waterfall with parallel testing.','Agile/Iterative: Short cycles (sprints) delivering working software. Best when requirements will change.','The later a defect is found, the more expensive it is to fix — all models try to catch defects early, just differently.'],
-    tip:'"First formal SDLC model?" = Waterfall (1970, Royce). "Most risk-focused model?" = Spiral.' }
+
+  integration: {
+    label: 'Integration Management',
+    icon: '🔗',
+    cat: 'core',
+    intro: 'Integration Management is the glue of project management — it coordinates all other knowledge areas so that every plan, process, and change works together as a unified whole. On the PMP exam, it is the most heavily tested knowledge area because PMI views the project manager\'s primary job as integration: making trade-off decisions, managing changes holistically, and ensuring nothing falls through the cracks. Understanding Integration Management means understanding how a project moves from a blank page to a closed, accepted deliverable.',
+    sections: [
+      {
+        h: 'What Is Integration Management?',
+        body: 'Think of Integration Management like an air traffic controller. Individual planes (scope, schedule, cost, quality, risk, etc.) each follow their own rules, but someone must coordinate them so they don\'t collide. The PM is that controller. Integration Management ensures that when one knowledge area changes — say, scope expands — the ripple effects on schedule, cost, and risk are captured and managed deliberately rather than accidentally.',
+        items: []
+      },
+      {
+        h: 'The Six Core Processes',
+        body: 'Integration Management spans the entire project lifecycle through six processes:',
+        items: [
+          'Develop Project Charter — Creates the document that formally authorizes the project and gives the PM authority. Inputs include the business case and benefits management plan. The sponsor (NOT the PM) signs it.',
+          'Develop Project Management Plan — Consolidates all subsidiary plans (scope plan, schedule plan, cost plan, quality plan, etc.) into one integrated document. This is the "how we will manage" document.',
+          'Direct and Manage Project Work — The actual execution: leading the team, producing deliverables, implementing approved changes, managing requests for changes.',
+          'Manage Project Knowledge — Capturing lessons learned, managing explicit and tacit knowledge, building organizational memory.',
+          'Monitor and Control Project Work — Tracking performance against the baseline, identifying variances, recommending corrective/preventive actions.',
+          'Perform Integrated Change Control — Evaluating ALL change requests holistically for impact across ALL constraints before approving or rejecting them. Uses a Change Control Board (CCB).',
+          'Close Project or Phase — Obtaining final acceptance, archiving records, releasing resources, documenting lessons learned.'
+        ]
+      },
+      {
+        h: 'Integrated Change Control — The Central Concept',
+        body: 'Integrated Change Control (ICC) is the process by which every change request — regardless of size — is formally reviewed, evaluated for cross-constraint impact, and either approved, deferred, or rejected. No change is simply "absorbed." The change control system exists to prevent scope creep, unplanned cost overruns, and schedule surprises.',
+        items: [
+          'Change Request: a formal document requesting a modification to scope, schedule, cost, quality, or any project document.',
+          'Impact assessment: the PM must analyze how the requested change affects ALL knowledge areas, not just the one being changed.',
+          'Change Control Board (CCB): the body with authority to approve or reject changes. The PM may chair it but usually doesn\'t have sole authority.',
+          'Only approved changes get implemented. Work ahead of approval = unauthorized scope change.',
+          'After approval, update the project management plan AND all affected subsidiary plans and baselines.'
+        ]
+      },
+      {
+        h: 'The Project Charter — Why It Matters',
+        body: 'The Project Charter is the foundational document that brings the project into existence. Without it, the PM has no authority. Key facts PMI tests heavily:',
+        items: [
+          'The SPONSOR authorizes (signs) the charter. The PM does not sign their own charter.',
+          'It is created BEFORE the PM is assigned in some cases, but the PM should ideally be involved in creating it.',
+          'Contents: project purpose, high-level requirements, milestones, risks, budget summary, assumptions, constraints, PM name and authority level, stakeholder list.',
+          'The charter is NOT the project plan — it is a high-level authorization document, not a detailed plan.',
+          'A project cannot begin (officially) without a charter.'
+        ]
+      },
+      {
+        h: 'Exam Focus',
+        body: 'PMI tests Integration Management through scenario questions about what the PM should do when conflicts arise, changes are requested, or the project is in trouble.',
+        items: [
+          'If someone asks you to "just make the change" without a change request — you must require a formal change request first.',
+          'The PM\'s role is to integrate, not to be an expert in every knowledge area.',
+          'Lessons Learned are captured THROUGHOUT the project, not only at the end.',
+          'Corrective action fixes current performance; preventive action prevents future deviations; defect repair fixes non-conforming work.',
+          'Close Project must be done even if the project is cancelled — document what was done and why it was closed.',
+          'The Project Management Plan is a formal, approved document. Changes to it go through ICC.',
+          'Common trap: The sponsor requests a change informally. You must still put it through the change control process, even if the requester is the sponsor.'
+        ]
+      }
+    ],
+    points: [
+      'Project Charter formally authorizes project; signed by sponsor',
+      'PM Plan integrates all subsidiary plans',
+      'Integrated Change Control: all changes evaluated holistically',
+      'CCB approves/rejects changes — PM may not have sole authority',
+      'Close Project even if cancelled',
+      'Lessons Learned captured throughout, not just at end'
+    ],
+    tip: 'Integration is the PM\'s primary job. When in doubt, the answer usually involves integrating impacts across all knowledge areas before acting.'
+  },
+
+  scope: {
+    label: 'Scope Management',
+    icon: '📐',
+    cat: 'core',
+    intro: 'Scope Management defines exactly what is — and is not — included in the project. It prevents the #1 cause of project failure: scope creep, where uncontrolled additions erode schedule and budget without formal approval. On the PMP exam, scope questions test your ability to distinguish product scope from project scope, understand how requirements become a WBS, and know when scope is validated versus controlled.',
+    sections: [
+      {
+        h: 'Product Scope vs. Project Scope',
+        body: 'These two terms are frequently confused but are fundamentally different.',
+        items: [
+          'Product scope: the features and functions of the product, service, or result being created. Example: "The app must support 10,000 concurrent users."',
+          'Project scope: the work required to deliver the product. Example: "The project includes design sprints, three rounds of user testing, and deployment to AWS."',
+          'Completion is measured differently: product scope is complete when it meets product requirements; project scope is complete when the project management plan is fulfilled.',
+          'A change to product scope almost always triggers a change to project scope.'
+        ]
+      },
+      {
+        h: 'Requirements Gathering',
+        body: 'Before you can define scope, you must collect requirements from stakeholders. Requirements are the detailed conditions the deliverable must meet.',
+        items: [
+          'Techniques: interviews, focus groups, facilitated workshops (e.g., JAD sessions), surveys, observation (job shadowing), prototypes, benchmarking, document analysis.',
+          'Requirements Traceability Matrix (RTM): links each requirement back to its business objective and forward to the deliverable that satisfies it. Ensures no requirement is orphaned or forgotten.',
+          'Business requirements: why the project is being done.',
+          'Stakeholder requirements: what stakeholders need.',
+          'Solution requirements: functional (what it does) and non-functional (how well it does it — performance, security, reliability).',
+          'Transition requirements: what is needed to move from current to future state (training, data migration).',
+          'Project requirements: what the project itself must meet (PMO standards, reporting).',
+          'Quality requirements: conditions to validate success.'
+        ]
+      },
+      {
+        h: 'Work Breakdown Structure (WBS)',
+        body: 'The WBS is a hierarchical decomposition of the TOTAL scope of work into smaller, manageable components called work packages. It is the cornerstone of scope definition.',
+        items: [
+          'The WBS defines what will be done — it does NOT show sequence, duration, or cost.',
+          'Work packages are the lowest level of the WBS — small enough to estimate and assign, but not task-level instructions.',
+          'WBS Dictionary: a companion document that describes each WBS element in detail (description, assumptions, responsible party, cost/schedule estimates).',
+          '100% Rule: the WBS must capture 100% of the project scope — no more, no less. Every deliverable must be in the WBS.',
+          'Decomposition is the technique used to create a WBS — breaking high-level deliverables into progressively smaller pieces.',
+          'Rolling wave planning: for work far in the future, you can plan at a high level now and decompose further as you get closer.'
+        ]
+      },
+      {
+        h: 'Validate Scope vs. Control Scope',
+        body: 'These two processes are distinct and commonly confused on the exam.',
+        items: [
+          'Validate Scope (Monitoring & Controlling group): the process of formally obtaining customer/sponsor ACCEPTANCE of completed deliverables. It is about sign-off and acceptance.',
+          'Control Scope (Monitoring & Controlling group): the process of monitoring scope status and managing changes to the scope baseline. It is about preventing unauthorized scope changes.',
+          'Validate Scope can result in accepted deliverables, change requests, or rejected deliverables (sent back for rework).',
+          'Control Scope results in variance analysis, corrective actions, and change requests.',
+          'Key sequence: verify quality (Control Quality) THEN get acceptance (Validate Scope). Quality must pass before acceptance is sought.',
+          'Scope creep = unofficial, uncontrolled scope additions. Always bad. Requires a change request to formalize.',
+          'Gold plating = adding unrequested features. Also bad — wastes resources and risks destabilizing tested deliverables.'
+        ]
+      },
+      {
+        h: 'Exam Focus',
+        body: '',
+        items: [
+          'The WBS is NOT a task list or a Gantt chart — it shows deliverables, not activities.',
+          'The scope baseline consists of three documents: the Scope Statement + WBS + WBS Dictionary.',
+          'Requirements must be measurable, testable, traceable, complete, consistent, and acceptable.',
+          'The RTM is used to trace requirements through the project lifecycle to verify all are delivered.',
+          'Validate Scope is done by the CUSTOMER or SPONSOR, not the PM or QA team.',
+          'Common trap: confusing Validate Scope (acceptance) with Control Quality (inspection). You inspect for quality first, then get the customer to accept.',
+          'Scope changes must go through Integrated Change Control — even if the customer informally asks for something "small."'
+        ]
+      }
+    ],
+    points: [
+      'Product scope = features of product; project scope = work to deliver it',
+      'WBS decomposes 100% of scope into work packages',
+      'WBS Dictionary describes each element in detail',
+      'RTM traces requirements to deliverables',
+      'Validate Scope = customer acceptance; Control Scope = prevent creep',
+      'Scope baseline = Scope Statement + WBS + WBS Dictionary'
+    ],
+    tip: 'Validate Scope is about ACCEPTANCE by the customer. Control Scope is about PREVENTING unauthorized changes. Don\'t confuse the two.'
+  },
+
+  schedule: {
+    label: 'Schedule Management',
+    icon: '📅',
+    cat: 'core',
+    intro: 'Schedule Management transforms the WBS (what to do) into a time-ordered plan (when to do it). It involves defining activities, sequencing them, estimating durations, developing a schedule, and then controlling it as the project executes. On the PMP exam, schedule questions are heavily mathematical — expect CPM calculations, float analysis, and schedule compression trade-offs.',
+    sections: [
+      {
+        h: 'From WBS to Schedule: The Sequence',
+        body: 'Schedule development follows a logical progression:',
+        items: [
+          '1. Define Activities: decompose WBS work packages into specific schedule activities (tasks).',
+          '2. Sequence Activities: determine dependencies between activities and build a network diagram.',
+          '3. Estimate Activity Durations: determine how long each activity will take.',
+          '4. Develop Schedule: analyze sequences, durations, resource requirements, and constraints to create the schedule model.',
+          '5. Control Schedule: monitor progress and manage changes to the schedule baseline.'
+        ]
+      },
+      {
+        h: 'Network Diagrams and Dependencies',
+        body: 'A network diagram shows the logical sequence of activities. The most common format is the Precedence Diagramming Method (PDM), also called Activity-on-Node (AON).',
+        items: [
+          'Finish-to-Start (FS): Activity B cannot start until Activity A finishes. Most common dependency.',
+          'Start-to-Start (SS): Activity B cannot start until Activity A starts.',
+          'Finish-to-Finish (FF): Activity B cannot finish until Activity A finishes.',
+          'Start-to-Finish (SF): Rarely used. Activity B cannot finish until Activity A starts.',
+          'Leads: negative lag — overlapping activities to compress schedule. Example: start testing 2 days before coding is done (FS -2d).',
+          'Lags: waiting periods added between activities. Example: wait 3 days for concrete to cure (FS +3d).',
+          'Mandatory dependencies (hard logic): inherent in the work — can\'t lay foundation before digging.',
+          'Discretionary dependencies (soft logic): best practices — can be changed when needed for compression.'
+        ]
+      },
+      {
+        h: 'Critical Path Method (CPM)',
+        body: 'CPM identifies the longest path through the network — this is the critical path, and it determines the minimum project duration. Activities on the critical path have zero float and any delay on them directly delays the project end date.',
+        items: [
+          'Forward pass: calculates Early Start (ES) and Early Finish (EF) for each activity.',
+          'Backward pass: calculates Late Start (LS) and Late Finish (LF) starting from project end.',
+          'Total Float (TF) = LS - ES = LF - EF. How long an activity can be delayed without delaying the project end.',
+          'Free Float (FF): how long an activity can be delayed without delaying the EARLY START of any successor.',
+          'Critical path activities: TF = 0. Any delay = project delay.',
+          'A project can have multiple critical paths simultaneously (all paths with TF = 0).',
+          'Crashing or fast-tracking can shorten the critical path but may create new critical paths.'
+        ]
+      },
+      {
+        h: 'Duration Estimation Techniques',
+        body: '',
+        items: [
+          'Analogous Estimating: uses historical data from similar past projects. Fast but less accurate. Top-down approach.',
+          'Parametric Estimating: uses statistical relationships (e.g., 10 sq ft per hour × 500 sq ft = 50 hours). More accurate than analogous if data is reliable.',
+          'Three-Point Estimating (PERT): uses Optimistic (O), Most Likely (M), and Pessimistic (P) estimates. Beta/PERT weighted average = (O+4M+P)/6. Standard deviation = (P-O)/6.',
+          'Bottom-Up Estimating: estimate each activity individually, then roll up. Most accurate but most time-consuming.',
+          'Reserve Analysis: adds contingency reserves for known risks and management reserves for unknown risks.'
+        ]
+      },
+      {
+        h: 'Schedule Compression Techniques',
+        body: 'When the schedule needs to be shortened, two primary techniques are used:',
+        items: [
+          'Crashing: adding resources (money, people, equipment) to critical path activities to shorten duration. Always increases cost. Focus crashes on activities that yield the most time for the least cost.',
+          'Fast Tracking: performing critical path activities in parallel that were originally planned in sequence. No added cost, but INCREASES RISK. Use only when activities can realistically overlap.',
+          'Resource Leveling: adjusting the schedule to resolve resource over-allocation. Often EXTENDS the schedule. Used when resources are limited.',
+          'Resource Smoothing: adjusts activities within their float to level resource usage without extending the schedule. Cannot change the critical path.'
+        ]
+      },
+      {
+        h: 'Exam Focus',
+        body: '',
+        items: [
+          'Longest path = critical path. It determines project duration, not the shortest or average path.',
+          'Float = LS - ES. Negative float means the project is already behind schedule.',
+          'Crashing adds cost; fast-tracking adds risk. Know which is which.',
+          'Resource leveling can extend the critical path. Resource smoothing cannot.',
+          'If asked which activity to crash, pick the one on the critical path with the lowest crash cost per unit of time.',
+          'Common trap: Calculate total durations of ALL paths — the longest one is the critical path.',
+          'Schedule baseline = approved version of the schedule model. Changes require formal change control.'
+        ]
+      }
+    ],
+    points: [
+      'CPM finds longest path — determines project duration',
+      'Total Float = LS - ES; zero float = critical path activity',
+      'Crashing adds cost; fast-tracking adds risk',
+      'PERT weighted avg = (O+4M+P)/6; Std Dev = (P-O)/6',
+      'Resource leveling may extend schedule; smoothing stays within float',
+      'Network diagram shows sequence, NOT duration or Gantt'
+    ],
+    tip: 'CPM questions are guaranteed on the exam. Practice forward/backward pass calculations and float. Remember: the critical path is the LONGEST path, not the shortest.'
+  },
+
+  cost: {
+    label: 'Cost Management & EVM',
+    icon: '💰',
+    cat: 'core',
+    intro: 'Cost Management covers how projects are estimated, budgeted, and controlled financially. Earned Value Management (EVM) is the exam\'s most mathematical topic — a standardized framework that integrates scope, schedule, and cost data into a single set of metrics that objectively measure project performance. Mastery of EVM formulas and their interpretation is essential for passing the PMP exam.',
+    sections: [
+      {
+        h: 'Estimation Methods',
+        body: 'Costs are estimated before a project baseline is set. The accuracy and effort of estimation varies by method:',
+        items: [
+          'Analogous Estimating: uses past project data. Rough Order of Magnitude (ROM) accuracy: -25% to +75%. Fast, cheap, least accurate.',
+          'Parametric Estimating: statistical model using cost drivers (e.g., $50/sq ft × 2,000 sq ft = $100,000). More accurate if the model is valid.',
+          'Bottom-Up Estimating: estimate each work package individually, sum upward. Most accurate, most time-consuming. Used for definitive estimates.',
+          'Three-Point (PERT): (O + 4M + P) / 6. Produces weighted average estimate accounting for uncertainty.',
+          'Reserve Analysis: contingency reserves added for identified risks (known-unknowns); management reserves added for unforeseeable events (unknown-unknowns). Management reserves are NOT part of the cost baseline.'
+        ]
+      },
+      {
+        h: 'Budget and Cost Baseline',
+        body: 'Once estimates are complete, they are aggregated into a budget. The structure of project costs is important:',
+        items: [
+          'Cost Baseline = time-phased budget (work packages + contingency reserves). This is what EVM measures against.',
+          'Project Budget = Cost Baseline + Management Reserves.',
+          'Control Accounts: management points where scope, schedule, and cost are integrated and compared against earned value.',
+          'Funding requirements are derived from the cost baseline — funds are typically provided in increments, not all upfront.',
+          'Changes to the cost baseline require formal change control.'
+        ]
+      },
+      {
+        h: 'EVM Core Metrics',
+        body: 'EVM uses three core data points to generate all performance metrics:',
+        items: [
+          'PV (Planned Value): the budgeted cost of work SCHEDULED to be done by a given date. Also called BCWS.',
+          'EV (Earned Value): the budgeted cost of work ACTUALLY COMPLETED. Also called BCWP. EV = % complete × BAC.',
+          'AC (Actual Cost): the actual money SPENT on work completed. Also called ACWP.',
+          'BAC (Budget at Completion): the total approved budget for the project.'
+        ]
+      },
+      {
+        h: 'EVM Variances, Indexes, and Forecasting Formulas',
+        body: 'From PV, EV, and AC, all other EVM metrics are derived. Memorize these:',
+        items: [
+          'CV (Cost Variance) = EV - AC. Positive = under budget. Negative = over budget.',
+          'SV (Schedule Variance) = EV - PV. Positive = ahead of schedule. Negative = behind schedule.',
+          'CPI (Cost Performance Index) = EV / AC. Greater than 1 = efficient. Less than 1 = over budget.',
+          'SPI (Schedule Performance Index) = EV / PV. Greater than 1 = ahead of schedule. Less than 1 = behind.',
+          'EAC (Estimate at Completion) — most common formula: BAC / CPI. Used when current CPI is expected to continue.',
+          'ETC (Estimate to Complete) = EAC - AC. How much more is needed to finish.',
+          'VAC (Variance at Completion) = BAC - EAC. Positive = will come in under budget. Negative = over budget at end.',
+          'TCPI (To-Complete Performance Index) = (BAC - EV) / (BAC - AC). The CPI needed going forward to finish within BAC. If TCPI greater than 1, it is harder than current performance.'
+        ]
+      },
+      {
+        h: 'Exam Focus',
+        body: '',
+        items: [
+          'CPI less than 1 means OVER budget. SPI less than 1 means BEHIND schedule. Never confuse direction.',
+          'EV is always the bridge: it connects physical progress to budget. Calculate it first.',
+          'Management reserves are NOT in the cost baseline and are NOT subject to EVM tracking.',
+          'The most common EAC formula on the exam is BAC/CPI — assume current inefficiency continues.',
+          'TCPI greater than 1.1 means the target is likely unrealistic — the team would need to be much more efficient than they have been.',
+          'Common trap: confusing SV (in dollars) with schedule slip (in days). SV is a cost-based proxy for schedule performance, not actual days late.',
+          'A project that is behind schedule AND over budget has SV less than 0 AND CV less than 0 AND CPI less than 1 AND SPI less than 1.'
+        ]
+      }
+    ],
+    points: [
+      'Cost Baseline = work packages + contingency reserves (NOT management reserves)',
+      'EV = % complete × BAC; always calculate EV first',
+      'CV = EV-AC; SV = EV-PV; CPI = EV/AC; SPI = EV/PV',
+      'EAC = BAC/CPI (most common); ETC = EAC-AC; VAC = BAC-EAC',
+      'TCPI = (BAC-EV)/(BAC-AC): efficiency needed to meet BAC',
+      'Negative variance = bad; Index below 1.0 = bad'
+    ],
+    tip: 'On EVM questions, always calculate EV first. Everything else flows from EV. Remember: negative variance = problem, index below 1.0 = problem.'
+  },
+
+  quality: {
+    label: 'Quality Management',
+    icon: '✅',
+    cat: 'core',
+    intro: 'Quality Management ensures the project delivers what it promised — not just completing work, but completing it correctly. PMI\'s philosophy is that quality must be planned in and built in from the start, not inspected in at the end. On the PMP exam, quality questions test your understanding of prevention versus inspection, Cost of Quality, the seven quality tools, and the distinction between managing quality (proactive) and controlling quality (reactive).',
+    sections: [
+      {
+        h: 'Quality vs. Grade',
+        body: 'These two terms are distinct and the exam tests this distinction.',
+        items: [
+          'Quality: the degree to which a product meets stated or implied requirements. A product that meets all its requirements has high quality regardless of features.',
+          'Grade: a category assigned to products with the same functional use but different technical characteristics. Example: economy vs. first-class airline seats — both are airworthy (quality) but different grade.',
+          'Low quality is ALWAYS a problem.',
+          'Low grade may be acceptable if it meets requirements. Example: a simple text editor that never crashes (high quality) is acceptable even if low grade.',
+          'A luxury product with defects = high grade, low quality = problem.'
+        ]
+      },
+      {
+        h: 'Cost of Quality (COQ)',
+        body: 'Cost of Quality is the total cost associated with achieving quality. It has two major categories:',
+        items: [
+          'Cost of Conformance (doing things right): Prevention costs (training, process documentation, equipment) + Appraisal costs (testing, inspection, audits).',
+          'Cost of Non-Conformance (fixing failures): Internal failure costs (rework, scrap — caught before delivery) + External failure costs (warranty claims, lost customers, liability — caught after delivery).',
+          'PMI\'s philosophy: invest more in prevention to reduce far higher failure costs.',
+          'External failure costs are always the most expensive — fixing a defect after the customer receives it costs far more than preventing it during design.',
+          'Gold-plating is NOT part of COQ — it\'s adding unrequested features, which is also bad practice.'
+        ]
+      },
+      {
+        h: 'The Seven Quality Tools',
+        body: 'These classical tools are used to analyze and solve quality problems:',
+        items: [
+          'Cause-and-Effect Diagram (Fishbone / Ishikawa): maps causes of a defect back to root categories (Man, Machine, Method, Material, Environment, Measurement). Used to find root cause.',
+          'Control Chart: plots process performance over time against control limits (±3 sigma). Rule of Seven: 7 consecutive points on one side of mean = out of control.',
+          'Pareto Chart: bar chart + cumulative line showing that 80% of defects come from 20% of causes. Prioritizes where to focus improvement efforts.',
+          'Histogram: frequency distribution showing how often defects occur at each level. Reveals patterns and distributions.',
+          'Scatter Diagram: plots two variables to identify correlations. Does not prove causation.',
+          'Flowchart: maps process steps to identify inefficiencies or failure points.',
+          'Checksheet: structured form for collecting and organizing data during inspection.'
+        ]
+      },
+      {
+        h: 'Plan Quality vs. Manage Quality vs. Control Quality',
+        body: 'Three processes, three very different purposes:',
+        items: [
+          'Plan Quality Management (Planning): identifies quality requirements and standards for the project and product. Output: Quality Management Plan, quality metrics.',
+          'Manage Quality (Executing): translates the quality plan into executable quality activities. Includes process audits, quality improvements, and the quality checklist. This is about the PROCESS being used.',
+          'Control Quality (Monitoring & Controlling): inspects actual deliverables to verify they meet requirements. This is about the PRODUCT. Output: verified deliverables, quality control measurements.',
+          'Sequence: Plan → Manage (audit processes) → Control (inspect products) → Validate Scope (get customer acceptance).',
+          'Only verified deliverables (from Control Quality) can proceed to Validate Scope for acceptance.'
+        ]
+      },
+      {
+        h: 'Exam Focus',
+        body: '',
+        items: [
+          'Prevention over inspection is PMI\'s core philosophy. Catching defects early is cheaper than fixing them later.',
+          'Control charts: points outside control limits = special cause = investigate immediately.',
+          'Rule of Seven: 7+ consecutive data points above OR below the mean signal a process is out of control even if all points are within control limits.',
+          'Pareto chart helps prioritize: fix the 20% of causes that drive 80% of defects.',
+          'Fishbone diagram is used for root cause analysis — trace symptoms back to their source.',
+          'Quality is everyone\'s responsibility, not just the QA team.',
+          'Common trap: Manage Quality = audit the process. Control Quality = inspect the deliverable. Don\'t confuse them.'
+        ]
+      }
+    ],
+    points: [
+      'Quality = meets requirements; Grade = feature level (low grade ≠ low quality)',
+      'COQ: Prevention + Appraisal = Conformance; Internal + External Failure = Non-Conformance',
+      'Fishbone = root cause; Pareto = prioritize 80/20; Control chart = process stability',
+      'Rule of Seven: 7 consecutive points one side of mean = out of control',
+      'Manage Quality = audit processes; Control Quality = inspect deliverables',
+      'Prevention over inspection: PMI core philosophy'
+    ],
+    tip: 'Know the three quality processes: Plan (what standards), Manage (audit processes), Control (inspect products). Then Validate Scope gets acceptance. That sequence is frequently tested.'
+  },
+
+  resource: {
+    label: 'Resource & HR Management',
+    icon: '👥',
+    cat: 'core',
+    intro: 'Resource Management covers acquiring, developing, and managing the project team — the people who actually do the work. It also covers physical resources (equipment, materials). On the PMP exam, this knowledge area is heavily behavioral: expect questions about motivation theories, conflict resolution, leadership styles, and how to handle team performance issues. Knowing WHICH theory to apply in a given scenario is the key skill.',
+    sections: [
+      {
+        h: 'Team Acquisition and Planning',
+        body: 'Before managing the team, you must plan for it and acquire it.',
+        items: [
+          'Resource Management Plan: defines how resources will be identified, acquired, managed, and released.',
+          'RACI Chart (Responsibility Assignment Matrix): maps team members to deliverables/activities with roles: Responsible (does the work), Accountable (owns the outcome — only ONE per task), Consulted (provides input), Informed (kept updated).',
+          'Team acquisition methods: Pre-assignment (specific people identified in charter), Negotiation (with functional managers), Acquisition (hiring contractors), Virtual Teams.',
+          'Resource Histogram: bar chart showing resource usage over time — used to identify over-allocation.',
+          'Physical resources: planned and controlled similarly to human resources, including procurement for materials and equipment.'
+        ]
+      },
+      {
+        h: 'Team Development: Tuckman\'s Five Stages',
+        body: 'Bruce Tuckman\'s model describes how teams naturally progress through stages. The PM\'s leadership style should adapt to match the stage.',
+        items: [
+          'Forming: team members meet, are polite, unclear about roles. PM should be directive — provide clear structure.',
+          'Storming: conflict emerges as people vie for position and work through differences. PM coaches and facilitates conflict resolution.',
+          'Norming: team establishes norms, builds trust, begins to collaborate effectively. PM becomes more participative.',
+          'Performing: team is high-functioning and self-directed. PM delegates and focuses on results.',
+          'Adjourning (added later): team dissolves after project completion. PM manages transitions and celebrates success.',
+          'Teams can regress to earlier stages when new members join or major changes occur.'
+        ]
+      },
+      {
+        h: 'Motivation Theories',
+        body: 'PMI expects you to know which theory applies to a given situation:',
+        items: [
+          'Maslow\'s Hierarchy of Needs: Physiological → Safety → Social (Belonging) → Esteem → Self-Actualization. Lower needs must be satisfied before higher ones motivate.',
+          'Herzberg\'s Hygiene Theory: Hygiene factors (salary, job security, working conditions) PREVENT dissatisfaction but don\'t motivate. Motivators (achievement, recognition, growth) actually motivate. Fix hygiene first, then use motivators.',
+          'McGregor\'s Theory X / Theory Y: Theory X assumes workers are lazy and need to be controlled. Theory Y assumes workers are self-motivated and want responsibility. PMI favors Theory Y.',
+          'McClelland\'s Three Needs: Need for Achievement (nAch), Need for Affiliation (nAff), Need for Power (nPow). High achievers prefer individual accountability and moderate risk.',
+          'Vroom\'s Expectancy Theory: motivation = Expectancy × Instrumentality × Valence. All three must be positive for motivation to occur.'
+        ]
+      },
+      {
+        h: 'Conflict Resolution Techniques',
+        body: 'Conflict is inevitable on projects. PMI recognizes five conflict resolution modes, with a clear preference order:',
+        items: [
+          'Collaborate/Problem Solve (Win-Win): best technique. Find a solution that addresses both parties\' needs fully. PMI\'s preferred approach.',
+          'Compromise/Reconcile (Lose-Lose partial): both sides give up something. Second best — maintains relationships but neither party is fully satisfied.',
+          'Smooth/Accommodate: emphasize areas of agreement; downplay differences. Temporary fix — problem remains.',
+          'Force/Direct: use authority to impose a solution. Quick but creates resentment. Win-Lose.',
+          'Withdraw/Avoid: postpone or remove yourself from conflict. Worst technique — problem remains unresolved.',
+          'Conflict is NATURAL and can be productive. The goal is resolution, not avoidance.',
+          'The best source of conflict on projects: schedule, followed by priorities, then resources.'
+        ]
+      },
+      {
+        h: 'Exam Focus',
+        body: '',
+        items: [
+          'In RACI, only ONE person can be Accountable for any single task.',
+          'Tuckman: recognize which stage the team is in from the scenario and apply the appropriate leadership response.',
+          'Herzberg: salary alone will not motivate — it only prevents dissatisfaction. To truly motivate, give recognition and growth opportunities.',
+          'Theory Y is the PMI-preferred management philosophy.',
+          'Conflict: Always try collaborate/problem solve first. Avoid force/withdraw unless there is no other option.',
+          'Common trap: a question about what to do when team morale is low and pay is adequate — according to Herzberg, add motivators (recognition, challenging work), not more hygiene factors.'
+        ]
+      }
+    ],
+    points: [
+      'RACI: only ONE Accountable per task',
+      'Tuckman stages: Forming→Storming→Norming→Performing→Adjourning',
+      'Maslow: lower needs first; Herzberg: hygiene prevents dissatisfaction, motivators inspire',
+      'McGregor Y: workers self-motivated (PMI preferred)',
+      'Conflict resolution order: Collaborate > Compromise > Smooth > Force > Withdraw',
+      'Best source of conflict on projects: schedule disputes'
+    ],
+    tip: 'Know the motivation theories cold — the exam gives you a scenario and asks which theory explains the behavior. Herzberg: pay is hygiene (not a motivator). PMI prefers Win-Win (Collaborate) for conflict.'
+  },
+
+  risk: {
+    label: 'Risk Management',
+    icon: '⚠️',
+    cat: 'core',
+    intro: 'Risk Management is the proactive process of identifying, analyzing, and responding to uncertainty — both threats (negative risks) and opportunities (positive risks). PMI views risk management as continuous, structured, and proactive. On the PMP exam, risk questions test your ability to identify the right type of risk, choose the correct response strategy, and know when reserves are appropriate. Many candidates lose points by not knowing opportunity responses, which mirror threat responses.',
+    sections: [
+      {
+        h: 'Risk Fundamentals: Key Definitions',
+        body: '',
+        items: [
+          'Risk: an uncertain event or condition that, IF it occurs, has a positive or negative effect on one or more project objectives.',
+          'Issue: a risk that HAS ALREADY occurred. Issues need immediate action, not risk responses.',
+          'Known-Unknown Risks: identified risks you\'re uncertain about (you know they might happen). Handled with contingency reserves.',
+          'Unknown-Unknown Risks: risks you never anticipated. Handled with management reserves.',
+          'Risk Appetite: how much risk an organization is willing to accept in pursuit of value.',
+          'Risk Threshold: the specific point at which a risk becomes unacceptable.',
+          'Residual Risk: risk remaining after a response strategy has been implemented.',
+          'Secondary Risk: a new risk created by implementing a risk response.'
+        ]
+      },
+      {
+        h: 'Risk Identification Techniques',
+        body: 'Risk identification is iterative — risks are identified, then new ones emerge throughout the project.',
+        items: [
+          'Brainstorming: teams generate risks freely; quantity over quality initially.',
+          'Delphi Technique: anonymous consensus-building through expert rounds. Reduces groupthink and bias. Experts don\'t know each other\'s identities.',
+          'Interviews: one-on-one with subject matter experts.',
+          'Root Cause Analysis: identifies underlying causes that could create risks.',
+          'SWOT Analysis: Strengths, Weaknesses (internal), Opportunities, Threats (external).',
+          'Risk Register: the output — a living document containing all identified risks, their descriptions, potential responses, and ownership.',
+          'Risk Breakdown Structure (RBS): hierarchical categorization of risks by category (technical, external, organizational, PM).'
+        ]
+      },
+      {
+        h: 'Qualitative vs. Quantitative Risk Analysis',
+        body: 'Risk analysis has two levels — qualitative (prioritization) always comes before quantitative (numerical analysis).',
+        items: [
+          'Qualitative Risk Analysis: prioritizes risks using a Probability and Impact Matrix. Combines likelihood (high/medium/low) with impact to score each risk. Fast, no special tools required.',
+          'Quantitative Risk Analysis: assigns numerical probability and dollar/time impact to prioritized risks. Requires more data and specialized tools.',
+          'EMV (Expected Monetary Value) = Probability × Impact. Used in decision trees. Example: 40% chance of $50,000 loss = EMV of -$20,000.',
+          'Decision Tree Analysis: maps out decision branches and their outcomes with EMV values to choose the best option.',
+          'Monte Carlo Simulation: runs thousands of simulations to produce probability distributions for schedule/cost outcomes.',
+          'Sensitivity Analysis: determines which risks have the greatest potential impact (often displayed as a Tornado diagram).'
+        ]
+      },
+      {
+        h: 'Risk Response Strategies',
+        body: 'There are four strategies for THREATS and four parallel strategies for OPPORTUNITIES. Knowing all eight is essential.',
+        items: [
+          'THREATS — Avoid: eliminate the threat by changing the project plan (change scope, extend timeline, drop a risky activity).',
+          'THREATS — Transfer: shift the negative impact to a third party (insurance, fixed-price contracts, warranties). You still own the risk outcome; a third party absorbs the financial impact.',
+          'THREATS — Mitigate: reduce the probability or impact of the risk to an acceptable level (add testing, use proven technology, add redundancy).',
+          'THREATS — Accept: acknowledge the risk and decide to deal with it if it occurs. Passive acceptance = no action planned. Active acceptance = establish contingency reserve.',
+          'OPPORTUNITIES — Exploit: ensure the opportunity definitely occurs (assign best resources, guarantee conditions).',
+          'OPPORTUNITIES — Share: allocate ownership to a third party better positioned to capture the opportunity (joint ventures, partnerships).',
+          'OPPORTUNITIES — Enhance: increase probability or impact of the opportunity (add resources, remove barriers).',
+          'OPPORTUNITIES — Accept: take advantage if it occurs but don\'t actively pursue it.',
+          'Escalate: used when the risk is outside the PM\'s authority — escalate to sponsor or program level.',
+          'Workaround: an unplanned response to an issue (risk that occurred). Developed on the fly, then formally documented.'
+        ]
+      },
+      {
+        h: 'Exam Focus',
+        body: '',
+        items: [
+          'Risk is uncertain — it hasn\'t happened yet. An issue HAS happened. Different responses required.',
+          'Contingency reserves cover known risks. Management reserves cover unknown risks.',
+          'Transferring risk does NOT eliminate it — it shifts financial consequences. The risk still exists.',
+          'Residual risk remains after a response. Secondary risk is CREATED by the response.',
+          'Delphi Technique is anonymous and iterative — used when you need expert input without groupthink.',
+          'Common trap: confusing Mitigate (reduce probability/impact) with Transfer (shift financial consequence to third party).',
+          'Opportunities are just as important as threats on the exam — PMI tests opportunity responses equally.'
+        ]
+      }
+    ],
+    points: [
+      'Risk = uncertain event; Issue = risk that occurred (needs immediate action)',
+      'Qualitative → Quantitative (always in that order)',
+      'EMV = Probability × Impact; used in decision trees',
+      'Threats: Avoid, Transfer, Mitigate, Accept; Opportunities: Exploit, Share, Enhance, Accept',
+      'Residual = remaining risk; Secondary = risk created by response',
+      'Contingency reserve = known risks; Management reserve = unknown risks'
+    ],
+    tip: 'Know all 8 risk response strategies (4 threats + 4 opportunities). The exam regularly tests opportunity responses, which many candidates skip. Also: risk vs. issue distinction is tested frequently.'
+  },
+
+  procurement: {
+    label: 'Procurement Management',
+    icon: '📄',
+    cat: 'core',
+    intro: 'Procurement Management governs how the project acquires goods and services from outside the organization. It covers the full lifecycle: deciding what to buy, selecting vendors, managing contracts, and closing them out. On the PMP exam, procurement questions focus heavily on contract types and who bears risk — the buyer or the seller — under each type. Understanding the Point of Total Assumption (PTA) for FPIF contracts is also tested.',
+    sections: [
+      {
+        h: 'Make-or-Buy Analysis',
+        body: 'Before procuring anything, the team determines whether it is more advantageous to make something in-house or buy it externally.',
+        items: [
+          'Reasons to Make: proprietary technology, maintain control, existing capacity, long-term strategic value.',
+          'Reasons to Buy: specialized expertise not available internally, cost savings, flexibility, risk transfer.',
+          'The make-or-buy decision is documented in the procurement management plan.',
+          'Both direct costs (purchase price) and indirect costs (administration, integration) must be considered.'
+        ]
+      },
+      {
+        h: 'Contract Types and Risk Allocation',
+        body: 'Contract type determines who bears the financial risk if costs exceed estimates. This is the most heavily tested procurement concept.',
+        items: [
+          'Fixed Price (FFP): seller bears all cost risk. Buyer knows exactly what they will pay. Best when scope is well-defined. Seller must absorb all cost overruns.',
+          'Fixed Price Incentive Fee (FPIF): fixed price + incentive for meeting targets + a ceiling price. Uses Point of Total Assumption (PTA). Seller bears cost risk above the ceiling.',
+          'Fixed Price Award Fee (FPAF): fixed price + subjective award fee based on performance. Buyer has discretion over award.',
+          'Cost Plus Fixed Fee (CPFF): buyer reimburses all costs + a fixed fee that doesn\'t change with cost performance. BUYER bears cost risk.',
+          'Cost Plus Incentive Fee (CPIF): reimbursable costs + incentive for beating targets. Both parties share risk.',
+          'Cost Plus Award Fee (CPAF): reimbursable costs + subjective fee based on satisfaction. Buyer controls award.',
+          'Time and Material (T&M): hybrid — fixed rate per hour (like FP) but open-ended scope (like CR). Used for staff augmentation or when scope is undefined. Buyer has cost risk for duration/scope growth.'
+        ]
+      },
+      {
+        h: 'Point of Total Assumption (PTA)',
+        body: 'PTA applies to Fixed Price Incentive Fee (FPIF) contracts. It is the cost point above which the seller absorbs ALL additional costs.',
+        items: [
+          'PTA Formula: PTA = ((Ceiling Price - Target Price) / Buyer\'s Share Ratio) + Target Cost.',
+          'Above the PTA, the seller takes 100% of cost risk — effectively behaving like a Firm Fixed Price contract.',
+          'Below the target cost, both parties share savings per the share ratio.',
+          'The ceiling price protects the buyer. But the seller is not protected — they must deliver at or below ceiling or lose money.'
+        ]
+      },
+      {
+        h: 'Procurement Documents',
+        body: 'Procurement documents communicate buyer requirements to potential sellers and structure the selection process.',
+        items: [
+          'RFI (Request for Information): gather market information before a formal bid. Not a commitment.',
+          'RFP (Request for Proposal): requests a detailed proposal including approach, team, and price. Used for complex, services-based procurements.',
+          'RFQ (Request for Quotation): requests price information, typically for commodities where price is the main differentiator.',
+          'IFB (Invitation for Bid): used in government/public procurement; price is primary award criterion.',
+          'Source Selection Criteria: defines how proposals will be evaluated — price, technical approach, experience, risk, etc.',
+          'Procurement Statement of Work (SOW): describes what the seller must deliver in sufficient detail to price it.'
+        ]
+      },
+      {
+        h: 'Exam Focus',
+        body: '',
+        items: [
+          'Risk rule: Fixed price = seller bears risk. Cost reimbursable = buyer bears risk. T&M = shared/buyer risk for scope growth.',
+          'Use fixed price when scope is clear. Use cost reimbursable when scope is uncertain. Use T&M for undefined duration/staff augmentation.',
+          'Procurement closure includes final payment, formal acceptance of all deliverables, and archiving of procurement records.',
+          'Privity of contract: the buyer only has a contract with the prime contractor, not with subcontractors. The PM cannot direct subcontractors — must go through the prime.',
+          'Common trap: in FPIF contracts, above the ceiling price the seller still absorbs costs — the buyer is protected by the ceiling.'
+        ]
+      }
+    ],
+    points: [
+      'Fixed Price: seller bears risk; Cost Reimbursable: buyer bears risk; T&M: hybrid',
+      'PTA = ((Ceiling - Target Price) / Buyer Share Ratio) + Target Cost',
+      'Use FP for defined scope; CR for undefined scope; T&M for staff augmentation',
+      'RFP = proposals; RFQ = price quotes; IFB = competitive bids',
+      'Privity: PM can only direct prime contractor, not subcontractors',
+      'FPIF ceiling price protects buyer; seller absorbs all costs above PTA'
+    ],
+    tip: 'The #1 procurement rule: who bears the risk? Fixed price = seller. Cost reimbursable = buyer. Know PTA for FPIF. The exam WILL give you a contract type scenario and ask what happens when costs overrun.'
+  },
+
+  stakeholder: {
+    label: 'Stakeholder Management',
+    icon: '🤝',
+    cat: 'core',
+    intro: 'Stakeholder Management is the process of identifying everyone who can affect or be affected by the project, understanding their interests and influence, and developing strategies to engage them effectively. PMI emphasizes that stakeholder engagement is continuous and proactive — not a one-time event. The PMP exam tests stakeholder analysis tools, engagement levels, and how to handle difficult stakeholders strategically.',
+    sections: [
+      {
+        h: 'Stakeholder Identification',
+        body: 'Stakeholder identification begins at project initiation and continues throughout the project. Finding stakeholders early reduces costly surprises.',
+        items: [
+          'Stakeholder: any individual, group, or organization that may affect, be affected by, or perceive itself to be affected by a decision, activity, or outcome of a project.',
+          'Stakeholder Register: the primary output of identification. Contains: name/role, contact info, requirements, expectations, influence level, stakeholder classification.',
+          'Identification techniques: expert judgment, questionnaires, brainstorming, organizational charts, reviewing project documents.',
+          'Stakeholders can be internal (team, PMO, sponsor) or external (customers, regulators, community, vendors).',
+          'New stakeholders should be identified throughout the project — re-run identification as the project evolves.'
+        ]
+      },
+      {
+        h: 'Stakeholder Analysis Grids',
+        body: 'Once identified, stakeholders are analyzed to prioritize engagement efforts.',
+        items: [
+          'Power/Interest Grid: plots stakeholders on a 2×2 grid by power (authority/influence) and interest (level of concern). Four quadrants: Manage Closely (high power, high interest), Keep Satisfied (high power, low interest), Keep Informed (low power, high interest), Monitor (low power, low interest).',
+          'Salience Model: classifies stakeholders by three attributes — Power (authority to impose will), Urgency (time-sensitive needs), Legitimacy (appropriate involvement). Stakeholders with all three = definitive stakeholders. Highest priority.',
+          'The analysis informs engagement strategies — different stakeholders require different approaches.'
+        ]
+      },
+      {
+        h: 'Stakeholder Engagement Levels',
+        body: 'PMI defines five levels of stakeholder engagement, and the PM must work to move stakeholders toward "Leading" when appropriate.',
+        items: [
+          'Unaware: stakeholder does not know about the project or its potential impacts.',
+          'Resistant: knows about the project but actively opposes it.',
+          'Neutral: aware of the project but neither supportive nor resistant.',
+          'Supportive: aware of the project and supportive of its outcomes.',
+          'Leading: actively engaged in ensuring the project succeeds. Champions the project.',
+          'The Stakeholder Engagement Assessment Matrix plots current (C) vs. desired (D) engagement level for each stakeholder.',
+          'The PM develops strategies to close the gap between current and desired engagement.'
+        ]
+      },
+      {
+        h: 'Communications Planning and Channel Formula',
+        body: 'Effective stakeholder management depends on effective communications.',
+        items: [
+          'Communications Channels Formula: N(N-1)/2, where N = number of stakeholders/team members. Example: 10 people → 10×9/2 = 45 channels.',
+          'Communications Management Plan defines: who needs what information, when, in what format, through which channel, and who is responsible for sending it.',
+          'Methods: push (sent to recipients — email, reports), pull (available on demand — intranet, repositories), interactive (real-time, bidirectional — meetings, calls).',
+          'The majority of the PM\'s time (estimated 90%) is spent communicating.'
+        ]
+      },
+      {
+        h: 'Exam Focus',
+        body: '',
+        items: [
+          'Identify stakeholders as early as possible — early engagement is cheaper and more effective than late course-correction.',
+          'The Stakeholder Register is NOT public. It contains sensitive information about stakeholder expectations and resistance.',
+          'High power, low interest stakeholders (Keep Satisfied) are dangerous if ignored — they can derail the project if they become concerned.',
+          'Resistant stakeholders need engagement strategies, not avoidance — understand their concerns and address them.',
+          'Common trap: the exam may describe a resistant stakeholder and ask what to do. The answer is NEVER to ignore them or go around them — engage directly.',
+          'Communications channels formula is frequently calculated. If the team grows from 8 to 12 people, the INCREASE in channels is (12×11/2) - (8×7/2) = 66 - 28 = 38 new channels.'
+        ]
+      }
+    ],
+    points: [
+      'Stakeholder Register: identification, interests, influence, engagement level',
+      'Power/Interest Grid: Manage Closely, Keep Satisfied, Keep Informed, Monitor',
+      'Salience Model: Power + Urgency + Legitimacy = definitive stakeholder',
+      'Engagement levels: Unaware→Resistant→Neutral→Supportive→Leading',
+      'Communications channels = N(N-1)/2',
+      'PM spends ~90% of time communicating'
+    ],
+    tip: 'On the exam, never ignore resistant stakeholders. The correct answer is always to engage and understand their concerns. Also memorize the channels formula — it appears regularly.'
+  },
+
+  agile: {
+    label: 'Agile & Scrum',
+    icon: '🔄',
+    cat: 'methodology',
+    intro: 'Agile is an iterative, incremental approach to project management that prioritizes collaboration, adaptability, and delivering working products in short cycles. Scrum is the most widely used Agile framework. With over 50% of PMP exam content focused on agile and hybrid approaches, this topic is critical. The exam tests Agile values, Scrum mechanics, servant leadership, and how to apply Agile thinking in real project scenarios.',
+    sections: [
+      {
+        h: 'The Agile Manifesto: 4 Values',
+        body: 'The Agile Manifesto (2001) defines Agile through four value statements. Each values the left side over the right — but does NOT eliminate the right side.',
+        items: [
+          'Individuals and Interactions OVER Processes and Tools: people and communication matter more than rigid procedures.',
+          'Working Software OVER Comprehensive Documentation: deliver value, not paperwork.',
+          'Customer Collaboration OVER Contract Negotiation: engage the customer continuously, not just at contract signing.',
+          'Responding to Change OVER Following a Plan: be flexible; plans must adapt to reality, not the reverse.',
+          'NOTE: The right side still has value — Agile teams DO document, DO have contracts, DO plan. But the left side is weighted more.'
+        ]
+      },
+      {
+        h: 'The 12 Agile Principles',
+        body: 'The 12 principles operationalize the four values. Exam favorites include:',
+        items: [
+          '1. Highest priority: satisfy the customer through early and continuous delivery of valuable software.',
+          '2. Welcome changing requirements, even late in development.',
+          '3. Deliver working software frequently (weeks, not months).',
+          '4. Business people and developers must work together daily.',
+          '5. Build projects around motivated individuals; give them the environment and trust they need.',
+          '7. Working software is the primary measure of progress.',
+          '10. Simplicity — maximize the amount of work NOT done.',
+          '12. Teams regularly reflect and adjust their behavior (retrospectives).'
+        ]
+      },
+      {
+        h: 'Scrum: Roles, Events, and Artifacts',
+        body: 'Scrum structures Agile work into three roles, five events, and three artifacts:',
+        items: [
+          'ROLES — Product Owner (PO): owns the Product Backlog, prioritizes features by business value, represents the customer.',
+          'ROLES — Scrum Master (SM): servant leader who facilitates Scrum, removes impediments, coaches the team. Does NOT manage the team.',
+          'ROLES — Development Team: self-organizing, cross-functional team (3-9 people) that does the actual work. No sub-roles or hierarchy.',
+          'EVENTS — Sprint: time-boxed iteration (1-4 weeks, same length each sprint). The container for all other events.',
+          'EVENTS — Sprint Planning: team selects Product Backlog items for the sprint and creates a Sprint Backlog.',
+          'EVENTS — Daily Scrum (Daily Standup): 15-minute daily sync. Each member answers: What did I do yesterday? What will I do today? Any impediments?',
+          'EVENTS — Sprint Review: team demonstrates working software to stakeholders; PO accepts or rejects work.',
+          'EVENTS — Sprint Retrospective: team reflects on their PROCESS (not the product). What went well? What to improve?',
+          'ARTIFACTS — Product Backlog: ordered list of all features, requirements, fixes. Owned and prioritized by PO.',
+          'ARTIFACTS — Sprint Backlog: subset of Product Backlog committed to for the current sprint.',
+          'ARTIFACTS — Increment: the sum of all completed Product Backlog items, potentially shippable at the end of each sprint.'
+        ]
+      },
+      {
+        h: 'Kanban, Velocity, and Burndown',
+        body: '',
+        items: [
+          'Kanban: a pull-based system using a board with columns (To Do, In Progress, Done). WIP (Work in Progress) limits are set per column to prevent bottlenecks and force quality.',
+          'WIP Limits: restrict how many items can be in a column simultaneously. If a column is full, new work cannot enter until something moves forward.',
+          'Velocity: average story points completed per sprint. Used to forecast how much work a team can do and when the project will complete.',
+          'Burndown Chart: shows remaining work (story points) vs. time within a sprint or release. Ideal line goes from total work to zero at sprint end.',
+          'Burnup Chart: shows completed work vs. total scope over time. Makes scope changes visible.',
+          'Definition of Done (DoD): team-agreed criteria that a backlog item must meet to be considered complete.'
+        ]
+      },
+      {
+        h: 'Exam Focus',
+        body: '',
+        items: [
+          'The Scrum Master does NOT manage the team — the team is self-organizing. The SM facilitates and removes impediments.',
+          'The Product Owner prioritizes the backlog — the team does NOT reorder PB items based on personal preference.',
+          'Sprint Review = show the product to stakeholders. Retrospective = improve the process. Never confuse these.',
+          'Agile does not eliminate planning — it plans at multiple levels (release, sprint, daily).',
+          'Common trap: "The customer wants to change requirements mid-sprint." Agile answer: the PO can add items to the Product Backlog; the Development Team protects the current sprint from mid-sprint changes.',
+          'Velocity is used for FORECASTING, not for setting team performance targets.',
+          'A sprint can be cancelled by the PO if the Sprint Goal becomes obsolete. Only the PO can cancel a sprint.'
+        ]
+      }
+    ],
+    points: [
+      'Agile Manifesto: 4 values (left over right, not instead of right)',
+      'Scrum roles: Product Owner, Scrum Master, Development Team',
+      'Sprint Review = demo product; Retrospective = improve process',
+      'PO owns/prioritizes backlog; SM removes impediments (servant leader)',
+      'WIP limits prevent bottlenecks in Kanban',
+      'Velocity = avg story points/sprint; Burndown = remaining work over time'
+    ],
+    tip: 'Sprint Review and Sprint Retrospective are the two most commonly confused events. Review = show the product. Retro = improve the process. Also know: only the PO can cancel a sprint.'
+  },
+
+  general: {
+    label: 'General PM Concepts',
+    icon: '📋',
+    cat: 'foundation',
+    intro: 'General PM Concepts form the theoretical foundation that all other knowledge areas build upon. Understanding what makes something a project (vs. operations), how projects fit within programs and portfolios, and what factors constrain and enable a PM\'s decisions is essential context for every other PMP topic. These foundational concepts appear as background knowledge in nearly every exam question.',
+    sections: [
+      {
+        h: 'What Is a Project?',
+        body: 'A project is a temporary endeavor undertaken to create a unique product, service, or result. Two words are key: temporary and unique.',
+        items: [
+          'Temporary: has a definite beginning and end. Projects end when objectives are met, cannot be met, or are no longer needed.',
+          'Unique: every project is different. Even building the same house twice involves different locations, workers, conditions.',
+          'Projects vs. Operations: Operations are ongoing, repetitive, and sustain the organization (manufacturing, payroll). Projects are temporary and unique.',
+          'Progressive Elaboration: planning in increasing detail as more information becomes available. The plan is not fully defined upfront — it evolves.',
+          'Projects drive organizational change — they are the mechanism by which strategy is implemented.'
+        ]
+      },
+      {
+        h: 'Portfolio, Program, Project Hierarchy',
+        body: 'Organizations manage work at three levels, each with a different focus:',
+        items: [
+          'Portfolio: a collection of programs, projects, and operations managed as a group to achieve strategic objectives. Portfolio management maximizes value alignment with organizational strategy.',
+          'Program: a group of related projects managed in a coordinated way to obtain benefits not available from managing them individually. Programs focus on benefits realization.',
+          'Project: a temporary, unique undertaking that creates a specific deliverable. Projects focus on objectives.',
+          'Supportive PMO: provides templates, training, best practices. Low control. Advisory role.',
+          'Controlling PMO: requires compliance with frameworks. Moderate control. Reviews and audits.',
+          'Directive PMO: directly manages projects and assigns PMs. High control. PMs report to the PMO.'
+        ]
+      },
+      {
+        h: 'Enterprise Environmental Factors (EEFs) vs. Organizational Process Assets (OPAs)',
+        body: 'These two input categories appear in nearly every process. Distinguishing them is important.',
+        items: [
+          'EEFs: conditions the PM cannot control that influence the project. Internal EEFs: organizational culture, infrastructure, HR policies, PM software. External EEFs: government regulations, market conditions, industry standards, political climate.',
+          'OPAs: the organization\'s accumulated knowledge and artifacts that the PM CAN use and contribute to. Processes & procedures: templates, standards, guidelines. Corporate knowledge base: lessons learned, historical data, financial databases.',
+          'Key distinction: EEFs constrain you; OPAs help you. EEFs are inputs you can\'t change; OPAs are tools and information you can leverage.',
+          'Both are inputs to most planning processes.'
+        ]
+      },
+      {
+        h: 'Triple Constraint and Project Success',
+        body: 'The triple constraint describes the fundamental trade-off relationship between scope, schedule, and cost.',
+        items: [
+          'The Iron Triangle: Scope, Schedule, Cost (and now also Quality, Risk, Resources in expanded models).',
+          'If scope increases, either schedule must extend, cost must increase, or quality must decrease.',
+          'Project success is measured against: scope (delivered what was promised), schedule (on time), cost (within budget), quality (meets standards), and benefits realization.',
+          'The project manager\'s job is to balance these constraints, not eliminate them.',
+          'PMI now emphasizes that true success means the project delivered its intended business value.'
+        ]
+      },
+      {
+        h: 'Exam Focus',
+        body: '',
+        items: [
+          'Project = temporary + unique. If it\'s ongoing and repetitive, it\'s an operation.',
+          'Progressive elaboration means plans are refined over time — not that the PM failed to plan upfront.',
+          'The PMO type determines how much authority it has over project managers.',
+          'EEFs are external influences you work within. OPAs are internal resources you leverage.',
+          'Portfolio management is about STRATEGIC ALIGNMENT. Program management is about BENEFITS REALIZATION. Project management is about OBJECTIVES AND DELIVERABLES.',
+          'Common trap: confusing PMO types. A directive PMO assigns project managers. A supportive PMO only provides templates and advice.'
+        ]
+      }
+    ],
+    points: [
+      'Project: temporary (defined end) + unique (distinct product/service/result)',
+      'Project vs. Operations: projects are temporary; operations are ongoing',
+      'Portfolio → Program → Project hierarchy (strategy → benefits → deliverables)',
+      'PMO types: Supportive (advises), Controlling (requires compliance), Directive (manages projects)',
+      'EEFs = external conditions (cannot change); OPAs = internal assets (leverage)',
+      'Triple constraint: Scope, Schedule, Cost — changing one affects the others'
+    ],
+    tip: 'EEFs constrain you (weather, laws, culture). OPAs help you (templates, lessons learned). This distinction appears in dozens of process input lists on the exam.'
+  },
+
+  ethics: {
+    label: 'Ethics & Professional Conduct',
+    icon: '⚖️',
+    cat: 'foundation',
+    intro: 'PMI\'s Code of Ethics and Professional Conduct establishes the ethical standards every certified PM must uphold. Ethics questions on the PMP exam describe realistic scenarios involving conflicts of interest, unethical requests, or professional dilemmas — and test whether you know the right course of action according to PMI\'s standards. The correct answer often requires more courage than convenience.',
+    sections: [
+      {
+        h: 'The Four Core Values',
+        body: 'PMI\'s Code of Ethics is built on four core values. Each has mandatory standards (required behaviors) and aspirational standards (ideals to strive toward).',
+        items: [
+          'Responsibility: taking ownership of decisions and their consequences. Reporting violations, delivering on commitments, being accountable for errors.',
+          'Respect: treating others with dignity. Listening, understanding cultural differences, not using personal influence to force agreement.',
+          'Fairness: making decisions impartially, without favoritism or self-interest. Transparency in decision-making, disclosing conflicts of interest.',
+          'Honesty: communicating truthfully. Not deceiving stakeholders, not withholding information that would harm others.'
+        ]
+      },
+      {
+        h: 'Mandatory vs. Aspirational Standards',
+        body: 'Each of the four values has both mandatory and aspirational standards.',
+        items: [
+          'Mandatory standards: required behaviors. Violations are subject to disciplinary action by PMI.',
+          'Aspirational standards: the ideal behaviors PMI expects members to strive for. Example: "We make decisions based on the best interests of society, public safety, and the environment."',
+          'Both matter on the exam — aspirational standards describe the ideal PM behavior even when not strictly required.'
+        ]
+      },
+      {
+        h: 'Handling Unethical Requests and Conflicts of Interest',
+        body: 'The exam frequently presents scenarios where someone asks the PM to do something questionable. PMI\'s expected responses are clear.',
+        items: [
+          'Conflict of interest: when a personal interest could improperly influence a professional decision. Must be disclosed proactively — don\'t wait to be asked.',
+          'If asked to do something unethical: refuse, document, and report to appropriate authority. Never comply to avoid conflict.',
+          'Accepting gifts: must follow your organization\'s policy. Even small gifts that could create an appearance of bias should be declined or disclosed.',
+          'Unethical behavior by others: PMI requires that you REPORT violations, not ignore them. Staying silent when you witness unethical conduct violates the Code.',
+          'Protecting project team: the PM must not allow the team to be pressured into unethical behavior by management or the client.'
+        ]
+      },
+      {
+        h: 'Exam Focus',
+        body: '',
+        items: [
+          'Ethics questions test your integrity under pressure. The correct answer is usually the most honest, transparent, and accountable option.',
+          'If you receive a gift from a vendor: disclose it to your organization and follow policy.',
+          'If a manager asks you to falsify a report: refuse and document. Escalate if necessary.',
+          'If you discover a billing error in your favor: report it and correct it.',
+          'Common trap: the answer that avoids confrontation (smooth things over, say nothing) is almost never correct. PMI expects PMs to act with courage and integrity.',
+          'The PMI Code applies to ALL PMI members and credential holders, not just during work hours.'
+        ]
+      }
+    ],
+    points: [
+      'Four values: Responsibility, Respect, Fairness, Honesty',
+      'Mandatory = required (violations punishable); Aspirational = ideals to pursue',
+      'Conflicts of interest must be proactively disclosed',
+      'Report unethical behavior — silence is a violation',
+      'Cultural differences acknowledged but do not override ethical standards',
+      'Ethics apply to ALL PMI members at all times'
+    ],
+    tip: 'Ethics exam questions reward courage and integrity, not conflict avoidance. If you see an answer that involves disclosing, reporting, or refusing an unethical request — that is almost always correct.'
+  },
+
+  talent: {
+    label: 'PMI Talent Triangle',
+    icon: '🔺',
+    cat: 'foundation',
+    intro: 'The PMI Talent Triangle defines the three skill domains that modern project managers must develop to be effective. Updated in 2022, it reflects PMI\'s recognition that technical PM skills alone are insufficient — today\'s PM must also be a strategic leader and a strong communicator. Exam questions on this topic often present leadership scenarios and ask which style or approach is most appropriate.',
+    sections: [
+      {
+        h: 'The Three Domains of the Talent Triangle',
+        body: 'PMI\'s updated Talent Triangle (2022) replaced the original three domains with:',
+        items: [
+          'Ways of Working: the technical project management skills — predictive, agile, hybrid methodologies, tools, frameworks. This is where traditional PM knowledge lives.',
+          'Power Skills (formerly Leadership): interpersonal, communication, leadership, collaboration, and influence skills. The "soft skills" that have the hardest impact.',
+          'Business Acumen: understanding of the business environment, strategic alignment, financial literacy, benefits realization, and organizational context.',
+          'All three domains are required. A PM who is technically excellent but cannot lead or understand business strategy is incomplete.'
+        ]
+      },
+      {
+        h: 'Leadership Styles',
+        body: 'Different situations call for different leadership approaches. The exam tests when to apply each style.',
+        items: [
+          'Servant Leadership: the leader\'s primary goal is to serve the team — remove obstacles, provide resources, support growth. Essential in Agile and Scrum.',
+          'Transformational Leadership: inspires and motivates through vision and values. Drives people to exceed their own expectations. Best for innovation and change.',
+          'Transactional Leadership: based on exchange — rewards for performance, consequences for non-performance. Good for stable environments with clear expectations.',
+          'Directive (Autocratic): leader makes decisions unilaterally. Effective in crises or when quick decisions are needed but can kill team morale long-term.',
+          'Democratic/Participative: team involved in decision-making. Builds buy-in and commitment but slower.',
+          'Situational Leadership (Hersey & Blanchard): leaders adapt their style based on team member maturity and task competence. No one style fits all situations.'
+        ]
+      },
+      {
+        h: 'Goleman\'s Emotional Intelligence (EQ)',
+        body: 'Daniel Goleman identified five components of Emotional Intelligence that distinguish great leaders from merely competent ones.',
+        items: [
+          'Self-Awareness: recognizing your own emotions and how they affect others. Foundation of all other EQ components.',
+          'Self-Regulation: controlling disruptive emotions and impulses. Thinking before acting. Maintaining trustworthiness.',
+          'Motivation: drive to achieve beyond external rewards. Passion for work itself, not just money or status.',
+          'Empathy: understanding others\' emotional states and perspectives. Critical for managing diverse teams and stakeholders.',
+          'Social Skills: managing relationships, building networks, finding common ground, leading change.'
+        ]
+      },
+      {
+        h: 'Business Acumen: Benefits and Financial Concepts',
+        body: 'The PM must understand business value and financial concepts to make sound decisions and communicate with executives.',
+        items: [
+          'Benefits Realization: ensuring the project actually delivers the value it was authorized to produce. Benefits are tracked after the project closes.',
+          'NPV (Net Present Value): present value of all future cash flows minus initial investment. Positive NPV = good investment. When selecting between projects, choose the HIGHEST positive NPV.',
+          'IRR (Internal Rate of Return): discount rate at which NPV = 0. Higher IRR = better investment.',
+          'Opportunity Cost: the value of the next-best alternative foregone when choosing a project.',
+          'ROI (Return on Investment): (Net Benefits / Costs) × 100%. Higher = better.',
+          'Payback Period: time to recover initial investment. Shorter = better (but ignores time value of money).'
+        ]
+      },
+      {
+        h: 'Exam Focus',
+        body: '',
+        items: [
+          'Servant leadership questions: the Agile PM or Scrum Master serves the team, not the other way around.',
+          'When asked what leadership style to use: consider the team\'s experience level, the urgency of the situation, and the need for buy-in.',
+          'Transformational vs. Transactional: transformational inspires with vision; transactional motivates with rewards/consequences.',
+          'EQ questions: self-awareness is the foundation. Without knowing your own emotions, none of the other EQ components can develop.',
+          'NPV project selection: always pick the project with the HIGHEST NPV, not the lowest cost or fastest completion.',
+          'Benefits realization happens AFTER project closure — the PM may not be involved, but they should plan for it.'
+        ]
+      }
+    ],
+    points: [
+      'Talent Triangle: Ways of Working, Power Skills, Business Acumen',
+      'Servant leadership: serve the team; transformational: inspire through vision',
+      'Goleman EQ: Self-Awareness, Self-Regulation, Motivation, Empathy, Social Skills',
+      'NPV: choose highest positive NPV for project selection',
+      'Opportunity cost: value of the alternative not chosen',
+      'Benefits realization continues after project closure'
+    ],
+    tip: 'For leadership style questions, context is everything. Servant leadership for agile teams, transformational for change initiatives, directive only in crises. EQ self-awareness is always the starting point.'
+  },
+
+  sixsigma: {
+    label: 'Six Sigma & DMAIC',
+    icon: '📊',
+    cat: 'methodology',
+    intro: 'Six Sigma is a data-driven quality improvement methodology that aims to eliminate defects and reduce process variation. Its goal is to achieve no more than 3.4 Defects Per Million Opportunities (DPMO) — statistically, 6 standard deviations from the mean. On the PMP exam, Six Sigma questions focus on DMAIC vs. DMADV, key tools, and understanding where Six Sigma fits within a project management context.',
+    sections: [
+      {
+        h: 'What Is Six Sigma?',
+        body: 'Six Sigma originated at Motorola in the 1980s and was popularized by Jack Welch at GE in the 1990s. It combines statistical analysis with structured problem-solving to drive quality improvement.',
+        items: [
+          'Sigma level represents process quality. 1 sigma = very poor. 6 sigma = near perfection.',
+          '3.4 DPMO target: at 6 sigma, fewer than 3.4 defects occur per million opportunities — about 99.99966% defect-free.',
+          'Six Sigma applies to any process — manufacturing, services, software, healthcare.',
+          'It is data-driven: decisions must be based on statistical evidence, not intuition.',
+          'Six Sigma is primarily a quality/process improvement tool, NOT a project management methodology — but PMI includes it because it uses project management principles.'
+        ]
+      },
+      {
+        h: 'DMAIC vs. DMADV',
+        body: 'Six Sigma has two primary frameworks, and choosing the right one depends on whether you are improving an existing process or designing a new one.',
+        items: [
+          'DMAIC (Define, Measure, Analyze, Improve, Control): used to IMPROVE an existing process that is underperforming.',
+          'DMADV (Define, Measure, Analyze, Design, Verify): also called DFSS (Design for Six Sigma). Used to CREATE a new process or product from scratch.',
+          'Rule: If the process exists and has problems → DMAIC. If no process exists yet → DMADV.',
+          'DMAIC stages: Define (the problem and goals) → Measure (current performance) → Analyze (root causes) → Improve (implement solutions) → Control (sustain improvements).',
+          'DMADV stages: Define (goals) → Measure (customer needs/CTQs) → Analyze (design options) → Design (detailed design) → Verify (test and validate).'
+        ]
+      },
+      {
+        h: 'Key Six Sigma Tools',
+        body: 'Six Sigma uses a toolkit of analytical tools throughout the DMAIC process:',
+        items: [
+          'SIPOC Diagram: maps a process at a high level. Suppliers, Inputs, Process, Outputs, Customers. Used in the Define phase to scope the improvement effort.',
+          'CTQ (Critical to Quality): the key measurable characteristics of a product or service whose performance standards must be met to satisfy the customer.',
+          'Control Charts: monitor process variation over time. Distinguish common-cause (normal) from special-cause (abnormal) variation.',
+          'Poka-Yoke (Mistake-Proofing): designing the process so errors are impossible or immediately obvious. Example: USB connectors that only fit one way.',
+          'FMEA (Failure Mode and Effects Analysis): proactively identifies potential failure modes. Each mode is scored by Severity × Occurrence × Detectability = Risk Priority Number (RPN). High RPN = priority for action.',
+          '5 Whys: iteratively ask "why?" to drill from symptoms to root causes.',
+          'Value Stream Mapping (Lean): maps the flow of value through a process to identify waste.'
+        ]
+      },
+      {
+        h: 'Belt Levels',
+        body: 'Six Sigma practitioners are certified at different levels of expertise:',
+        items: [
+          'White Belt: basic awareness of Six Sigma concepts. Support roles.',
+          'Yellow Belt: participates in improvement projects, understands DMAIC basics.',
+          'Green Belt: leads small improvement projects part-time. Proficient in Six Sigma tools.',
+          'Black Belt: full-time Six Sigma practitioner. Leads complex improvement projects. Strong statistical knowledge.',
+          'Master Black Belt: coaches and mentors Black Belts. Develops training. Strategic-level expertise.',
+          'Champion: executive sponsor who selects projects and removes organizational barriers.'
+        ]
+      },
+      {
+        h: 'Exam Focus',
+        body: '',
+        items: [
+          'DMAIC = improve existing process. DMADV = design new process. Never mix them up.',
+          '6 sigma = 3.4 DPMO. Know this number — it appears on the exam.',
+          'SIPOC is a Define-phase tool for scoping. CTQ translates customer voice into measurable specs.',
+          'FMEA RPN = Severity × Occurrence × Detectability. Highest RPN gets attention first.',
+          'Poka-Yoke = mistake-proofing = designing out errors.',
+          'Common trap: Six Sigma is about reducing VARIATION and eliminating DEFECTS — not just about speed or cost.',
+          'Lean Six Sigma combines Six Sigma (reduce defects) with Lean (eliminate waste/speed up flow).'
+        ]
+      }
+    ],
+    points: [
+      'Six Sigma goal: 3.4 DPMO (defects per million opportunities)',
+      'DMAIC = improve existing process; DMADV = design new process',
+      'SIPOC: Suppliers, Inputs, Process, Outputs, Customers (Define phase)',
+      'CTQ: critical-to-quality characteristics from Voice of Customer',
+      'FMEA RPN = Severity × Occurrence × Detectability',
+      'Poka-Yoke = mistake-proofing; Control Charts = monitor variation'
+    ],
+    tip: 'The DMAIC vs. DMADV choice is always tested: existing process → DMAIC. New process → DMADV. Also know FMEA RPN formula and that 6 sigma = 3.4 DPMO.'
+  },
+
+  cmmi: {
+    label: 'CMMI Maturity Levels',
+    icon: '📈',
+    cat: 'methodology',
+    intro: 'CMMI (Capability Maturity Model Integration) is a framework for assessing and improving an organization\'s software and project management processes. Developed by Carnegie Mellon\'s Software Engineering Institute, CMMI defines five maturity levels that describe how well an organization manages its processes. On the PMP exam, CMMI questions focus on knowing the five levels, what characterizes each, and what maturity is typically required for government contracts.',
+    sections: [
+      {
+        h: 'What Is CMMI?',
+        body: 'CMMI is an organizational improvement framework — it evaluates how mature an organization\'s processes are and provides a roadmap for improvement.',
+        items: [
+          'Originally developed as CMM (Capability Maturity Model) for software, later expanded to CMMI covering software, services, and acquisition.',
+          'CMMI is used by organizations to self-assess and improve, and by buyers (especially government) to evaluate vendors.',
+          'Assessment: organizations go through a formal appraisal to receive a CMMI maturity level rating.',
+          'CMMI applies at the ORGANIZATIONAL level, not the project level. A project within a Level 1 organization cannot be a Level 3 project.'
+        ]
+      },
+      {
+        h: 'The Five CMMI Maturity Levels',
+        body: 'Each level builds on the previous one. You cannot skip levels — organizations must progress through each stage.',
+        items: [
+          'Level 1 — Initial: processes are unpredictable, ad hoc, and chaotic. Success depends on individual heroics, not repeatable processes.',
+          'Level 2 — Managed: projects are planned, performed, measured, and controlled. Basic project management is in place at the PROJECT level.',
+          'Level 3 — Defined: processes are defined, documented, and standardized at the ORGANIZATIONAL level. All projects use the organization\'s standard process. Required for most U.S. government contracts.',
+          'Level 4 — Quantitatively Managed: processes are measured and controlled using statistical data. Organizational performance is predictable using quantitative targets.',
+          'Level 5 — Optimizing: focus on continuous process improvement. Innovative and incremental improvements are identified, implemented, and institutionalized.'
+        ]
+      },
+      {
+        h: 'Why Organizations Cannot Skip Levels',
+        body: 'Each maturity level is a prerequisite for the next. The logic is cumulative:',
+        items: [
+          'To quantitatively manage processes (Level 4), they must first be standardized (Level 3).',
+          'To standardize across the organization (Level 3), they must first be manageable at the project level (Level 2).',
+          'You cannot statistically control what you have not first defined and measured.',
+          'Attempting to jump to Level 3 without Level 2 discipline leads to inconsistent adoption and collapse of the improvement effort.'
+        ]
+      },
+      {
+        h: 'Exam Focus',
+        body: '',
+        items: [
+          'Memorize all five levels and their key characteristics: Initial (chaotic), Managed (project-level), Defined (org-level), Quantitatively Managed (data-driven), Optimizing (continuous improvement).',
+          'Level 3 = government contract requirement (commonly tested).',
+          'Organizations cannot skip levels — this principle is frequently tested.',
+          'CMMI is an ORGANIZATIONAL maturity model, not a project maturity model.',
+          'Common trap: confusing CMMI Level 2 (managed project processes) with Level 3 (defined organizational processes). Level 2 is project-level discipline; Level 3 is enterprise standardization.',
+          'CMMI vs. Six Sigma: CMMI improves process maturity organization-wide; Six Sigma reduces defects in specific processes. They are complementary, not competing.'
+        ]
+      }
+    ],
+    points: [
+      'Level 1: Initial (chaotic, ad hoc)',
+      'Level 2: Managed (project-level planning and control)',
+      'Level 3: Defined (org-wide standard processes — required for govt contracts)',
+      'Level 4: Quantitatively Managed (statistical process control)',
+      'Level 5: Optimizing (continuous improvement)',
+      'Cannot skip levels; CMMI is organizational, not project-level'
+    ],
+    tip: 'Know all 5 levels in order with their key descriptors. Level 3 = government contract standard. Cannot skip levels. This is a straightforward memorization topic — master it for easy points.'
+  },
+
+  sdlc: {
+    label: 'SDLC Models',
+    icon: '🔁',
+    cat: 'methodology',
+    intro: 'The Software Development Life Cycle (SDLC) describes the structured process for planning, creating, testing, and deploying software or systems. Multiple SDLC models exist, each suited to different project contexts. On the PMP exam, SDLC questions test your ability to identify which model fits a given scenario — understanding the trade-offs between structure, speed, risk, and flexibility across models is the key skill.',
+    sections: [
+      {
+        h: 'Why SDLC Models Matter',
+        body: 'Choosing the wrong SDLC model for a project is a common root cause of failure. The model should match the project\'s level of uncertainty, stakeholder availability, regulatory requirements, and time constraints.',
+        items: [
+          'Predictive models (Waterfall, V-Model): best when requirements are stable and well-understood.',
+          'Iterative/Incremental models (Agile, Scrum, RAD): best when requirements are uncertain or expected to evolve.',
+          'Risk-driven models (Spiral): best when risk is high and the cost of failure is severe.',
+          'The cost of defect discovery increases dramatically the later in the SDLC a defect is found. Prevention and early testing are always cheaper than late remediation.'
+        ]
+      },
+      {
+        h: 'Waterfall Model',
+        body: 'Waterfall is the classic sequential SDLC model where each phase must complete before the next begins.',
+        items: [
+          'Phases (in order): Requirements → Design → Implementation (Coding) → Testing → Deployment → Maintenance.',
+          'No going back: once a phase is signed off, revisiting it is costly and difficult.',
+          'Best when: requirements are completely known and stable, the product type is familiar, regulatory documentation is required.',
+          'Weakness: inflexible to change. If requirements change after design is complete, rework is expensive.',
+          'Testing happens AFTER development — defects found late are expensive to fix.'
+        ]
+      },
+      {
+        h: 'V-Model (Verification and Validation)',
+        body: 'The V-Model is an extension of Waterfall that explicitly pairs each development phase with a corresponding testing phase.',
+        items: [
+          'Left side of V (development): Requirements → System Design → Architecture Design → Module Design → Coding.',
+          'Right side of V (testing): Unit Testing → Integration Testing → System Testing → Acceptance Testing.',
+          'The key insight: testing is planned IN PARALLEL with development, not as an afterthought.',
+          'Best when: requirements are well-defined, safety-critical systems where testing rigor is paramount (medical, aviation).',
+          'Weakness: still sequential — changes are expensive and rigid.'
+        ]
+      },
+      {
+        h: 'Spiral Model',
+        body: 'The Spiral Model is an iterative, risk-driven model developed by Barry Boehm. Each loop of the spiral represents a phase of development.',
+        items: [
+          'Each spiral loop has four quadrants: Determine objectives → Identify and resolve risks → Develop and test → Plan the next iteration.',
+          'Risk-driven: the model explicitly forces risk analysis before each development phase. High-risk items are addressed first.',
+          'Best when: project is large, complex, and high-risk. Cost of failure is high. Requirements are partially unclear.',
+          'Good for: large government projects, safety-critical systems, innovative products with significant technical uncertainty.'
+        ]
+      },
+      {
+        h: 'RAD and Agile/Iterative',
+        body: 'Speed-focused and adaptive models for uncertain or evolving requirements:',
+        items: [
+          'RAD (Rapid Application Development): heavy use of prototyping to rapidly confirm requirements. The customer sees working software early and often. Sacrifices documentation thoroughness for speed.',
+          'Agile/Scrum: short sprints (1-4 weeks), continuous feedback, adaptive to change. Best when requirements evolve, customer is available for continuous collaboration.',
+          'Kanban: pull-based continuous flow. Best for maintenance work or support teams where work arrives unpredictably.',
+          'When to choose Waterfall: requirements stable and complete, regulatory compliance, customer not available for ongoing collaboration.',
+          'When to choose Agile: requirements unclear or changing, fast feedback needed.',
+          'When to choose Spiral: high technical risk, large/complex project, early risk identification is critical.',
+          'Cost of late defect discovery: a bug found during requirements costs 1x to fix. The same bug found post-deployment can cost 100x.',
+          'Hybrid: most real projects use a hybrid — e.g., waterfall phases for procurement/compliance + agile sprints for development.'
+        ]
+      },
+      {
+        h: 'Exam Focus',
+        body: '',
+        items: [
+          'Match the model to the scenario: stable requirements → Waterfall; evolving requirements → Agile; high risk → Spiral; speed needed → RAD; safety-critical with testing focus → V-Model.',
+          'V-Model is NOT the same as Waterfall — its key distinction is parallel testing planning alongside development.',
+          'Spiral is the ONLY model with explicit, systematic risk analysis built into each iteration.',
+          'RAD uses prototyping to rapidly confirm requirements.',
+          'Common trap: assuming Agile is always better. For projects with fixed requirements, regulatory mandates, and limited customer access, Waterfall is the correct choice.',
+          'The cost of fixing defects increases exponentially the later they are found.'
+        ]
+      }
+    ],
+    points: [
+      'Waterfall: sequential phases, stable requirements, no going back',
+      'V-Model: pairs each dev phase with a test phase; testing planned concurrently',
+      'Spiral: risk-driven iterations; explicitly addresses risk at each loop',
+      'RAD: rapid prototyping for speed; heavy user involvement',
+      'Agile: iterative sprints, evolving requirements, continuous feedback',
+      'Defect cost multiplies the later it is found — early testing is always cheaper'
+    ],
+    tip: 'Match model to scenario: Waterfall=stable requirements, V-Model=safety-critical, Spiral=high risk, RAD=fast+prototyping, Agile=evolving requirements. Know these cold — they appear in scenario questions.'
+  }
+
 };
 
 const MASTERY_KEY = 'pmp_mastery';
@@ -4364,11 +5555,40 @@ function openStudyModal(cat) {
   document.getElementById('study-modal-icon').textContent = td.icon;
   document.getElementById('study-modal-title').textContent = td.label;
   updateStudyModalBar();
-  // Populate learn tab
-  document.getElementById('study-key-points').innerHTML = td.points.map((p,i) =>
+
+  // Intro paragraph
+  const introEl = document.getElementById('study-intro');
+  introEl.innerHTML = td.intro
+    ? `<div class="learn-intro">${td.intro}</div>`
+    : '';
+
+  // Textbook sections
+  const sectionsEl = document.getElementById('study-sections');
+  if (td.sections && td.sections.length) {
+    sectionsEl.innerHTML = td.sections.map(s => {
+      const bodyHtml = s.body ? `<div class="learn-section-body"><p>${s.body}</p></div>` : '';
+      const itemsHtml = (s.items && s.items.length)
+        ? `<ul class="learn-section-items">${s.items.map(it => `<li>${it}</li>`).join('')}</ul>`
+        : '';
+      return `<div class="learn-section">
+        <div class="learn-section-h">${s.h}</div>
+        ${bodyHtml}${itemsHtml}
+      </div>`;
+    }).join('');
+  } else {
+    sectionsEl.innerHTML = '';
+  }
+
+  // Quick reference bullets
+  document.getElementById('study-key-points').innerHTML = (td.points || []).map((p,i) =>
     `<div class="key-point"><div class="kp-num">${i+1}</div><div>${p}</div></div>`
   ).join('');
+
+  // Exam tip
   document.getElementById('study-exam-tip').innerHTML = `<strong>💡 Exam Tip:</strong> ${td.tip}`;
+
+  // Reset scroll and open
+  document.getElementById('study-learn-pane').scrollTop = 0;
   switchStudyTab('learn');
   document.getElementById('study-overlay').classList.add('open');
 }
