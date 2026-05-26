@@ -467,7 +467,7 @@ body.dark .profile-box h2 { color:var(--orange-light); }
     <div class="stat-card"><div class="num" id="stat-modules">0/10</div><div class="lbl">Modules Done</div></div>
     <div class="stat-card"><div class="num" id="stat-quiz">—</div><div class="lbl">Best Quiz Score</div></div>
     <div class="stat-card"><div class="num" id="stat-mastered">0/16</div><div class="lbl">Topics Mastered</div></div>
-    <div class="stat-card"><div class="num" id="stat-questions">131</div><div class="lbl">Practice Questions</div></div>
+    <div class="stat-card"><div class="num" id="stat-questions">—</div><div class="lbl">Practice Questions</div></div>
   </div>
 
   <div class="grid-2" style="margin-bottom:14px">
@@ -493,6 +493,14 @@ body.dark .profile-box h2 { color:var(--orange-light); }
       <div id="weak-area-chart"></div>
       <button class="btn btn-outline" onclick="resetCatPerf()" style="font-size:0.7rem;margin-top:8px">Reset Stats</button>
     </div>
+  </div>
+
+  <!-- PMP Domain Readiness -->
+  <div class="card" style="margin-bottom:14px">
+    <h3 style="margin-bottom:4px">🎯 PMP Domain Readiness</h3>
+    <p style="font-size:0.75rem;color:var(--text-light);margin-bottom:12px">Based on your quiz performance. PMP exam weights: People 42% · Process 50% · Business 8%</p>
+    <div id="domain-readiness"></div>
+    <div style="margin-top:10px;font-size:0.75rem;color:var(--text-light)">Tip: Target 75%+ in all three domains before exam day.</div>
   </div>
 
   <div class="card" style="margin-bottom:14px">
@@ -1390,16 +1398,16 @@ body.dark .profile-box h2 { color:var(--orange-light); }
   <div class="topbar"><h2>Practice Quiz</h2></div>
   <div id="quiz-setup" class="card">
     <h3>Quiz Settings</h3>
-    <div class="grid-2" style="margin-bottom:12px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:14px">
       <div>
         <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:4px">Number of Questions</label>
-        <select id="quiz-count" style="width:auto">
+        <select id="quiz-count" style="width:100%">
           <option>10</option><option>20</option><option selected>30</option><option>50</option><option>All</option>
         </select>
       </div>
       <div>
         <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:4px">Topic Filter</label>
-        <select id="quiz-cat" style="width:auto">
+        <select id="quiz-cat" style="width:100%">
           <option value="all">All Topics</option>
           <option value="integration">Integration</option>
           <option value="scope">Scope</option>
@@ -1417,6 +1425,24 @@ body.dark .profile-box h2 { color:var(--orange-light); }
           <option value="cmmi">CMMI</option>
           <option value="sdlc">SDLC Models</option>
           <option value="general">General PM</option>
+        </select>
+      </div>
+      <div>
+        <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:4px">PMP Domain</label>
+        <select id="quiz-domain" style="width:100%">
+          <option value="all">All Domains</option>
+          <option value="people">👥 People (42%)</option>
+          <option value="process">⚙️ Process (50%)</option>
+          <option value="business">💼 Business Env (8%)</option>
+        </select>
+      </div>
+      <div>
+        <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:4px">Difficulty</label>
+        <select id="quiz-diff" style="width:100%">
+          <option value="all">All Levels</option>
+          <option value="easy">🟢 Easy</option>
+          <option value="medium">🟡 Medium</option>
+          <option value="hard">🔴 Hard</option>
         </select>
       </div>
     </div>
@@ -3729,7 +3755,7 @@ body.dark .profile-box h2 { color:var(--orange-light); }
       <p id="mock-time-used" style="font-size:0.83rem;color:var(--text-light);margin-top:4px"></p>
     </div>
     <div class="card" style="margin-bottom:12px">
-      <h3>Results by Category</h3>
+      <h3>📊 Exam Performance Breakdown</h3>
       <div id="mock-breakdown" style="margin-top:12px"></div>
     </div>
     <div class="card">
@@ -4160,13 +4186,27 @@ function updateMissedButton() {
   if (btn2) btn2.style.display = missedQIDs.length > 0 ? 'inline-block' : 'none';
 }
 
+function getDomain(q) {
+  if (q.domain) return q.domain;
+  const peopleMap = ['resource','stakeholder','ethics','talent'];
+  const businessMap = ['general'];
+  if (peopleMap.includes(q.cat)) return 'people';
+  if (businessMap.includes(q.cat)) return 'business';
+  return 'process';
+}
+
 function startQuiz(missedOnly) {
   const rawCount = document.getElementById('quiz-count').value;
   const cat = document.getElementById('quiz-cat').value;
+  const domain = document.getElementById('quiz-domain') ? document.getElementById('quiz-domain').value : 'all';
+  const diff = document.getElementById('quiz-diff') ? document.getElementById('quiz-diff').value : 'all';
   let pool = missedOnly
     ? quizBank.filter(q => missedQIDs.includes(quizBank.indexOf(q)))
-    : (cat === 'all' ? [...quizBank] : quizBank.filter(q => q.cat === cat));
-  if (pool.length === 0) { alert('No questions available for this selection.'); return; }
+    : [...quizBank];
+  if (!missedOnly && cat !== 'all') pool = pool.filter(q => q.cat === cat);
+  if (!missedOnly && domain !== 'all') pool = pool.filter(q => getDomain(q) === domain);
+  if (!missedOnly && diff !== 'all') pool = pool.filter(q => (q.d || 'medium') === diff);
+  if (pool.length === 0) { alert('No questions match these filters. Try broadening your selection.'); return; }
   pool = pool.sort(() => Math.random() - 0.5);
   const count = rawCount === 'All' ? pool.length : Math.min(parseInt(rawCount), pool.length);
   quizQuestions = pool.slice(0, count);
@@ -4178,13 +4218,16 @@ function startQuiz(missedOnly) {
 }
 
 const catLabels = {integration:'Integration',scope:'Scope',schedule:'Schedule',cost:'Cost/EVM',quality:'Quality',resource:'Resource',risk:'Risk',procurement:'Procurement',stakeholder:'Stakeholder',agile:'Agile',general:'General PM',ethics:'Ethics',talent:'Talent Triangle',sixsigma:'Six Sigma',cmmi:'CMMI',sdlc:'SDLC'};
+const domainLabels = {people:'👥 People',process:'⚙️ Process',business:'💼 Business Env'};
 
 function showQuestion() {
   answered = false;
   const q = quizQuestions[qIndex];
   document.getElementById('q-counter').textContent = `Question ${qIndex+1} of ${quizQuestions.length}`;
   document.getElementById('q-score').textContent = `Score: ${qScore}/${qIndex}`;
-  document.getElementById('q-cat-badge').textContent = catLabels[q.cat] || q.cat;
+  const domBadge = domainLabels[getDomain(q)] || '';
+  const diffBadge = q.d ? `<span style="margin-left:4px;padding:1px 6px;border-radius:10px;font-size:0.6rem;font-weight:700;background:${q.d==='hard'?'#fee2e2':q.d==='easy'?'#dcfce7':'#fef9c3'};color:${q.d==='hard'?'#dc2626':q.d==='easy'?'#15803d':'#92400e'}">${q.d.toUpperCase()}</span>` : '';
+  document.getElementById('q-cat-badge').innerHTML = (catLabels[q.cat] || q.cat) + ` <span style="opacity:0.7;font-size:0.65rem">· ${domBadge}</span>` + diffBadge;
   document.getElementById('q-text').textContent = q.q;
   document.getElementById('q-options').innerHTML = q.o.map((opt, i) =>
     `<button class="quiz-option" onclick="selectAnswer(${i})">${String.fromCharCode(65+i)}. ${opt}</button>`
@@ -4215,7 +4258,7 @@ function selectAnswer(i) {
   }
   uSet('pmp_cat_perf', JSON.stringify(catPerf));
   localStorage.setItem('pmp_missed', JSON.stringify(missedQIDs));
-  renderWeakAreas();
+  renderWeakAreas(); renderDomainReadiness();
   document.getElementById('q-score').textContent = `Score: ${qScore}/${qIndex+1}`;
   document.getElementById('q-explanation').textContent = q.e;
   document.getElementById('q-explanation').style.display = 'block';
@@ -4238,6 +4281,42 @@ function nextQuestion() {
 }
 
 // ====== Weak Area Analytics ======
+function renderDomainReadiness() {
+  const el = document.getElementById('domain-readiness');
+  if (!el) return;
+  const catPerf = JSON.parse(uGet('pmp_cat_perf') || '{}');
+  // Map cats to domains
+  const domMap = {people:{r:0,t:0},process:{r:0,t:0},business:{r:0,t:0}};
+  Object.entries(catPerf).forEach(([cat, d]) => {
+    const dom = ['resource','stakeholder','ethics','talent'].includes(cat) ? 'people'
+              : cat === 'general' ? 'business' : 'process';
+    domMap[dom].r += d.r; domMap[dom].t += d.t;
+  });
+  // Also include questions answered in quizBank with domain field
+  const domOrder = [['people','👥 People','42%'],['process','⚙️ Process','50%'],['business','💼 Business Env','8%']];
+  const hasAny = Object.values(domMap).some(d => d.t > 0);
+  if (!hasAny) {
+    el.innerHTML = '<p style="font-size:0.82rem;color:var(--text-light)">No quiz data yet. Take quizzes to track your domain readiness.</p>';
+    return;
+  }
+  el.innerHTML = domOrder.map(([d, lbl, weight]) => {
+    const dd = domMap[d];
+    if (dd.t === 0) return `<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:0.82rem;margin-bottom:3px"><span style="font-weight:700">${lbl} <span style="font-weight:400;color:var(--text-light)">${weight}</span></span><span style="color:var(--text-light)">No data yet</span></div><div style="height:10px;background:var(--border);border-radius:5px"></div></div>`;
+    const pct = Math.round((dd.r/dd.t)*100);
+    const col = pct < 60 ? '#dc2626' : pct < 75 ? '#f59e0b' : '#059669';
+    const icon = pct >= 75 ? '✅' : pct >= 60 ? '⚠️' : '🔴';
+    return `<div style="margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.82rem;margin-bottom:3px">
+        <span style="font-weight:700">${icon} ${lbl} <span style="font-weight:400;color:var(--text-light);font-size:0.75rem">${weight}</span></span>
+        <span style="font-weight:700;color:${col}">${pct}% (${dd.r}/${dd.t})</span>
+      </div>
+      <div style="height:10px;background:var(--border);border-radius:5px;overflow:hidden">
+        <div style="width:${pct}%;height:100%;background:${col};border-radius:5px;transition:width 0.4s"></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
 function renderWeakAreas() {
   const el = document.getElementById('weak-area-chart');
   if (!el) return;
@@ -4267,7 +4346,7 @@ function renderWeakAreas() {
 function resetCatPerf() {
   if (confirm('Reset all weak area stats? This cannot be undone.')) {
     uSet('pmp_cat_perf', '{}');
-    renderWeakAreas();
+    renderWeakAreas(); renderDomainReadiness();
   }
 }
 
@@ -5606,7 +5685,7 @@ function closeStudyModal(e) {
   if (e && e.target !== document.getElementById('study-overlay')) return;
   document.getElementById('study-overlay').classList.remove('open');
   renderTopicGrid();
-  renderWeakAreas();
+  renderWeakAreas(); renderDomainReadiness();
 }
 
 function switchStudyTab(tab) {
@@ -5770,7 +5849,7 @@ function nextDiagQ() {
     const m = getMastery();
     const weak = Object.entries(m).filter(([c,d]) => d.t>0 && (d.r/d.t)<0.5).map(([c]) => catLabels[c]||c).slice(0,3);
     document.getElementById('diag-done-msg').textContent = `You scored ${diagCorrect}/${diagQs.length} (${pct}%). Your Learning Map is now populated.${weak.length ? ' Weakest areas: ' + weak.join(', ') + '.' : ' Great start!'}`;
-    renderWeakAreas();
+    renderWeakAreas(); renderDomainReadiness();
   } else { showDiagQ(); }
 }
 
@@ -5820,7 +5899,8 @@ function startMock() {
 function showMockQ() {
   const q = mockQs[mockIdx];
   document.getElementById('mock-counter').textContent = `Question ${mockIdx+1} of ${mockQs.length}`;
-  document.getElementById('mock-q-num').textContent = `Q${mockIdx+1} · ${catLabels[q.cat] || q.cat}`;
+  const mockDiff = q.d ? ` · <span style="padding:1px 5px;border-radius:8px;font-size:0.65rem;font-weight:700;background:${q.d==='hard'?'#fee2e2':q.d==='easy'?'#dcfce7':'#fef9c3'};color:${q.d==='hard'?'#dc2626':q.d==='easy'?'#15803d':'#92400e'}">${q.d.toUpperCase()}</span>` : '';
+  document.getElementById('mock-q-num').innerHTML = `Q${mockIdx+1} · ${catLabels[q.cat] || q.cat} · ${domainLabels[getDomain(q)]||''}${mockDiff}`;
   document.getElementById('mock-q-text').textContent = q.q;
   const sel = mockAnswers[mockIdx];
   document.getElementById('mock-options').innerHTML = q.o.map((opt, i) =>
@@ -5874,30 +5954,48 @@ function finishMock() {
   document.getElementById('mock-results').style.display = 'block';
   const elapsed = Math.round((Date.now() - mockStartTime) / 60000);
   let score = 0;
-  const catScore = {};
+  const catScore = {}; const domScore = {people:{r:0,t:0},process:{r:0,t:0},business:{r:0,t:0}};
   mockQs.forEach((q, i) => {
     if (!catScore[q.cat]) catScore[q.cat] = {r:0,t:0};
     catScore[q.cat].t++;
-    if (mockAnswers[i] === q.a) { score++; catScore[q.cat].r++; }
+    const dom = getDomain(q);
+    domScore[dom].t++;
+    if (mockAnswers[i] === q.a) { score++; catScore[q.cat].r++; domScore[dom].r++; }
   });
   const pct = Math.round((score / mockQs.length) * 100);
   document.getElementById('mock-final-score').textContent = `${score} / ${mockQs.length} — ${pct}%`;
   const verdict = pct >= 80 ? '🎉 Pass-ready! Strong performance.' : pct >= 70 ? '📈 Getting close — review weak areas below.' : '📚 Keep studying — target 75%+ before exam day.';
   document.getElementById('mock-verdict').textContent = verdict;
   document.getElementById('mock-time-used').textContent = `Time used: ${elapsed} minutes`;
-  // Category breakdown
-  const breakdown = Object.entries(catScore).sort((a,b) => (a[1].r/a[1].t)-(b[1].r/b[1].t));
-  document.getElementById('mock-breakdown').innerHTML = breakdown.map(([cat, d]) => {
-    const p = Math.round((d.r/d.t)*100);
+  // PMP Domain breakdown (People / Process / Business)
+  const domOrder = [['people','👥 People','42%'],['process','⚙️ Process','50%'],['business','💼 Business Env','8%']];
+  const domHtml = domOrder.map(([d, lbl, weight]) => {
+    const dd = domScore[d]; if (!dd || dd.t === 0) return '';
+    const p = Math.round((dd.r/dd.t)*100);
     const col = p < 60 ? '#dc2626' : p < 75 ? '#f59e0b' : '#059669';
-    return `<div style="margin-bottom:7px;display:flex;align-items:center;gap:10px">
-      <span style="min-width:130px;font-size:0.82rem;font-weight:600">${catLabels[cat]||cat}</span>
-      <div style="flex:1;height:12px;background:var(--border);border-radius:6px;overflow:hidden">
+    return `<div style="margin-bottom:9px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px">
+        <span style="font-size:0.83rem;font-weight:700">${lbl} <span style="font-weight:400;color:var(--text-light);font-size:0.75rem">(exam weight: ${weight})</span></span>
+        <span style="font-size:0.82rem;font-weight:700;color:${col}">${p}% (${dd.r}/${dd.t})</span>
+      </div>
+      <div style="height:12px;background:var(--border);border-radius:6px;overflow:hidden">
         <div style="width:${p}%;height:100%;background:${col};border-radius:6px"></div>
       </div>
-      <span style="font-size:0.8rem;font-weight:700;color:${col};min-width:65px;text-align:right">${p}% (${d.r}/${d.t})</span>
     </div>`;
   }).join('');
+  document.getElementById('mock-breakdown').innerHTML = `<div style="margin-bottom:14px"><h4 style="font-size:0.8rem;text-transform:uppercase;letter-spacing:0.6px;color:var(--text-light);margin-bottom:10px">PMP Exam Domains</h4>${domHtml}</div><details><summary style="cursor:pointer;font-size:0.8rem;font-weight:700;color:var(--navy);margin-bottom:8px">▸ Topic-by-Topic Breakdown</summary><div style="margin-top:10px">${
+    Object.entries(catScore).sort((a,b) => (a[1].r/a[1].t)-(b[1].r/b[1].t)).map(([cat, d]) => {
+      const p = Math.round((d.r/d.t)*100);
+      const col = p < 60 ? '#dc2626' : p < 75 ? '#f59e0b' : '#059669';
+      return `<div style="margin-bottom:7px;display:flex;align-items:center;gap:10px">
+        <span style="min-width:130px;font-size:0.82rem;font-weight:600">${catLabels[cat]||cat}</span>
+        <div style="flex:1;height:10px;background:var(--border);border-radius:6px;overflow:hidden">
+          <div style="width:${p}%;height:100%;background:${col};border-radius:6px"></div>
+        </div>
+        <span style="font-size:0.78rem;font-weight:700;color:${col};min-width:55px;text-align:right">${p}% (${d.r}/${d.t})</span>
+      </div>`;
+    }).join('')
+  }</div></details>`;
   // Flagged review
   const flaggedHtml = mockFlagged.size === 0 ? '<p style="font-size:0.83rem;color:var(--text-light)">No flagged questions.</p>'
     : Array.from(mockFlagged).map(i => {
@@ -6868,8 +6966,11 @@ window.addEventListener('load', () => {
   renderGloss();
   renderCard();
   renderIttoGrid();
-  renderWeakAreas();
+  renderWeakAreas(); renderDomainReadiness();
   renderTopicGrid();
+  // Dynamic question count
+  const qStatEl = document.getElementById('stat-questions');
+  if (qStatEl) qStatEl.textContent = quizBank.length + (typeof sitBank !== 'undefined' ? '+' + sitBank.length + ' sit.' : '');
 
   const active = getActiveProfile();
   const profiles = getProfiles();
