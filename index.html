@@ -231,7 +231,7 @@ body.dark .kanban-col-header { color:var(--orange-light); }
 /* Diagnostic */
 .diag-progress { height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:14px; }
 .diag-progress-fill { height:100%;background:var(--navy);border-radius:3px;transition:width 0.3s; }
-.profile-overlay { position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,20,50,0.82);z-index:900;display:flex;align-items:center;justify-content:center; }
+.profile-overlay { position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,20,50,0.82);z-index:900;display:none;align-items:center;justify-content:center; }
 .profile-box { background:var(--card);border-radius:16px;padding:32px;max-width:420px;width:92%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,0.4); }
 .profile-box h2 { color:var(--navy);font-size:1.4rem;margin-bottom:6px; }
 body.dark .profile-box h2 { color:var(--orange-light); }
@@ -6955,9 +6955,10 @@ function createProfile() {
 
 function activateProfile(id) {
   localStorage.setItem(ACTIVE_KEY, id);
-  document.getElementById('profile-overlay').style.display = 'none';
-  applyUserData();
-  renderProfileList();
+  const ov = document.getElementById('profile-overlay');
+  if (ov) ov.style.display = 'none';
+  try { applyUserData(); } catch(e) { console.error('applyUserData error:', e); }
+  try { renderProfileList(); } catch(e) {}
 }
 
 function showProfileModal() {
@@ -7181,16 +7182,23 @@ window.addEventListener('load', () => {
   const qStatEl = document.getElementById('stat-questions');
   if (qStatEl) qStatEl.textContent = quizBank.length + (typeof sitBank !== 'undefined' ? '+' + sitBank.length + ' sit.' : '');
 
-  const active = getActiveProfile();
-  const profiles = getProfiles();
-  if (!active || !profiles.find(p => p.id === active)) {
-    // First launch or profile deleted — show profile modal
-    renderProfileList();
-    document.getElementById('profile-overlay').style.display = 'flex';
-    // Set up a default if no profiles exist yet
-  } else {
-    document.getElementById('profile-overlay').style.display = 'none';
-    applyUserData();
+  try {
+    const active = getActiveProfile();
+    const profiles = getProfiles();
+    if (!active || !profiles.find(p => p.id === active)) {
+      renderProfileList();
+      const ov = document.getElementById('profile-overlay');
+      if (ov) { ov.style.display = 'flex'; }
+    } else {
+      const ov = document.getElementById('profile-overlay');
+      if (ov) ov.style.display = 'none';
+      applyUserData();
+    }
+  } catch(e) {
+    // If anything fails, still hide the overlay so the app is usable
+    console.error('Init error:', e);
+    const ov = document.getElementById('profile-overlay');
+    if (ov) ov.style.display = 'none';
   }
 });
 </script>
